@@ -22,7 +22,7 @@ export default function HomePage() {
           {/* Main content with staggered animation */}
           <div className="text-center space-y-6">
             <div className="animate-slide-up">
-              <h1 className="text-lg sm:text-xl font-medium text-muted-foreground mb-3">Hello, I'm</h1>
+              <h1 className="text-lg sm:text-xl font-medium text-muted-foreground mb-3">Hello World, I'm</h1>
               <div className="relative">
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent animate-gradient drop-shadow-lg mb-4">
                   Ted - Tetsuya Maeda
@@ -61,7 +61,7 @@ export default function HomePage() {
                     className="hover:scale-110 transition-transform backdrop-blur-md bg-background/70 border-border/60 shadow-lg hover:shadow-xl"
                     asChild
                   >
-                    <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+                    <a href="https://github.com/ted-M-tech" target="_blank" rel="noopener noreferrer">
                       <Github className="h-4 w-4" />
                     </a>
                   </Button>
@@ -71,7 +71,7 @@ export default function HomePage() {
                     className="hover:scale-110 transition-transform backdrop-blur-md bg-background/70 border-border/60 shadow-lg hover:shadow-xl"
                     asChild
                   >
-                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.linkedin.com/in/tetsuya-maeda-629b70294/" target="_blank" rel="noopener noreferrer">
                       <Linkedin className="h-4 w-4" />
                     </a>
                   </Button>
@@ -88,35 +88,33 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Quick Links */}
-      <section className="bg-muted/60 backdrop-blur-md py-16 relative z-10">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <Link
-              href="/about"
-              className="group p-6 bg-background/80 backdrop-blur-md rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-border/60 hover:border-primary/30"
-            >
-              <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">About</h3>
-              <p className="text-muted-foreground text-sm">Learn more about my background and skill set.</p>
-            </Link>
-            <Link
-              href="/projects"
-              className="group p-6 bg-background/80 backdrop-blur-md rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-border/60 hover:border-primary/30"
-            >
-              <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">Projects</h3>
-              <p className="text-muted-foreground text-sm">Explore the key projects I have worked on.</p>
-            </Link>
-            <Link
-              href="/contact"
-              className="group p-6 bg-background/80 backdrop-blur-md rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-border/60 hover:border-primary/30"
-            >
-              <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">Contact</h3>
-              <p className="text-muted-foreground text-sm">Get in touch for work inquiries or questions.</p>
-            </Link>
+            {/* Quick Links */}
+            <div className="animate-slide-up-delay-3 mt-12">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <Link
+                  href="/about"
+                  className="group p-6 bg-background/80 backdrop-blur-md rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-border/60 hover:border-primary/30"
+                >
+                  <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">About</h3>
+                  <p className="text-muted-foreground text-sm">Learn more about my background and skill set.</p>
+                </Link>
+                <Link
+                  href="/projects"
+                  className="group p-6 bg-background/80 backdrop-blur-md rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-border/60 hover:border-primary/30"
+                >
+                  <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">Projects</h3>
+                  <p className="text-muted-foreground text-sm">Explore the key projects I have worked on.</p>
+                </Link>
+                <Link
+                  href="/contact"
+                  className="group p-6 bg-background/80 backdrop-blur-md rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-border/60 hover:border-primary/30"
+                >
+                  <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">Contact</h3>
+                  <p className="text-muted-foreground text-sm">Get in touch for work inquiries or questions.</p>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
