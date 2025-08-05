@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "title": "Taro Tanaka - Full Stack Engineer",
+    "description": "Portfolio website of Taro Tanaka, a full stack engineer."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "home": {
+    "name": "Taro Tanaka",
+    "title": "Full Stack Engineer",
+    "description": "A full stack engineer specializing in designing and developing modern web applications. I focus on creating user-centric products using a tech stack centered around React, Next.js, and Node.js.",
+    "cta": "View Projects"
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "Experience and Skills",
+    "bio": "A full stack engineer with over 5 years of web development experience. I have worked on projects of various scales from startups to large enterprises, covering a wide range of technical areas from frontend to backend and infrastructure.",
+    "skills": {
+      "languages": "Programming Languages",
+      "frameworks": "Frameworks",
+      "tools": "Tools & Others"
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "subtitle": "Key projects I have worked on",
+    "viewCode": "View Code",
+    "viewDemo": "View Demo"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Feel free to get in touch",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "send": "Send Message"
+    },
+    "social": "Social Links"
+  }
+}
