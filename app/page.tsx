@@ -9,15 +9,8 @@ export default function HomePage() {
       <ParticleBackground />
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 relative z-10">
+      <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-20 relative z-10">
         <div className="max-w-4xl mx-auto">
-          {/* Animated greeting */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/20 backdrop-blur-md rounded-full text-sm text-primary mb-6 animate-fade-in border border-primary/30 shadow-lg shadow-primary/20">
-              <Sparkles className="w-4 h-4" />
-              Welcome to my portfolio
-            </div>
-          </div>
 
           {/* Main content with staggered animation */}
           <div className="text-center space-y-6">
@@ -44,16 +37,6 @@ export default function HomePage() {
 
             <div className="animate-slide-up-delay-2">
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
-                <Button
-                  asChild
-                  size="lg"
-                  className="group backdrop-blur-md shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 transition-all"
-                >
-                  <Link href="/projects">
-                    View Projects
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </Button>
                 <div className="flex space-x-4">
                   <Button
                     variant="outline"
