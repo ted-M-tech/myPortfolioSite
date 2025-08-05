@@ -4,31 +4,61 @@ import { Camera, Music, Gamepad2, BookOpen, Mountain, Coffee } from "lucide-reac
 
 export default function AboutPage() {
   const skills = {
-    languages: ["JavaScript", "TypeScript", "Python", "Go", "Java"],
-    frameworks: ["React", "Next.js", "Vue.js", "Node.js", "Express", "FastAPI"],
-    tools: ["Docker", "AWS", "PostgreSQL", "MongoDB", "Git", "Figma"],
+    languages: ["SQL", "Python(Basic)", "C#(Basic)", "TypeScript(Basic)"],
+    frameworks: ["React", "Next.js"],
+    tools: ["Docker", "Azure", "Azure DevOps", "PostgreSQL", "Snowflake", "Git", "Figma", "Miro", "Cursor", "MS Excel", "MS Powerpoint", "MS Word", "MS Teams", "MS Outlook", "MS OneDrive"],
   }
 
   const certifications = [
     {
-      name: "AWS Certified Solutions Architect",
-      issuer: "Amazon Web Services",
+      name: "Azure Solutions Architect Expert",
+      issuer: "Microsoft",
+      date: "2025",
+    },
+    {
+      name: "DevOps Engineer Expert",
+      issuer: "Microsoft",
+      date: "2025",
+    },
+    {
+      name: "Azure AI Engineer Associate",
+      issuer: "Microsoft",
+      date: "2025",
+    },
+    {
+      name: "Azure Administrator Associate",
+      issuer: "Microsoft",
+      date: "2025",
+    },
+    {
+      name: "Azure Developer Associate",
+      issuer: "Microsoft",
+      date: "2025",
+    },
+    {
+      name: "Azure Fundamentals",
+      issuer: "Microsoft",
+      date: "2024",
+    },
+    {
+      name: "Registered Product Owner",
+      issuer: "Agile Education by Scrum Inc",
+      date: "2024",
+    },
+    {
+      name: "Registered Scrum Master",
+      issuer: "Agile Education by Scrum Inc",
+      date: "2024",
+    },
+    {
+      name: "JDLA Deep Learning for GENERAL",
+      issuer: "JDLA",
       date: "2023",
     },
     {
-      name: "Google Cloud Professional Cloud Architect",
-      issuer: "Google Cloud",
-      date: "2022",
-    },
-    {
-      name: "Fundamental Information Technology Engineer Examination",
-      issuer: "Information-technology Promotion Agency (IPA)",
-      date: "2020",
-    },
-    {
-      name: "TOEIC Score 850",
+      name: "TOEIC Score 860",
       issuer: "Educational Testing Service",
-      date: "2021",
+      date: "2025",
     },
   ]
 
