@@ -31,11 +31,18 @@ export function Navigation() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === item.href ? "text-primary" : "text-muted-foreground"
+                className={`text-sm font-medium transition-all duration-200 relative pb-2 ${
+                  pathname === item.href ? "text-primary" : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {item.label}
+                <div
+                  className={`absolute bottom-0 left-0 right-0 h-0.5 rounded-full transition-all duration-200 ${
+                    pathname === item.href
+                      ? "bg-primary scale-x-100"
+                      : "bg-transparent scale-x-0 hover:bg-primary/50 hover:scale-x-100"
+                  }`}
+                />
               </Link>
             ))}
           </div>
@@ -54,8 +61,10 @@ export function Navigation() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`block px-3 py-2 text-base font-medium transition-colors hover:text-primary ${
-                    pathname === item.href ? "text-primary" : "text-muted-foreground"
+                  className={`block px-3 py-2 text-base font-medium transition-colors hover:text-primary rounded-md ${
+                    pathname === item.href
+                      ? "text-primary bg-primary/10 border-l-4 border-primary"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
