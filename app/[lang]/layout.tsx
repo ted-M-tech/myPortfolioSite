@@ -2,7 +2,6 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter, Noto_Sans_JP } from "next/font/google"
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
 import { Navigation } from "@/components/navigation"
 import { getDictionary } from "@/lib/dictionaries"
 
@@ -40,14 +39,12 @@ export default function RootLayout({
   params: { lang: "ja" | "en" }
 }) {
   return (
-    <html lang={params.lang} suppressHydrationWarning>
+    <html lang={params.lang} className="dark" suppressHydrationWarning>
       <body className={`${inter.variable} ${notoSansJP.variable} font-sans antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="min-h-screen bg-background">
-            <Navigation lang={params.lang} />
-            <main className="pt-16">{children}</main>
-          </div>
-        </ThemeProvider>
+        <div className="min-h-screen bg-background">
+          <Navigation lang={params.lang} />
+          <main className="pt-16">{children}</main>
+        </div>
       </body>
     </html>
   )

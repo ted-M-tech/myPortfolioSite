@@ -3,9 +3,8 @@
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { MoonIcon, SunIcon, Menu, X, Globe } from "lucide-react"
-import { useTheme } from "next-themes"
-import { useState, useEffect } from "react"
+import { Menu, X, Globe } from "lucide-react"
+import { useState } from "react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 interface NavigationProps {
@@ -15,13 +14,7 @@ interface NavigationProps {
 export function Navigation({ lang }: NavigationProps) {
   const pathname = usePathname()
   const router = useRouter()
-  const { setTheme, theme } = useTheme()
   const [isOpen, setIsOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   const navItems = [
     { href: `/${lang}`, label: lang === "ja" ? "ホーム" : "Home" },
@@ -74,15 +67,6 @@ export function Navigation({ lang }: NavigationProps) {
                 <DropdownMenuItem onClick={() => switchLanguage("en")}>English</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-
-            {/* Theme Switcher */}
-            {mounted && (
-              <Button variant="ghost" size="sm" onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-                <SunIcon className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <MoonIcon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                <span className="sr-only">Toggle theme</span>
-              </Button>
-            )}
 
             {/* Mobile Menu Button */}
             <Button variant="ghost" size="sm" className="md:hidden" onClick={() => setIsOpen(!isOpen)}>

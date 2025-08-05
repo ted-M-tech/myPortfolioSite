@@ -33,17 +33,17 @@ export function ParticleBackground() {
 
     const createParticles = () => {
       const particles: Particle[] = []
-      const particleCount = Math.min(80, Math.floor((canvas.width * canvas.height) / 10000)) // More particles
+      const particleCount = Math.min(80, Math.floor((canvas.width * canvas.height) / 10000))
 
       for (let i = 0; i < particleCount; i++) {
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 1.2, // Faster movement
+          vx: (Math.random() - 0.5) * 1.2,
           vy: (Math.random() - 0.5) * 1.2,
-          size: Math.random() * 3 + 1.5, // Larger particles
-          opacity: Math.random() * 0.7 + 0.3, // Higher opacity
-          color: `hsl(${Math.random() * 80 + 180}, 80%, 65%)`, // Brighter colors
+          size: Math.random() * 3 + 1.5,
+          opacity: Math.random() * 0.7 + 0.3,
+          color: `hsl(${Math.random() * 80 + 180}, 80%, 65%)`, // Blue to cyan range for dark mode
           pulse: Math.random() * Math.PI * 2,
           pulseSpeed: Math.random() * 0.02 + 0.01,
         })
@@ -98,13 +98,12 @@ export function ParticleBackground() {
             const distance = Math.sqrt(dx * dx + dy * dy)
 
             if (distance < 150) {
-              // Longer connection distance
               ctx.beginPath()
               ctx.moveTo(particle.x, particle.y)
               ctx.lineTo(otherParticle.x, otherParticle.y)
-              const connectionOpacity = (1 - distance / 150) * 0.3 // More visible connections
+              const connectionOpacity = (1 - distance / 150) * 0.3
               ctx.strokeStyle = `rgba(120, 180, 255, ${connectionOpacity})`
-              ctx.lineWidth = 1.5 // Thicker lines
+              ctx.lineWidth = 1.5
               ctx.stroke()
             }
           }
@@ -136,7 +135,7 @@ export function ParticleBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0 opacity-90 dark:opacity-70" // Higher opacity
+      className="fixed inset-0 pointer-events-none z-0 opacity-70" // Optimized for dark mode
       style={{ background: "transparent" }}
     />
   )
