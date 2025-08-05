@@ -3,46 +3,33 @@ import type { Metadata } from "next"
 import { Inter, Noto_Sans_JP } from "next/font/google"
 import "./globals.css"
 import { Navigation } from "@/components/navigation"
-import { getDictionary } from "@/lib/dictionaries"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 const notoSansJP = Noto_Sans_JP({ subsets: ["latin"], variable: "--font-noto-sans-jp" })
 
-export function generateStaticParams() {
-  return [{ lang: "ja" }, { lang: "en" }]
-}
-
-export function generateMetadata({
-  params,
-}: {
-  params: { lang: "ja" | "en" }
-}): Metadata {
-  const dict = getDictionary(params.lang)
-
+export function generateMetadata(): Metadata {
   return {
-    title: dict.meta.title,
-    description: dict.meta.description,
+    title: "Static Title",
+    description: "Static Description",
     openGraph: {
-      title: dict.meta.title,
-      description: dict.meta.description,
+      title: "Static Title",
+      description: "Static Description",
       type: "website",
-      locale: params.lang === "ja" ? "ja_JP" : "en_US",
+      locale: "en_US",
     },
   }
 }
 
 export default function RootLayout({
   children,
-  params,
 }: {
   children: React.ReactNode
-  params: { lang: "ja" | "en" }
 }) {
   return (
-    <html lang={params.lang} className="dark" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${inter.variable} ${notoSansJP.variable} font-sans antialiased`}>
         <div className="min-h-screen bg-background">
-          <Navigation lang={params.lang} />
+          <Navigation />
           <main className="pt-16">{children}</main>
         </div>
       </body>

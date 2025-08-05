@@ -1,40 +1,30 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Globe } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { useState } from "react"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
-interface NavigationProps {
-  lang: "ja" | "en"
-}
+type NavigationProps = {}
 
-export function Navigation({ lang }: NavigationProps) {
+export function Navigation() {
   const pathname = usePathname()
-  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
 
   const navItems = [
-    { href: `/${lang}`, label: lang === "ja" ? "ホーム" : "Home" },
-    { href: `/${lang}/about`, label: lang === "ja" ? "プロフィール" : "About" },
-    { href: `/${lang}/projects`, label: lang === "ja" ? "プロジェクト" : "Projects" },
-    { href: `/${lang}/contact`, label: lang === "ja" ? "お問い合わせ" : "Contact" },
+    { href: "/", label: "Home" },
+    { href: "/about", label: "About" },
+    { href: "/projects", label: "Projects" },
+    { href: "/contact", label: "Contact" },
   ]
-
-  const switchLanguage = (newLang: "ja" | "en") => {
-    const currentPath = pathname.replace(`/${lang}`, "")
-    const newPath = `/${newLang}${currentPath}`
-    router.push(newPath)
-  }
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link href={`/${lang}`} className="font-bold text-xl">
-            {lang === "ja" ? "前田哲哉" : "Tetsuya Maeda"}
+          <Link href="/" className="font-bold text-xl">
+            Ted - Tetsuya Maeda
           </Link>
 
           {/* Desktop Navigation */}
@@ -54,20 +44,6 @@ export function Navigation({ lang }: NavigationProps) {
 
           {/* Controls */}
           <div className="flex items-center space-x-2">
-            {/* Language Switcher */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm">
-                  <Globe className="h-4 w-4" />
-                  <span className="ml-1 text-sm">{lang.toUpperCase()}</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => switchLanguage("ja")}>日本語</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => switchLanguage("en")}>English</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
             {/* Mobile Menu Button */}
             <Button variant="ghost" size="sm" className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
               {isOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}

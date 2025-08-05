@@ -1,15 +1,8 @@
-import { getDictionary } from "@/lib/dictionaries"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Camera, Music, Gamepad2, BookOpen, Mountain, Coffee } from "lucide-react"
 
-export default function AboutPage({
-  params,
-}: {
-  params: { lang: "ja" | "en" }
-}) {
-  const dict = getDictionary(params.lang)
-
+export default function AboutPage() {
   const skills = {
     languages: ["JavaScript", "TypeScript", "Python", "Go", "Java"],
     frameworks: ["React", "Next.js", "Vue.js", "Node.js", "Express", "FastAPI"],
@@ -18,25 +11,22 @@ export default function AboutPage({
 
   const certifications = [
     {
-      name: params.lang === "ja" ? "AWS認定ソリューションアーキテクト" : "AWS Certified Solutions Architect",
+      name: "AWS Certified Solutions Architect",
       issuer: "Amazon Web Services",
       date: "2023",
     },
     {
-      name:
-        params.lang === "ja"
-          ? "Google Cloud Professional Cloud Architect"
-          : "Google Cloud Professional Cloud Architect",
+      name: "Google Cloud Professional Cloud Architect",
       issuer: "Google Cloud",
       date: "2022",
     },
     {
-      name: params.lang === "ja" ? "基本情報技術者試験" : "Fundamental Information Technology Engineer Examination",
-      issuer: params.lang === "ja" ? "情報処理推進機構（IPA）" : "Information-technology Promotion Agency (IPA)",
+      name: "Fundamental Information Technology Engineer Examination",
+      issuer: "Information-technology Promotion Agency (IPA)",
       date: "2020",
     },
     {
-      name: params.lang === "ja" ? "TOEIC 850点" : "TOEIC Score 850",
+      name: "TOEIC Score 850",
       issuer: "Educational Testing Service",
       date: "2021",
     },
@@ -45,51 +35,35 @@ export default function AboutPage({
   const hobbies = [
     {
       icon: Camera,
-      name: params.lang === "ja" ? "写真撮影" : "Photography",
-      description:
-        params.lang === "ja"
-          ? "風景や街並みの撮影が好きです。技術と芸術の融合に魅力を感じています。"
-          : "I enjoy capturing landscapes and cityscapes. I'm fascinated by the fusion of technology and art.",
+      name: "Photography",
+      description: "I enjoy capturing landscapes and cityscapes. I'm fascinated by the fusion of technology and art.",
     },
     {
       icon: Music,
-      name: params.lang === "ja" ? "音楽鑑賞・制作" : "Music & Production",
+      name: "Music & Production",
       description:
-        params.lang === "ja"
-          ? "ジャズやエレクトロニカを聴くのが好きで、DTMでの楽曲制作も趣味です。"
-          : "I love listening to jazz and electronica, and enjoy creating music with digital audio workstations.",
+        "I love listening to jazz and electronica, and enjoy creating music with digital audio workstations.",
     },
     {
       icon: Gamepad2,
-      name: params.lang === "ja" ? "ゲーム開発" : "Game Development",
-      description:
-        params.lang === "ja"
-          ? "Unityを使ったインディーゲーム開発に挑戦しています。創造性を刺激される分野です。"
-          : "I'm exploring indie game development with Unity. It's a field that stimulates my creativity.",
+      name: "Game Development",
+      description: "I'm exploring indie game development with Unity. It's a field that stimulates my creativity.",
     },
     {
       icon: BookOpen,
-      name: params.lang === "ja" ? "読書" : "Reading",
+      name: "Reading",
       description:
-        params.lang === "ja"
-          ? "技術書からSF小説まで幅広く読みます。新しい視点や知識を得ることが好きです。"
-          : "I read everything from technical books to sci-fi novels. I love gaining new perspectives and knowledge.",
+        "I read everything from technical books to sci-fi novels. I love gaining new perspectives and knowledge.",
     },
     {
       icon: Mountain,
-      name: params.lang === "ja" ? "ハイキング" : "Hiking",
-      description:
-        params.lang === "ja"
-          ? "自然の中を歩くことでリフレッシュし、新しいアイデアを得ています。"
-          : "Walking in nature helps me refresh and gain new ideas for my projects.",
+      name: "Hiking",
+      description: "Walking in nature helps me refresh and gain new ideas for my projects.",
     },
     {
       icon: Coffee,
-      name: params.lang === "ja" ? "コーヒー" : "Coffee",
-      description:
-        params.lang === "ja"
-          ? "スペシャルティコーヒーの探求とハンドドリップが日課です。集中力の源です。"
-          : "Exploring specialty coffee and hand-drip brewing is my daily routine. It's my source of focus.",
+      name: "Coffee",
+      description: "Exploring specialty coffee and hand-drip brewing is my daily routine. It's my source of focus.",
     },
   ]
 
@@ -97,31 +71,32 @@ export default function AboutPage({
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">{dict.about.title}</h1>
-          <p className="text-xl text-muted-foreground">{dict.about.subtitle}</p>
+          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">About Me</h1>
+          <p className="text-xl text-muted-foreground">Learn more about my background and skills.</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
           <div className="lg:col-span-2">
             <Card>
               <CardHeader>
-                <CardTitle>{params.lang === "ja" ? "自己紹介" : "About Me"}</CardTitle>
+                <CardTitle>About Me</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground leading-relaxed">{dict.about.bio}</p>
+                <p className="text-muted-foreground leading-relaxed">
+                  I am a software engineer with 5+ years of experience in developing web and mobile applications. I am
+                  passionate about building scalable and maintainable systems that solve real-world problems.
+                </p>
               </CardContent>
             </Card>
           </div>
           <div>
             <Card>
               <CardHeader>
-                <CardTitle>{params.lang === "ja" ? "経験年数" : "Experience"}</CardTitle>
+                <CardTitle>Experience</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-3xl font-bold text-primary mb-2">5+</div>
-                <p className="text-muted-foreground">
-                  {params.lang === "ja" ? "年間の開発経験" : "Years of Development"}
-                </p>
+                <p className="text-muted-foreground">Years of Development</p>
               </CardContent>
             </Card>
           </div>
@@ -130,7 +105,7 @@ export default function AboutPage({
         <div className="space-y-8">
           <Card>
             <CardHeader>
-              <CardTitle>{dict.about.skills.languages}</CardTitle>
+              <CardTitle>Languages</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-2">
@@ -145,7 +120,7 @@ export default function AboutPage({
 
           <Card>
             <CardHeader>
-              <CardTitle>{dict.about.skills.frameworks}</CardTitle>
+              <CardTitle>Frameworks</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-2">
@@ -160,7 +135,7 @@ export default function AboutPage({
 
           <Card>
             <CardHeader>
-              <CardTitle>{dict.about.skills.tools}</CardTitle>
+              <CardTitle>Tools</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-2">
@@ -175,7 +150,7 @@ export default function AboutPage({
 
           <Card>
             <CardHeader>
-              <CardTitle>{params.lang === "ja" ? "資格・認定" : "Certifications"}</CardTitle>
+              <CardTitle>Certifications</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -195,7 +170,7 @@ export default function AboutPage({
 
           <Card>
             <CardHeader>
-              <CardTitle>{params.lang === "ja" ? "趣味・興味" : "Hobbies & Interests"}</CardTitle>
+              <CardTitle>Hobbies & Interests</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
