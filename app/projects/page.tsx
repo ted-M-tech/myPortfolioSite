@@ -40,8 +40,8 @@ export default function ProjectsPage() {
       id: 6,
       title: "Portfolio Website",
       description:
-        "Responsive portfolio website built with Next.js 15 and Tailwind CSS. Features dark mode and internationalization.",
-      tech: ["Next.js", "TypeScript", "Tailwind CSS", "i18n"],
+        "Responsive portfolio website built with Next.js 15 and Tailwind CSS. Features dark mode and modern design.",
+      tech: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
     },
   ]
 
@@ -50,7 +50,7 @@ export default function ProjectsPage() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">Projects</h1>
-          <p className="text-xl text-muted-foreground">Explore my latest projects</p>
+          <p className="text-xl text-muted-foreground">Key projects I have worked on</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

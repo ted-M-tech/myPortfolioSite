@@ -72,7 +72,7 @@ export default function AboutPage() {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">About Me</h1>
-          <p className="text-xl text-muted-foreground">Learn more about my background and skills.</p>
+          <p className="text-xl text-muted-foreground">Experience and Skills</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
@@ -105,7 +105,7 @@ export default function AboutPage() {
         <div className="space-y-8">
           <Card>
             <CardHeader>
-              <CardTitle>Languages</CardTitle>
+              <CardTitle>Programming Languages</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-2">
@@ -135,7 +135,7 @@ export default function AboutPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Tools</CardTitle>
+              <CardTitle>Tools & Others</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-2">

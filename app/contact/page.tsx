@@ -9,8 +9,8 @@ export default function ContactPage() {
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">Contact Us</h1>
-          <p className="text-xl text-muted-foreground">We would love to hear from you!</p>
+          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">Contact</h1>
+          <p className="text-xl text-muted-foreground">Feel free to get in touch</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -30,7 +30,7 @@ export default function ContactPage() {
                   <Textarea placeholder="Message" rows={5} required />
                 </div>
                 <Button type="submit" className="w-full">
-                  Send
+                  Send Message
                 </Button>
               </form>
             </CardContent>
@@ -39,7 +39,7 @@ export default function ContactPage() {
           <div className="space-y-8">
             <Card>
               <CardHeader>
-                <CardTitle>Social Media</CardTitle>
+                <CardTitle>Social Links</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
