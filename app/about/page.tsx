@@ -83,20 +83,25 @@ export default function AboutPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground leading-relaxed">
-                  I am a software engineer with 5+ years of experience in developing web and mobile applications. I am
-                  passionate about building scalable and maintainable systems that solve real-world problems.
+                  Ted - Tetsuya Maeda<br/><br/>
+                  I obtained my Master's degree in Electronic Information Science from Kanazawa University Graduate School in 2020 and joined Mitsubishi Electric Corporation.<br/><br/>
+                  From July 2020 to March 2023, I was engaged in the development and support of SCADA (Supervisory Control And Data Acquisition) GENESIS64, as well as system construction.<br/><br/>
+                  From April 2023 to July 2025, I worked as a Scrum Master in the development of new cloud SaaS business for manufacturing industry.
                 </p>
               </CardContent>
             </Card>
           </div>
           <div>
-            <Card>
-              <CardHeader>
-                <CardTitle>Experience</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold text-primary mb-2">5+</div>
-                <p className="text-muted-foreground">Years of Development</p>
+            <Card className="h-full flex flex-col p-0 overflow-hidden">
+              <CardContent className="flex-1 flex justify-center items-center p-0">
+                <div className="relative w-full h-full">
+                  <img
+                    src="/profile-photo.jpg"
+                    alt="Ted - Tetsuya Maeda"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-transparent opacity-40"></div>
+                </div>
               </CardContent>
             </Card>
           </div>
