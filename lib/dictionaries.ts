@@ -2,8 +2,8 @@
 export const dictionaries = {
   ja: {
     meta: {
-      title: "田中太郎 - フルスタックエンジニア",
-      description: "フルスタックエンジニアの田中太郎のポートフォリオサイトです。",
+      title: "前田哲哉 - フルスタックエンジニア",
+      description: "フルスタックエンジニアの前田哲哉のポートフォリオサイトです。",
     },
     nav: {
       home: "ホーム",
@@ -12,7 +12,7 @@ export const dictionaries = {
       contact: "お問い合わせ",
     },
     home: {
-      name: "田中太郎",
+      name: "前田哲哉",
       title: "フルスタックエンジニア",
       description:
         "モダンなWebアプリケーションの設計・開発を得意とするフルスタックエンジニアです。React、Next.js、Node.jsを中心とした技術スタックで、ユーザー体験を重視したプロダクト開発に取り組んでいます。",
@@ -46,8 +46,8 @@ export const dictionaries = {
   },
   en: {
     meta: {
-      title: "Taro Tanaka - Full Stack Engineer",
-      description: "Portfolio website of Taro Tanaka, a full stack engineer.",
+      title: "Tetsuya Maeda - Full Stack Engineer",
+      description: "Portfolio website of Tetsuya Maeda, a full stack engineer.",
     },
     nav: {
       home: "Home",
@@ -56,7 +56,7 @@ export const dictionaries = {
       contact: "Contact",
     },
     home: {
-      name: "Taro Tanaka",
+      name: "Tetsuya Maeda",
       title: "Full Stack Engineer",
       description:
         "A full stack engineer specializing in designing and developing modern web applications. I focus on creating user-centric products using a tech stack centered around React, Next.js, and Node.js.",
