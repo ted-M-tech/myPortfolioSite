@@ -64,7 +64,7 @@ export default function HomePage() {
                     className="hover:scale-110 transition-transform backdrop-blur-md bg-background/70 border-border/60 shadow-lg hover:shadow-xl"
                     asChild
                   >
-                    <Link href="/contact">
+                    <Link href="mailto:tetsuya.maeda.mail@gmail.com">
                       <Mail className="h-4 w-4" />
                     </Link>
                   </Button>
