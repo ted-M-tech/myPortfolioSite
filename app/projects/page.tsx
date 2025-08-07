@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import Image from "next/image"
+import { OptimizedImage } from "@/components/optimized-image"
+import { PageHeader } from "@/components/page-header"
 import Link from "next/link"
 
 export default function ProjectsPage() {
@@ -35,11 +36,8 @@ export default function ProjectsPage() {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">Projects</h1>
-          <p className="text-xl text-muted-foreground">Key projects I have worked on</p>
-        </div>
+      <div className="max-w-4xl mx-auto">
+        <PageHeader title="Projects" subtitle="Key projects I have worked on" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project) => (
@@ -47,12 +45,13 @@ export default function ProjectsPage() {
               <Card className="flex flex-col h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer">
                 <CardHeader className="flex-shrink-0">
                   <div className="aspect-video bg-muted rounded-lg mb-4 overflow-hidden">
-                    <Image
+                    <OptimizedImage
                       src={project.image}
                       alt={project.title}
                       width={350}
                       height={200}
                       className="w-full h-full object-cover"
+                      priority={project.id === 1}
                     />
                   </div>
                   <CardTitle className="text-lg">{project.title}</CardTitle>

@@ -1,18 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Code, Gamepad2, Palette, Music, Camera, BookOpen } from "lucide-react"
+import { PageHeader } from "@/components/page-header"
 
 export default function OtherPage() {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">Others</h1>
-          <p className="text-xl text-muted-foreground">Hobby Projects & Creative Works</p>
-        </div>
+        <PageHeader title="Others" subtitle="Hobby Projects & Creative Works" />
 
-        <div className="text-center">
-          <Card className="max-w-2xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+          <Card>
             <CardHeader>
               <CardTitle>About This Section</CardTitle>
             </CardHeader>
@@ -23,6 +21,17 @@ export default function OtherPage() {
               </p>
               <p className="text-sm text-muted-foreground">
                 Currently under development. Please check back soon.
+              </p>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardHeader>
+              <CardTitle>Coming Soon</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">
+                More content will be added here in the future. Stay tuned for updates!
               </p>
             </CardContent>
           </Card>

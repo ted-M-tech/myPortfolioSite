@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Camera, Music, Gamepad2, BookOpen, Mountain, Coffee } from "lucide-react"
+import { PageHeader } from "@/components/page-header"
 
 export default function AboutPage() {
   const skills = {
@@ -89,10 +90,7 @@ export default function AboutPage() {
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">About Me</h1>
-          <p className="text-xl text-muted-foreground">Experience and Skills</p>
-        </div>
+        <PageHeader title="About Me" subtitle="Experience and Skills" />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
           <div className="lg:col-span-2">

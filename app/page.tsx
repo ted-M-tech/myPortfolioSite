@@ -24,14 +24,14 @@ export default function HomePage() {
               </div>
               <div className="flex items-center justify-center gap-2 text-xl sm:text-2xl text-muted-foreground">
                 <Code className="w-5 h-5 text-primary animate-bounce drop-shadow-md" />
-                <span>Software Developer</span>
+                <span>Data Engineer / Software Developer</span>
               </div>
             </div>
 
             <div className="animate-slide-up-delay-1">
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed backdrop-blur-md bg-background/70 p-6 rounded-lg border border-border/60 shadow-xl shadow-primary/10">
-                I am a software developer with a passion for creating innovative solutions. My background includes
-                experience in web development, mobile applications, and data analysis.
+                I am a data engineer and software developer with a passion for creating innovative solutions. My background includes
+                experience in web development, construct SCADA system, and data analysis.
               </p>
             </div>
 
