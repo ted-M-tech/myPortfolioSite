@@ -64,9 +64,9 @@ export default function HomePage() {
                     className="hover:scale-110 transition-transform backdrop-blur-md bg-background/70 border-border/60 shadow-lg hover:shadow-xl"
                     asChild
                   >
-                    <Link href="mailto:tetsuya.maeda.mail@gmail.com">
+                    <a href="mailto:tetsuya.maeda.mail@gmail.com">
                       <Mail className="h-4 w-4" />
-                    </Link>
+                    </a>
                   </Button>
                 </div>
               </div>
@@ -90,11 +90,11 @@ export default function HomePage() {
                   <p className="text-muted-foreground text-sm">Explore the key projects I have worked on.</p>
                 </Link>
                 <Link
-                  href="/contact"
+                  href="/other"
                   className="group p-6 bg-background/80 backdrop-blur-md rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-border/60 hover:border-primary/30"
                 >
-                  <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">Contact</h3>
-                  <p className="text-muted-foreground text-sm">Get in touch for work inquiries or questions.</p>
+                  <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">Others</h3>
+                  <p className="text-muted-foreground text-sm">Explore my hobby projects and creative works.</p>
                 </Link>
               </div>
             </div>

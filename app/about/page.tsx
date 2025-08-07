@@ -69,17 +69,6 @@ export default function AboutPage() {
       description: "I enjoy capturing landscapes and cityscapes. I'm fascinated by the fusion of technology and art.",
     },
     {
-      icon: Music,
-      name: "Music & Production",
-      description:
-        "I love listening to jazz and electronica, and enjoy creating music with digital audio workstations.",
-    },
-    {
-      icon: Gamepad2,
-      name: "Game Development",
-      description: "I'm exploring indie game development with Unity. It's a field that stimulates my creativity.",
-    },
-    {
       icon: BookOpen,
       name: "Reading",
       description:
