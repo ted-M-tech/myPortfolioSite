@@ -117,7 +117,7 @@ export default function HomePage() {
     },
     {
       id: 3,
-      title: "Agile Cloud SaaS Platform Development",
+      title: "SaaS Service Development",
       description:
         "Led Agile practices as Scrum Master in cloud SaaS development for manufacturing. Reduced software release cycle from monthly to weekly, enabling 4x increase in delivery frequency. Improved team productivity by 20% measured by cycle time.",
       tech: [
