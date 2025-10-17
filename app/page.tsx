@@ -111,7 +111,7 @@ export default function HomePage() {
       title: "Data Visualization & Remote Control Systems",
       description:
         "Collaborated directly with clients to design and implement enhanced data visualization and remote control systems for factory and building automation, leading to 25% improvement in operational efficiency and faster response time to system alerts.",
-      tech: ["C#", "SQL", "Power BI", "Azure", "SCADA"],
+      tech: ["C#", "SQL", "Azure", "SCADA", "PLC", "SQL Server"],
       link: "https://www.mitsubishielectric.co.jp/fa/products/software/visualisation/genesis64/index.html",
       image: "/scada_develop.png",
     },
@@ -165,10 +165,12 @@ export default function HomePage() {
 
             <div className="animate-slide-up-delay-1">
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed backdrop-blur-md bg-background/70 p-6 rounded-lg border border-border/60 shadow-xl shadow-primary/10">
-                Data-focused software engineer with a strong background in developing AI-powered systems and data analytics
-                pipelines. Proven experience in delivering end-to-end AI solutions and transforming customer requirements into
-                tangible system features. Using a unique blend of software engineering, AI, and data analysis skills to build
-                innovative solutions.
+                Data-focused software engineer with a strong background in
+                developing AI-powered systems and data analytics pipelines.
+                Proven experience in delivering end-to-end AI solutions and
+                transforming customer requirements into tangible system
+                features. Using a unique blend of software engineering, AI, and
+                data analysis skills to build innovative solutions.
               </p>
             </div>
 
@@ -278,20 +280,25 @@ export default function HomePage() {
                     Tetsuya Maeda
                     <br />
                     <br />
-                    Currently working as a Full Stack Developer (Contract) at TECHNOMORe Inc.,
-                    developing factory automation systems that integrate real-time data analytics
-                    and AI-powered engines for industrial process optimization and predictive maintenance.
+                    Currently working as a Full Stack Developer (Contract),
+                    developing factory automation systems that integrate
+                    real-time data analytics and AI-powered engines for
+                    industrial process optimization and predictive maintenance.
                     <br />
                     <br />
-                    Previously worked as a Software Developer at Mitsubishi Electric Corporation (April 2020 – September 2025),
-                    where I collaborated directly with clients to design and implement data visualization and
-                    remote control systems for factory and building automation. Led Agile practices as a Scrum Master,
-                    improving team productivity by 20% and reducing software release cycles from monthly to weekly—
-                    enabling a 4x increase in delivery frequency.
+                    Previously worked as a Software Developer (April 2020 –
+                    September 2025), where I collaborated directly with clients
+                    to design and implement data visualization and remote
+                    control systems for factory and building automation. Led
+                    Agile practices as a Scrum Master, improving team
+                    productivity by 20% and reducing software release cycles
+                    from monthly to weekly— enabling a 4x increase in delivery
+                    frequency.
                     <br />
                     <br />
-                    Currently pursuing a Data Science diploma at Cornerstone International Community College
-                    in Vancouver to deepen expertise in machine learning and data-driven solutions.
+                    Currently pursuing a Data Science diploma at Cornerstone
+                    International Community College in Vancouver to deepen
+                    expertise in machine learning and data-driven solutions.
                   </p>
                 </CardContent>
               </Card>
