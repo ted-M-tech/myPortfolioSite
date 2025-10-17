@@ -23,58 +23,37 @@ import { OptimizedImage } from "@/components/optimized-image";
 export default function HomePage() {
   // Skills data
   const skills = {
-    languages: ["SQL", "Python(Basic)", "C#(Basic)", "TypeScript(Basic)"],
-    frameworks: ["React", "Next.js"],
+    languages: ["Python", "SQL", "C#", "TypeScript", "HTML/CSS"],
+    frameworks: ["React", "Next.js", "Node.js"],
     tools: [
+      "Microsoft Azure",
+      "Git",
       "Docker",
-      "Azure",
+      "Power BI",
+      "Miro",
+      "Figma",
       "Azure DevOps",
       "PostgreSQL",
       "Snowflake",
-      "Git",
-      "Figma",
-      "Miro",
-      "Cursor",
-      "MS Excel",
-      "MS Powerpoint",
-      "MS Word",
-      "MS Teams",
-      "MS Outlook",
-      "MS OneDrive",
     ],
   };
 
   // Certifications data
   const certifications = [
     {
-      name: "Azure Solutions Architect Expert",
+      name: "Microsoft Certified: DevOps Engineer Expert",
       issuer: "Microsoft",
       date: "2025",
     },
     {
-      name: "DevOps Engineer Expert",
+      name: "Microsoft Certified: Azure Solutions Architect Expert",
       issuer: "Microsoft",
       date: "2025",
     },
     {
-      name: "Azure AI Engineer Associate",
+      name: "Microsoft Certified: Azure AI Engineer Associate",
       issuer: "Microsoft",
       date: "2025",
-    },
-    {
-      name: "Azure Administrator Associate",
-      issuer: "Microsoft",
-      date: "2025",
-    },
-    {
-      name: "Azure Developer Associate",
-      issuer: "Microsoft",
-      date: "2025",
-    },
-    {
-      name: "Azure Fundamentals",
-      issuer: "Microsoft",
-      date: "2024",
     },
     {
       name: "Registered Product Owner",
@@ -85,16 +64,6 @@ export default function HomePage() {
       name: "Registered Scrum Master",
       issuer: "Agile Education by Scrum Inc",
       date: "2024",
-    },
-    {
-      name: "JDLA Deep Learning for GENERAL",
-      issuer: "JDLA",
-      date: "2023",
-    },
-    {
-      name: "TOEIC Score 860",
-      issuer: "Educational Testing Service",
-      date: "2025",
     },
   ];
 
@@ -130,40 +99,39 @@ export default function HomePage() {
   const projects = [
     {
       id: 1,
-      title: "SCADA GENESIS64 function development",
+      title: "AI-Powered Factory Automation System",
       description:
-        "Developed features for SCADA targeting both Factory Automation and Process Automation.",
-      tech: ["SCADA", "C#", "WPF", "GX Works", "PLC"],
+        "Developing factory automation systems integrating real-time data analytics and AI-powered engines for industrial process optimization and predictive maintenance. Delivering end-to-end AI solutions from data preprocessing to production deployment.",
+      tech: ["Python", "Azure", "AI/ML", "Real-time Analytics", "Docker"],
+      link: "https://www.linkedin.com/in/tetsuya-maeda-629b70294/",
+      image: "/saas_development.png",
+    },
+    {
+      id: 2,
+      title: "Data Visualization & Remote Control Systems",
+      description:
+        "Collaborated directly with clients to design and implement enhanced data visualization and remote control systems for factory and building automation, leading to 25% improvement in operational efficiency and faster response time to system alerts.",
+      tech: ["C#", "SQL", "Power BI", "Azure", "SCADA"],
       link: "https://www.mitsubishielectric.co.jp/fa/products/software/visualisation/genesis64/index.html",
       image: "/scada_develop.png",
     },
     {
-      id: 2,
-      title: "SCADA System Construction and Support",
-      description:
-        "Supported and assisted in building customer systems for Factory Automation and Building Automation using SCADA GENESIS64.",
-      tech: ["SCADA", "PLC", "SQL", "SQL Serever", "BI Tools"],
-      link: "https://www.mitsubishielectric.co.jp/fa/products/software/visualisation/genesis64/our-stories.html",
-      image: "/scada_system.png",
-    },
-    {
       id: 3,
-      title: "Data Visualization and Analysis SaaS development",
+      title: "Agile Cloud SaaS Platform Development",
       description:
-        "Engaged in the development of a new cloud SaaS business for manufacturing, utilizing Scrum as an agile methodology and serving as a Scrum Master to promote data utilization solutions.",
+        "Led Agile practices as Scrum Master in cloud SaaS development for manufacturing. Reduced software release cycle from monthly to weekly, enabling 4x increase in delivery frequency. Improved team productivity by 20% measured by cycle time.",
       tech: [
-        "Azure",
         "React",
         "Next.js",
+        "TypeScript",
+        "Azure",
         "Snowflake",
-        "IoT",
-        "Scrum",
         "DevOps",
+        "Scrum",
         "Miro",
-        "Figma",
       ],
       link: "https://www.mitsubishielectric.co.jp/fa/about-us/fa-digitalsolution/index.html",
-      image: "/saas_development.png",
+      image: "/scada_system.png",
     },
   ];
 
@@ -191,15 +159,16 @@ export default function HomePage() {
               </div>
               <div className="flex items-center justify-center gap-2 text-xl sm:text-2xl text-muted-foreground">
                 <Code className="w-5 h-5 text-primary animate-bounce drop-shadow-md" />
-                <span>Data Engineer / Software Developer</span>
+                <span>Fullstack Developer</span>
               </div>
             </div>
 
             <div className="animate-slide-up-delay-1">
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed backdrop-blur-md bg-background/70 p-6 rounded-lg border border-border/60 shadow-xl shadow-primary/10">
-                I am a data engineer and software developer with a passion for
-                creating innovative solutions. My background includes experience
-                in web development, construct SCADA system, and data analysis.
+                Data-focused software engineer with a strong background in developing AI-powered systems and data analytics
+                pipelines. Proven experience in delivering end-to-end AI solutions and transforming customer requirements into
+                tangible system features. Using a unique blend of software engineering, AI, and data analysis skills to build
+                innovative solutions.
               </p>
             </div>
 
@@ -306,22 +275,23 @@ export default function HomePage() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground leading-relaxed">
-                    Ted - Tetsuya Maeda
+                    Tetsuya Maeda
                     <br />
                     <br />
-                    I obtained my Master's degree in Electronic Information
-                    Science from Kanazawa University Graduate School in 2020 and
-                    joined Mitsubishi Electric Corporation.
+                    Currently working as a Full Stack Developer (Contract) at TECHNOMORe Inc.,
+                    developing factory automation systems that integrate real-time data analytics
+                    and AI-powered engines for industrial process optimization and predictive maintenance.
                     <br />
                     <br />
-                    From July 2020 to March 2023, I was engaged in the
-                    development and support of SCADA (Supervisory Control And
-                    Data Acquisition) GENESIS64, as well as system construction.
+                    Previously worked as a Software Developer at Mitsubishi Electric Corporation (April 2020 – September 2025),
+                    where I collaborated directly with clients to design and implement data visualization and
+                    remote control systems for factory and building automation. Led Agile practices as a Scrum Master,
+                    improving team productivity by 20% and reducing software release cycles from monthly to weekly—
+                    enabling a 4x increase in delivery frequency.
                     <br />
                     <br />
-                    From April 2023 to July 2025, I worked as a Scrum Master in
-                    the development of new cloud SaaS business for manufacturing
-                    industry.
+                    Currently pursuing a Data Science diploma at Cornerstone International Community College
+                    in Vancouver to deepen expertise in machine learning and data-driven solutions.
                   </p>
                 </CardContent>
               </Card>

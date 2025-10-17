@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Next.js 15 portfolio website for Ted - Tetsuya Maeda (Software Developer / Data Engineer). The site is built with TypeScript, React 19, and Tailwind CSS, using shadcn/ui components. It's configured to be automatically synced with v0.dev and deployed on Vercel.
+This is a Next.js 15 portfolio website for Tetsuya Maeda, a Fullstack Developer based in Vancouver, Canada. The portfolio showcases expertise in developing AI-powered systems, data analytics pipelines, and end-to-end software solutions. Professional background includes 5+ years of experience delivering factory automation systems, data visualization platforms, real-time analytics dashboards, and leading Agile development teams as a Scrum Master. Technical stack includes Python, SQL, TypeScript, C#, Azure, Docker, Next.js, and Power BI. The site is built with TypeScript, React 19, and Tailwind CSS, using shadcn/ui components. It's configured to be automatically synced with v0.dev and deployed on Vercel.
 
 **Important**: This project is configured with `ignoreDuringBuilds: true` for both ESLint and TypeScript in next.config.mjs. These settings exist to facilitate rapid development with v0.dev, but you should still aim to write type-safe, lint-compliant code.
 
