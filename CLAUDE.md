@@ -96,6 +96,9 @@ The site runs on Cloudflare Workers via [`@opennextjs/cloudflare`](https://openn
 - `open-next.config.ts` — adapter config (currently defaults).
 - `.open-next/` and `.wrangler/` are build output and are gitignored. Never commit them.
 - Deploys run automatically through **Workers Builds** on push. `pnpm run deploy` exists for manual/emergency deploys.
+- `middleware.ts` 301s `www.maepace.com` to the apex. Both hosts are registered as custom domains in `wrangler.jsonc` — www must be registered or the host returns 530 with nothing to redirect *from*.
+
+**Testing host-dependent behaviour:** `wrangler dev` pins the request host to the first entry in `routes` and ignores a `Host:` header you send, so the www redirect looks broken locally. Use `wrangler dev --host www.maepace.com` to exercise it.
 
 Verify changes with `pnpm preview` rather than only `pnpm dev` — `pnpm dev` runs the Node dev server, which does not share workerd's constraints (the `next/image` gap above is exactly the kind of difference it hides).
 

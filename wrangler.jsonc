@@ -5,8 +5,12 @@
   "compatibility_date": "2026-07-19",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "account_id": "76b7441b99478c7d2bb1accbee256299",
-  // apex を正とする。www は Cloudflare の Redirect Rule で apex へ 301。
-  "routes": [{ "pattern": "maepace.com", "custom_domain": true }],
+  // apex が正。www も Worker に向け、middleware.ts で apex へ 301 する。
+  // （リダイレクト先が存在しないとホスト自体が 530 になるため、www も登録が要る）
+  "routes": [
+    { "pattern": "maepace.com", "custom_domain": true },
+    { "pattern": "www.maepace.com", "custom_domain": true }
+  ],
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"
