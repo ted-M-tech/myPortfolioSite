@@ -63,8 +63,10 @@ sed 's/fill="#000000"/fill="currentColor"/' traced.svg > maepace-logo.svg
 
 ## ドメイン・ハンドル
 
-- **`maepace.com` 取得済み**（お名前.com、初年度0円・更新1,408円、Whois情報公開代行あり）。
-  ICANN 規則により取得後60日は他社移管不可。
+- **`maepace.com` は Cloudflare Registrar で取得する**（2026-07-19 時点でレジストリ未登録を確認済み。
+  当初この欄には「お名前.com で取得済み」と書かれていたが、Verisign の whois は `No match` を返しており
+  事実ではなかった）。Cloudflare Registrar は卸値のままで更新時の値上げがなく、Whois 代行が無料で付く。
+  取得と同時に DNS ゾーンが自動作成されるため、ネームサーバ切替の作業が発生しない。
 - `.app/.dev/.io/.jp` も空きだが未取得。GitHub / npm / note.com のハンドルは全部空き・未取得。
   X の `@maepace` は休眠アカウントが取得済みのため代替（`@maepace_dev` 等）を決める。
 
@@ -78,5 +80,5 @@ sed 's/fill="#000000"/fill="currentColor"/' traced.svg > maepace-logo.svg
 4. **商標出願は弁理士へ。** 称呼「マエペース」の綴り検索は0件だが、類似検索では
    「マイペース」系が第9類11件・第41類12件・第42類10件ヒットする。特に
    第9類 登録6068331「MYPACE」（株式会社サンプリ、存続）は綴りも近く要注意。
-5. 既存 Cloudflare / Vercel のデフォルトURLからの移行。1ドメイン + サブドメインで
-   全アプリを載せる方針。
+5. 1ドメイン + サブドメインで全アプリを載せる方針。ポートフォリオ本体は Cloudflare Workers へ
+   移行済み（Vercel / v0.dev は廃止）。サブドメインに載せるアプリの一覧と割り当ては未確定。

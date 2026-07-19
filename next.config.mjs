@@ -7,10 +7,9 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: false,
-    formats: ['image/webp', 'image/avif'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    // Cloudflare Workers には sharp が無いため next/image の最適化は素通りになる。
+    // 画像は public/ に WebP で事前最適化して置く方針。
+    unoptimized: true,
   },
 }
 

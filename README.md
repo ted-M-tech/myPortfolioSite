@@ -1,30 +1,59 @@
-# Japanese portfolio site
+# maepace.com
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
+前田哲也（Tetsuya Maeda）のポートフォリオサイト。屋号 **MaePace** の下で運営している。
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/ted-m-techs-projects/v0-japanese-portfolio-site)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/oWFHgKzbaFO)
+Next.js 15 (App Router) / React 19 / TypeScript / Tailwind CSS v4 / shadcn/ui で構築し、
+[`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare) 経由で Cloudflare Workers 上で動かしている。
 
-## Overview
+## 開発
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+```sh
+pnpm install
+pnpm dev        # http://localhost:3000
+```
 
-## Deployment
+`pnpm dev` は Node の開発サーバーなので、Workers ランタイム固有の制約は再現されない。
+デプロイ前に必ず実ランタイム（workerd）で確認する:
 
-Your project is live at:
+```sh
+pnpm preview    # ビルドして workerd 上で起動
+```
 
-**[https://vercel.com/ted-m-techs-projects/v0-japanese-portfolio-site](https://vercel.com/ted-m-techs-projects/v0-japanese-portfolio-site)**
+その他のコマンド:
 
-## Build your app
+```sh
+pnpm build      # Next のプロダクションビルド
+pnpm lint
+pnpm deploy     # 手動デプロイ（通常は不要）
+pnpm cf-typegen # Cloudflare バインディングの型を再生成
+```
 
-Continue building your app on:
+## デプロイ
 
-**[https://v0.dev/chat/projects/oWFHgKzbaFO](https://v0.dev/chat/projects/oWFHgKzbaFO)**
+push すると Cloudflare の **Workers Builds** が自動でビルド・デプロイする。
 
-## How It Works
+- `wrangler.jsonc` — Worker 設定。`.open-next/worker.js` をエントリに、静的アセットは `.open-next/assets` から配信。
+- `open-next.config.ts` — アダプタ設定。
+- `.open-next/` と `.wrangler/` はビルド生成物。コミットしない。
 
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+## 画像について
+
+**Cloudflare Workers では `next/image` の実行時最適化が効かない**（`sharp` が workerd で動かないため、
+`/_next/image` は原本をそのまま返す）。そのため `next.config.mjs` で `images.unoptimized: true` にしてある。
+
+画像は **コミット前に自分で最適化する**。実際に表示される最大サイズまで縮めて WebP にすること。
+
+```sh
+magick source.png -resize 1024x1024 -quality 82 -define webp:method=6 public/name.webp
+```
+
+## ブランド
+
+ロゴ・命名・使用ルールの正典は [`docs/brand/maepace.md`](docs/brand/maepace.md)。
+アセットは `public/brand/`（`currentColor` 指定なので親の `color` で単色化する）。
+ブランド関連をいじる前に必ず読むこと。
+
+## 補足
+
+このリポジトリは以前 v0.dev と同期し Vercel にデプロイしていたが、いずれも廃止した。
+パッケージマネージャは `pnpm`（`pnpm-lock.yaml` が唯一のロックファイル）。
