@@ -1,6 +1,6 @@
 # MaePace — 傘ブランド
 
-前田哲也の個人開発アプリ群（HelpMeKansai ほか）を束ねる傘ブランド。
+前田哲也の個人開発アプリ群（HelpKansai ほか）を束ねる傘ブランド。
 2026-07-19 に名前とロゴを確定。本命プロダクトは未確定で、将来の法人化の可能性あり。
 
 ## 名前: MaePace
@@ -69,6 +69,24 @@ sed 's/fill="#000000"/fill="currentColor"/' traced.svg > maepace-logo.svg
   取得と同時に DNS ゾーンが自動作成されるため、ネームサーバ切替の作業が発生しない。
 - `.app/.dev/.io/.jp` も空きだが未取得。GitHub / npm / note.com のハンドルは全部空き・未取得。
   X の `@maepace` は休眠アカウントが取得済みのため代替（`@maepace_dev` 等）を決める。
+
+### サブドメイン設計
+
+`maepace.com` 1本にアプリを集約する。apex はポートフォリオ本体（Cloudflare Workers）。
+サブドメインは**アプリ名の小文字表記そのまま**を使う（略称を作らない。表記ルールが
+CamelCase 固定なので、小文字化以外の変形を入れると対応関係が崩れる）。
+
+| サブドメイン | アプリ | 状態 |
+|---|---|---|
+| `maepace.com` | ポートフォリオ本体 | Workers 移行済み・ドメイン未取得 |
+| `annoscene.maepace.com` | AnnoScene（旅の軌跡アプリ、App Store 申請中） | 未設定 |
+| `helpkansai.maepace.com` | HelpKansai（関西弁学習） | 未設定 |
+| `wellnesspet.maepace.com` | WellnessPet | 未設定 |
+
+- **HelpKansai** が正式名（旧 HelpMeKansai から改名）。**WellnessPet** は Wellness（Wallness ではない）。
+- AnnoScene は `annoscene.com` / `annoscene.app` が空いており独自ドメイン取得も検討したが、
+  ドメイン管理を1本に集約する方針を優先してサブドメインに載せる判断とした（2026-07-19）。
+  独立ブランドとして育てる場合はこの判断を見直す余地がある。
 
 ## 残タスク
 
