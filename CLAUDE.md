@@ -4,24 +4,33 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Next.js 15 portfolio website for Tetsuya Maeda, a Fullstack Developer based in Vancouver, Canada. The portfolio showcases expertise in developing AI-powered systems, data analytics pipelines, and end-to-end software solutions. Professional background includes 5+ years of experience delivering factory automation systems, data visualization platforms, real-time analytics dashboards, and leading Agile development teams as a Scrum Master. Technical stack includes Python, SQL, TypeScript, C#, Azure, Docker, Next.js, and Power BI. The site is built with TypeScript, React 19, and Tailwind CSS, using shadcn/ui components. It's configured to be automatically synced with v0.dev and deployed on Vercel.
+This is a Next.js 15 portfolio website for Tetsuya Maeda, a Fullstack Developer based in Vancouver, Canada. The portfolio showcases expertise in developing AI-powered systems, data analytics pipelines, and end-to-end software solutions. Professional background includes 5+ years of experience delivering factory automation systems, data visualization platforms, real-time analytics dashboards, and leading Agile development teams as a Scrum Master. Technical stack includes Python, SQL, TypeScript, C#, Azure, Docker, Next.js, and Power BI. The site is built with TypeScript, React 19, and Tailwind CSS, using shadcn/ui components.
 
-**Important**: This project is configured with `ignoreDuringBuilds: true` for both ESLint and TypeScript in next.config.mjs. These settings exist to facilitate rapid development with v0.dev, but you should still aim to write type-safe, lint-compliant code.
+The site is the personal portfolio of Tetsuya Maeda; **MaePace** is the umbrella brand (屋号) it operates under. Brand assets and the canonical decision record live in `docs/brand/` and `public/brand/` — read `docs/brand/maepace.md` before touching anything brand-related. The site is served from `maepace.com`, with other apps planned on subdomains.
+
+**Important**: This project is configured with `ignoreDuringBuilds: true` for both ESLint and TypeScript in next.config.mjs. Builds will not fail on type or lint errors, so you must check type-safety yourself rather than relying on the build.
 
 ## Development Commands
 
 ```bash
-# Start development server
-pnpm dev        # or npm run dev
+# Start development server (Next dev server — fastest loop)
+pnpm dev
 
 # Build for production
-pnpm build      # or npm run build
-
-# Start production server
-pnpm start      # or npm run start
+pnpm build
 
 # Run linter
-pnpm lint       # or npm run lint
+pnpm lint
+
+# Build + run on the real Cloudflare Workers runtime (workerd) locally.
+# Use this before deploying — behaviour differs from `pnpm dev`.
+pnpm preview
+
+# Build + deploy to Cloudflare Workers manually
+pnpm deploy
+
+# Regenerate Cloudflare binding types into cloudflare-env.d.ts
+pnpm cf-typegen
 ```
 
 ## Project Structure
@@ -64,23 +73,32 @@ All portfolio data (skills, certifications, hobbies, projects) is defined as Jav
 - Path alias `@/*` maps to project root for clean imports
 
 ### Image Optimization
-- All images use the `OptimizedImage` component wrapper
-- Component includes loading states, blur placeholders, and error handling
+- All images use the `OptimizedImage` component wrapper (loading states, blur placeholders, error handling)
 - Images are stored in `/public/` directory
-- Next.js image optimization is enabled with WebP/AVIF formats
+- **`next/image` runtime optimization does not work on Cloudflare Workers.** Next's optimizer depends on `sharp`, which cannot run in workerd — requests to `/_next/image?url=...&w=640` return the original file untouched. `next.config.mjs` therefore sets `images.unoptimized: true` so nothing pretends otherwise.
+- **Consequence: optimize images before committing them.** Convert to WebP and resize to the largest size actually rendered. Do not commit multi-megabyte PNGs — there is no build step that will shrink them.
+  ```bash
+  magick source.png -resize 1024x1024 -quality 82 -define webp:method=6 public/name.webp
+  ```
 
 ### Client vs Server Components
 - Most components are server components by default
 - Client components (marked with `"use client"`): `navigation.tsx`, `particle-background.tsx`, `optimized-image.tsx`
 - Use client components only when needed for state, effects, or browser APIs
 
-## v0.dev Integration
+## Deployment — Cloudflare Workers
 
-This project is synced with v0.dev (https://v0.dev/chat/projects/oWFHgKzbaFO). Changes made in v0.dev are automatically pushed to this repository. When making manual edits:
-- Understand that v0.dev syncs may overwrite local changes
-- Coordinate with the deployment workflow to avoid conflicts
-- The README.md emphasizes v0.dev as the primary development interface
+The site runs on Cloudflare Workers via [`@opennextjs/cloudflare`](https://opennext.js.org/cloudflare), which adapts the Next build output into a Worker.
+
+- `wrangler.jsonc` — Worker config. `main` points at the generated `.open-next/worker.js`; static assets are served from `.open-next/assets` via the `ASSETS` binding. `nodejs_compat` is required.
+- `open-next.config.ts` — adapter config (currently defaults).
+- `.open-next/` and `.wrangler/` are build output and are gitignored. Never commit them.
+- Deploys run automatically through **Workers Builds** on push. `pnpm deploy` exists for manual/emergency deploys.
+
+Verify changes with `pnpm preview` rather than only `pnpm dev` — `pnpm dev` runs the Node dev server, which does not share workerd's constraints (the `next/image` gap above is exactly the kind of difference it hides).
+
+**This project no longer uses Vercel or v0.dev.** Both were dropped when the site moved to Cloudflare. If you find leftover references to either (in `README.md`, `.vercel`, or config), they are stale and safe to remove.
 
 ## Package Manager
 
-This project uses `pnpm` (evidenced by `pnpm-lock.yaml`), though `npm` is also supported via `package-lock.json`. Prefer `pnpm` for consistency with the project setup.
+Use `pnpm`. `pnpm-lock.yaml` is the only lockfile — do not create `package-lock.json`. Some native dependencies (`workerd`, `esbuild`, `sharp`, `@tailwindcss/oxide`) need to run install scripts; they are allowlisted under `pnpm.onlyBuiltDependencies` in `package.json`. If you add a dependency that ships a postinstall, add it there or it will be silently skipped.

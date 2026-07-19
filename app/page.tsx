@@ -104,7 +104,7 @@ export default function HomePage() {
         "Developing factory automation systems integrating real-time data analytics and AI-powered engines for industrial process optimization and predictive maintenance. Delivering end-to-end AI solutions from data preprocessing to production deployment.",
       tech: ["Python", "Azure", "AI/ML", "Real-time Analytics", "Docker"],
       link: "https://www.linkedin.com/in/tetsuya-maeda-629b70294/",
-      image: "/saas_development.png",
+      image: "/saas_development.webp",
     },
     {
       id: 2,
@@ -113,7 +113,7 @@ export default function HomePage() {
         "Collaborated directly with clients to design and implement enhanced data visualization and remote control systems for factory and building automation, leading to 25% improvement in operational efficiency and faster response time to system alerts.",
       tech: ["C#", "SQL", "Azure", "SCADA", "PLC", "SQL Server"],
       link: "https://www.mitsubishielectric.co.jp/fa/products/software/visualisation/genesis64/index.html",
-      image: "/scada_develop.png",
+      image: "/scada_develop.webp",
     },
     {
       id: 3,
@@ -131,7 +131,7 @@ export default function HomePage() {
         "Miro",
       ],
       link: "https://www.mitsubishielectric.co.jp/fa/about-us/fa-digitalsolution/index.html",
-      image: "/scada_system.png",
+      image: "/scada_system.webp",
     },
   ];
 
@@ -308,7 +308,7 @@ export default function HomePage() {
                 <CardContent className="flex-1 flex justify-center items-center p-0">
                   <div className="relative w-full h-full">
                     <img
-                      src="/profile-photo.jpg"
+                      src="/profile-photo.webp"
                       alt="Ted - Tetsuya Maeda"
                       className="w-full h-full object-cover"
                     />
