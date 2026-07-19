@@ -24,7 +24,8 @@ pnpm preview    # ビルドして workerd 上で起動
 ```sh
 pnpm build      # Next のプロダクションビルド
 pnpm lint
-pnpm deploy     # 手動デプロイ（通常は不要）
+pnpm run deploy # 手動デプロイ（通常は不要）。`run` は省略不可 — `pnpm deploy` は
+                # pnpm 組み込みの workspace deploy に食われる
 pnpm cf-typegen # Cloudflare バインディングの型を再生成
 ```
 

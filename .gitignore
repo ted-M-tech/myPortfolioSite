@@ -30,3 +30,7 @@ cloudflare-env.d.ts
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# macOS
+# public/ 配下に紛れ込むと静的アセットとして公開され、ファイル名一覧が漏れる
+.DS_Store

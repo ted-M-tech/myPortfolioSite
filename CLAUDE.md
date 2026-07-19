@@ -26,8 +26,10 @@ pnpm lint
 # Use this before deploying — behaviour differs from `pnpm dev`.
 pnpm preview
 
-# Build + deploy to Cloudflare Workers manually
-pnpm deploy
+# Build + deploy to Cloudflare Workers manually.
+# `run` is NOT optional here: `pnpm deploy` is pnpm's own workspace-deploy
+# builtin and fails with ERR_PNPM_CANNOT_DEPLOY.
+pnpm run deploy
 
 # Regenerate Cloudflare binding types into cloudflare-env.d.ts
 pnpm cf-typegen
@@ -93,7 +95,7 @@ The site runs on Cloudflare Workers via [`@opennextjs/cloudflare`](https://openn
 - `wrangler.jsonc` — Worker config. `main` points at the generated `.open-next/worker.js`; static assets are served from `.open-next/assets` via the `ASSETS` binding. `nodejs_compat` is required.
 - `open-next.config.ts` — adapter config (currently defaults).
 - `.open-next/` and `.wrangler/` are build output and are gitignored. Never commit them.
-- Deploys run automatically through **Workers Builds** on push. `pnpm deploy` exists for manual/emergency deploys.
+- Deploys run automatically through **Workers Builds** on push. `pnpm run deploy` exists for manual/emergency deploys.
 
 Verify changes with `pnpm preview` rather than only `pnpm dev` — `pnpm dev` runs the Node dev server, which does not share workerd's constraints (the `next/image` gap above is exactly the kind of difference it hides).
 
