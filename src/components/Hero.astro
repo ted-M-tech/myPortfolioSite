@@ -146,18 +146,18 @@ const orbit = [
     filter: blur(26px);
   }
 
+  /*
+   * 原典のコアはほぼ透明な輪で、中身が主張しない。
+   * 塗りつぶした円盤にすると背後の塵が消え、軌道の奥行きが失われる。
+   */
   .core-disc {
     position: absolute;
     inset: 0;
     display: grid;
     place-items: center;
     border-radius: 50%;
-    background:
-      radial-gradient(120% 120% at 34% 28%, #26221f 0%, #16130f 62%, #0d0b09 100%);
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.06),
-      0 0 0 1px rgba(255, 255, 255, 0.08),
-      0 30px 90px rgba(0, 0, 0, 0.55);
+    background: radial-gradient(circle at 50% 45%, rgba(28, 25, 22, 0.55), transparent 68%);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
   }
 
   /*
@@ -166,10 +166,10 @@ const orbit = [
    * 暗い面に載せるここでは反転させて紙色にする。
    */
   .core-disc img {
-    width: 34%;
+    width: 30%;
     height: auto;
     filter: invert(1);
-    opacity: 0.9;
+    opacity: 0.42;
   }
 
   .core-ring {
@@ -225,7 +225,7 @@ const orbit = [
     position: absolute;
     inset: -14% -18%;
     z-index: -1;
-    background: radial-gradient(58% 52% at 50% 54%, rgba(10, 9, 8, 0.62), transparent 74%);
+    background: radial-gradient(56% 48% at 50% 56%, rgba(10, 9, 8, 0.42), transparent 76%);
     pointer-events: none;
   }
 
