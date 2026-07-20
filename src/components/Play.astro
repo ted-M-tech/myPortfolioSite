@@ -21,10 +21,47 @@ import { play } from "../data/profile";
     <ul class="grid stagger">
       {
         play.map((item, index) => (
-          <li class:list={["tile", `tile--${item.size}`, `tile--${item.id}`, "reveal"]} data-tilt>
+          <li
+            class:list={[
+              "tile",
+              `tile--${item.size}`,
+              `tile--${item.id}`,
+              item.image ? "tile--photo" : "tile--drawn",
+              "reveal",
+            ]}
+            data-tilt
+          >
             {item.image && (
               <img src={item.image} alt="" loading="lazy" decoding="async" width="1536" height="1024" />
             )}
+
+            {/* 写真のない項目は線画で描く。それらしいストック写真を当てない。
+                pace = トラックの周回と、その少し先に置いた次の一歩。
+                ball = バスケ・野球・テニスを縫い目だけで描き分ける */}
+            {item.motif === "pace" && (
+              <svg class="motif" viewBox="0 0 200 150" fill="none" aria-hidden="true">
+                <g stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke">
+                  <rect x="16" y="42" width="168" height="74" rx="37" />
+                  <rect x="30" y="56" width="140" height="46" rx="23" />
+                  <rect x="44" y="70" width="112" height="18" rx="9" />
+                </g>
+              </svg>
+            )}
+
+            {item.motif === "ball" && (
+              <svg class="motif" viewBox="0 0 240 88" fill="none" aria-hidden="true">
+                <g stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke">
+                  <circle cx="44" cy="44" r="34" />
+                  <path d="M44 10v68" />
+                  <path d="M44 10a46 46 0 0 0 0 68M44 10a46 46 0 0 1 0 68" />
+                  <circle cx="120" cy="44" r="27" />
+                  <path d="M100 22c12 14 12 30 0 44M140 22c-12 14-12 30 0 44" />
+                  <circle cx="196" cy="44" r="21" />
+                  <path d="M177 32c9 14 29 14 38 0M177 56c9-14 29-14 38 0" />
+                </g>
+              </svg>
+            )}
+
             <span class="shade" aria-hidden="true"></span>
             <span class="tile-index">{String(index + 1).padStart(2, "0")}</span>
             <span class="caption">
@@ -107,12 +144,44 @@ import { play } from "../data/profile";
     transform: scale(1.035);
   }
 
-  .tile--photo img {
-    object-position: center 60%;
+  /* 横長タイルでは cover が縦を切るので、object-position の X は効かない。
+     カメラを持った手は画角の下側にあるため、上へ寄せて枠外に落とす */
+  .tile--travel img {
+    object-position: center 38%;
   }
 
-  .tile--reading img {
-    object-position: center 62%;
+  /* ---------- 線画のタイル ---------- */
+  .tile--drawn {
+    background: var(--tile-tint);
+  }
+
+  .tile--running {
+    --tile-tint: linear-gradient(160deg, #dfe9e6, #eef1ec 70%);
+  }
+
+  .tile--sports {
+    --tile-tint: linear-gradient(160deg, #f2e8d6, #f6f1e6 72%);
+  }
+
+  .motif {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 42%;
+    width: min(66%, 260px);
+    height: auto;
+    transform: translate(-50%, -50%);
+    color: var(--ink);
+    opacity: .34;
+    transition: transform 900ms var(--ease-out);
+  }
+
+  .tile--drawn:hover .motif {
+    transform: translate(-50%, -50%) scale(1.03);
+  }
+
+  .tile--sports .motif {
+    width: min(78%, 220px);
   }
 
   .shade {
@@ -123,6 +192,11 @@ import { play } from "../data/profile";
       linear-gradient(180deg, rgba(12, 11, 10, .24), transparent 38%),
       linear-gradient(0deg, rgba(12, 11, 10, .72), transparent 56%);
     pointer-events: none;
+  }
+
+  /* 線画の面は明るいので、暗幕ではなく淡い紙色でキャプションを支える */
+  .tile--drawn .shade {
+    background: linear-gradient(0deg, rgba(247, 245, 242, .92), transparent 46%);
   }
 
   .tile-index {
@@ -144,6 +218,18 @@ import { play } from "../data/profile";
     bottom: 18px;
     color: #fff;
     pointer-events: none;
+  }
+
+  .tile--drawn .tile-index {
+    color: var(--text-faint);
+  }
+
+  .tile--drawn .caption {
+    color: var(--text);
+  }
+
+  .tile--drawn .caption .note {
+    color: var(--text-muted);
   }
 
   .caption b,
@@ -184,10 +270,9 @@ import { play } from "../data/profile";
       grid-column: span 2;
     }
 
-    .tile--wide {
-      grid-column: span 2;
-    }
-
+    /* 2列では wide も1列にする。span 2 のままだと sm の隣が空いて
+       行末に穴が残る（6列のときと同じで、穴は作らない） */
+    .tile--wide,
     .tile--md,
     .tile--sm {
       grid-column: span 1;

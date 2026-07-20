@@ -1,35 +1,46 @@
 /**
- * Obsidian-like knowledge graph.
+ * Knowledge graph — light field.
  *
- * 180 small data nodes form six fuzzy knowledge clusters. Those clusters feed
- * the MaePace concept node, and the resolved signal travels into one output.
- * Pointer proximity reveals local relationships; scroll progress reveals the
- * overall idea from fragments to point of view to masterpiece.
+ * Fragments of knowledge start scattered across the field. As the section comes
+ * into view they reorganize into six loose domains, the domains resolve into one
+ * point of view (the MaePace mark), and that resolved signal renders into a
+ * single output.
+ *
+ * Deliberately quiet: hairline edges, small dots, low-contrast ink on paper.
+ * The hero owns the loud motion on this page — this section must not compete.
+ * Nodes drift and converge; they never jitter, and nothing glows.
  */
 
 type GraphNode = {
+  /** Where the fragment sits before it belongs to anything. */
+  sx: number;
+  sy: number;
+  /** Where it settles once its domain forms. */
   x: number;
   y: number;
   r: number;
   cluster: number;
   phase: number;
-  strength: number;
+  /** 0 = far, 1 = near. Drives size, opacity and parallax. */
+  depth: number;
 };
 
-type Edge = {
-  a: number;
-  b: number;
-  strength: number;
-};
+type Edge = { a: number; b: number; strength: number };
 
+/**
+ * Domain colours. Muted derivatives of the pastel tokens, darkened just enough
+ * to hold their own against paper without turning into signal lights.
+ */
 const COLORS = [
-  [111, 131, 255],
-  [255, 117, 64],
-  [216, 155, 255],
-  [99, 214, 184],
-  [255, 183, 91],
-  [116, 161, 255],
+  [123, 138, 178],
+  [174, 141, 154],
+  [124, 165, 156],
+  [181, 158, 111],
+  [148, 137, 176],
+  [193, 133, 105],
 ] as const;
+
+const INK = "20,17,15";
 
 export function initEthosConstellation(
   stage: HTMLElement,
@@ -56,9 +67,11 @@ export function initEthosConstellation(
   let looping = false;
   let target = 0;
   let progress = 0;
-  let pointerX = -9999;
-  let pointerY = -9999;
-  let pointerActive = false;
+  /** Parallax lean, in the range -1..1. Eased towards the pointer. */
+  let leanX = 0;
+  let leanY = 0;
+  let leanTargetX = 0;
+  let leanTargetY = 0;
 
   const random = mulberry32(91427);
 
@@ -66,46 +79,51 @@ export function initEthosConstellation(
     const mobile = w < 660;
     const clusterLayout = mobile
       ? [
-          [.16, .18], [.48, .12], [.15, .58],
-          [.43, .78], [.48, .34], [.78, .22],
+          [.17, .17], [.50, .11], [.15, .55],
+          [.44, .78], [.49, .33], [.79, .18],
         ]
       : [
-          [.13, .24], [.31, .14], [.18, .70],
-          [.43, .79], [.43, .36], [.70, .20],
+          [.12, .25], [.30, .13], [.17, .71],
+          [.40, .82], [.42, .37], [.66, .16],
         ];
 
     hubPoints = clusterLayout.map(([x, y]) => ({ x: x! * w, y: y! * h }));
-    corePoint = mobile ? { x: w * .37, y: h * .50 } : { x: w * .60, y: h * .53 };
-    outputPoint = mobile ? { x: w * .73, y: h * .68 } : { x: w * .84, y: h * .54 };
+    corePoint = mobile ? { x: w * .38, y: h * .49 } : { x: w * .60, y: h * .53 };
+    outputPoint = mobile ? { x: w * .74, y: h * .70 } : { x: w * .85, y: h * .55 };
 
     nodes = [];
-    const count = mobile ? 118 : 180;
+    const count = mobile ? 110 : 176;
     for (let i = 0; i < count; i++) {
       const cluster = i % hubPoints.length;
       const hub = hubPoints[cluster]!;
       const angle = random() * Math.PI * 2;
-      const distance = Math.pow(random(), .64) * (mobile ? 112 : 158);
+      const distance = Math.pow(random(), .64) * (mobile ? 104 : 150);
       const spreadX = mobile ? .74 : 1.12;
       const spreadY = mobile ? 1.05 : .68;
+      const depth = random();
       nodes.push({
+        sx: 20 + random() * (w - 40),
+        sy: 30 + random() * (h - 60),
         x: clamp(hub.x + Math.cos(angle) * distance * spreadX, 16, w - 16),
-        y: clamp(hub.y + Math.sin(angle) * distance * spreadY, 36, h - 34),
-        r: i < hubPoints.length ? 3.2 : .65 + random() * 1.65,
+        y: clamp(hub.y + Math.sin(angle) * distance * spreadY, 32, h - 30),
+        r: .7 + depth * 1.5,
         cluster,
         phase: random() * Math.PI * 2,
-        strength: .24 + random() * .76,
+        depth,
       });
     }
 
-    // Place one canvas anchor under every visible knowledge label.
+    // One canvas anchor under every visible domain label, always in the front plane.
     hubPoints.forEach((point, index) => {
       const anchor = nodes[index];
       if (!anchor) return;
       anchor.x = point.x;
       anchor.y = point.y;
-      anchor.r = 4;
+      anchor.sx = point.x;
+      anchor.sy = point.y;
+      anchor.r = 2.6;
       anchor.cluster = index;
-      anchor.strength = 1;
+      anchor.depth = 1;
     });
 
     edges = [];
@@ -115,20 +133,13 @@ export function initEthosConstellation(
         if (i === j) continue;
         const a = nodes[i]!;
         const b = nodes[j]!;
-        const dx = a.x - b.x;
-        const dy = a.y - b.y;
-        const distance = Math.hypot(dx, dy);
-        const limit = a.cluster === b.cluster ? 104 : 62;
+        const distance = Math.hypot(a.x - b.x, a.y - b.y);
+        const limit = a.cluster === b.cluster ? 100 : 58;
         if (distance < limit) near.push({ index: j, distance });
       }
       near.sort((a, b) => a.distance - b.distance);
-      const links = 1 + (i % 4 === 0 ? 1 : 0);
-      near.slice(0, links).forEach(({ index, distance }) => {
-        if (index > i) edges.push({
-          a: i,
-          b: index,
-          strength: 1 - distance / 112,
-        });
+      near.slice(0, 1 + (i % 4 === 0 ? 1 : 0)).forEach(({ index, distance }) => {
+        if (index > i) edges.push({ a: i, b: index, strength: 1 - distance / 108 });
       });
     }
   }
@@ -150,146 +161,128 @@ export function initEthosConstellation(
 
   const draw = (time: number) => {
     if (!looping) return;
-    progress += (target - progress) * (reduced ? 1 : .065);
-    const fragmentIn = ease((progress - .02) / .30);
-    const relationsIn = ease((progress - .18) / .34);
-    const conceptIn = ease((progress - .48) / .25);
-    const outputIn = ease((progress - .70) / .24);
+    progress += (target - progress) * (reduced ? 1 : .06);
+    leanX += (leanTargetX - leanX) * (reduced ? 1 : .05);
+    leanY += (leanTargetY - leanY) * (reduced ? 1 : .05);
+
+    /** Fragments appear → gather into domains → relate → resolve → render. */
+    const fragmentIn = ease((progress - .02) / .26);
+    const gatherIn = ease((progress - .10) / .42);
+    const relationsIn = ease((progress - .34) / .30);
+    const conceptIn = ease((progress - .52) / .24);
+    const outputIn = ease((progress - .72) / .24);
 
     ctx.clearRect(0, 0, w, h);
 
-    const offsets = nodes.map((node, index) => {
-      const idle = reduced ? 0 : Math.sin(time * .00022 + node.phase) * (1.2 + node.strength * 1.6);
-      let x = node.x + Math.cos(node.phase) * idle;
-      let y = node.y + Math.sin(node.phase) * idle;
-
-      if (pointerActive) {
-        const dx = x - pointerX;
-        const dy = y - pointerY;
-        const distance = Math.hypot(dx, dy);
-        if (distance < 124 && distance > .1) {
-          const force = (1 - distance / 124) * 13;
-          x += dx / distance * force;
-          y += dy / distance * force;
-        }
-      }
-      return { x, y, index };
+    const points = nodes.map((node, index) => {
+      const drift = reduced ? 0 : Math.sin(time * .00016 + node.phase) * (.8 + node.depth * 1.4);
+      const px = node.sx + (node.x - node.sx) * gatherIn;
+      const py = node.sy + (node.y - node.sy) * gatherIn;
+      return {
+        index,
+        x: px + Math.cos(node.phase) * drift + leanX * (2 + node.depth * 14),
+        y: py + Math.sin(node.phase) * drift + leanY * (2 + node.depth * 10),
+      };
     });
 
-    // Fine Obsidian-like relationships.
+    // Hairline relationships. Only meaningful once the domains have formed.
     for (const edge of edges) {
-      const a = offsets[edge.a]!;
-      const b = offsets[edge.b]!;
-      const closeToPointer = pointerActive &&
-        (Math.hypot(a.x - pointerX, a.y - pointerY) < 118 ||
-         Math.hypot(b.x - pointerX, b.y - pointerY) < 118);
-      const alpha = (.028 + Math.max(0, edge.strength) * .11 + (closeToPointer ? .18 : 0)) * relationsIn;
-      ctx.strokeStyle = `rgba(202,207,221,${alpha.toFixed(3)})`;
-      ctx.lineWidth = closeToPointer ? .9 : .55;
+      const a = points[edge.a]!;
+      const b = points[edge.b]!;
+      const alpha = (.07 + Math.max(0, edge.strength) * .13) * relationsIn;
+      ctx.strokeStyle = `rgba(${INK},${alpha.toFixed(3)})`;
+      ctx.lineWidth = .7;
       ctx.beginPath();
       ctx.moveTo(a.x, a.y);
       ctx.lineTo(b.x, b.y);
       ctx.stroke();
     }
 
-    // Six knowledge domains converge into the point of view.
+    // Six domains resolve into one point of view.
     hubPoints.forEach((hub, index) => {
-      const bendX = (hub.x + corePoint.x) / 2 + Math.sin(index * 2.1) * 24;
-      const bendY = (hub.y + corePoint.y) / 2 + Math.cos(index * 1.8) * 28;
-      const gradient = ctx.createLinearGradient(hub.x, hub.y, corePoint.x, corePoint.y);
+      const from = points[index] ?? hub;
+      const bendX = (from.x + corePoint.x) / 2 + Math.sin(index * 2.1) * 26;
+      const bendY = (from.y + corePoint.y) / 2 + Math.cos(index * 1.8) * 30;
       const color = COLORS[index % COLORS.length]!;
-      gradient.addColorStop(0, `rgba(${color[0]},${color[1]},${color[2]},${(.14 * conceptIn).toFixed(3)})`);
-      gradient.addColorStop(1, `rgba(255,117,64,${(.52 * conceptIn).toFixed(3)})`);
+      const gradient = ctx.createLinearGradient(from.x, from.y, corePoint.x, corePoint.y);
+      gradient.addColorStop(0, `rgba(${color[0]},${color[1]},${color[2]},${(.34 * conceptIn).toFixed(3)})`);
+      gradient.addColorStop(1, `rgba(${INK},${(.16 * conceptIn).toFixed(3)})`);
       ctx.strokeStyle = gradient;
-      ctx.lineWidth = 1;
+      ctx.lineWidth = .9;
       ctx.beginPath();
-      ctx.moveTo(hub.x, hub.y);
+      ctx.moveTo(from.x, from.y);
       ctx.quadraticCurveTo(bendX, bendY, corePoint.x, corePoint.y);
       ctx.stroke();
 
-      if (conceptIn > .35 && !reduced) {
-        const travel = (time * .00011 + index * .147) % 1;
-        const point = quadraticPoint(hub, { x: bendX, y: bendY }, corePoint, travel);
-        ctx.fillStyle = `rgba(255,154,105,${(.3 + travel * .65).toFixed(3)})`;
+      // One sparse signal per domain, staggered so they never pulse in unison.
+      if (conceptIn > .3 && !reduced) {
+        const travel = (time * .00007 + index * .167) % 1;
+        const point = quadraticPoint(from, { x: bendX, y: bendY }, corePoint, travel);
+        const fade = Math.sin(travel * Math.PI);
+        ctx.fillStyle = `rgba(${color[0]},${color[1]},${color[2]},${(fade * .7 * conceptIn).toFixed(3)})`;
         ctx.beginPath();
-        ctx.arc(point.x, point.y, 1.2 + travel * 1.4, 0, Math.PI * 2);
+        ctx.arc(point.x, point.y, 1.5, 0, Math.PI * 2);
         ctx.fill();
       }
     });
 
-    // The resolved idea is rendered into one output through several parallel
-    // signal lanes — a small visual "compiler", not a decorative connector.
-    for (let lane = -2; lane <= 2; lane++) {
-      const offset = lane * 4.5;
-      const alpha = (.12 + (2 - Math.abs(lane)) * .045) * outputIn;
-      ctx.strokeStyle = `rgba(255,135,80,${alpha.toFixed(3)})`;
-      ctx.lineWidth = lane === 0 ? 1.3 : .7;
+    // The resolved point of view renders into one output.
+    const controlA = { x: corePoint.x + (outputPoint.x - corePoint.x) * .36, y: corePoint.y };
+    const controlB = { x: corePoint.x + (outputPoint.x - corePoint.x) * .7, y: outputPoint.y };
+    for (let lane = -1; lane <= 1; lane++) {
+      const offset = lane * 5;
+      const alpha = (lane === 0 ? .5 : .2) * outputIn;
+      ctx.strokeStyle = `rgba(198,72,26,${alpha.toFixed(3)})`;
+      ctx.lineWidth = lane === 0 ? 1.2 : .7;
       ctx.beginPath();
       ctx.moveTo(corePoint.x, corePoint.y + offset);
       ctx.bezierCurveTo(
-        corePoint.x + (outputPoint.x - corePoint.x) * .34,
-        corePoint.y + offset * 2,
-        corePoint.x + (outputPoint.x - corePoint.x) * .72,
-        outputPoint.y - offset,
-        outputPoint.x,
-        outputPoint.y + offset * .35,
+        controlA.x, controlA.y + offset * 2,
+        controlB.x, controlB.y - offset,
+        outputPoint.x, outputPoint.y + offset * .35,
       );
       ctx.stroke();
     }
 
-    if (outputIn > .25 && !reduced) {
-      for (let i = 0; i < 5; i++) {
-        const travel = (time * .00016 + i * .19) % 1;
-        const point = cubicPoint(
-          corePoint,
-          { x: corePoint.x + (outputPoint.x - corePoint.x) * .34, y: corePoint.y },
-          { x: corePoint.x + (outputPoint.x - corePoint.x) * .72, y: outputPoint.y },
-          outputPoint,
-          travel,
-        );
-        ctx.fillStyle = `rgba(255,191,154,${(.28 + travel * .72).toFixed(3)})`;
+    if (outputIn > .2 && !reduced) {
+      for (let i = 0; i < 2; i++) {
+        const travel = (time * .00011 + i * .5) % 1;
+        const point = cubicPoint(corePoint, controlA, controlB, outputPoint, travel);
+        const fade = Math.sin(travel * Math.PI);
+        ctx.fillStyle = `rgba(198,72,26,${(fade * .8 * outputIn).toFixed(3)})`;
         ctx.beginPath();
-        ctx.arc(point.x, point.y, 1.3 + travel * 1.5, 0, Math.PI * 2);
+        ctx.arc(point.x, point.y, 1.7, 0, Math.PI * 2);
         ctx.fill();
       }
     }
 
-    // Data nodes sit above edges as in Obsidian's graph view.
-    offsets.forEach((point) => {
+    // Fragments sit above their relationships, as in a graph view.
+    points.forEach((point) => {
       const node = nodes[point.index]!;
       const color = COLORS[node.cluster % COLORS.length]!;
-      const nearPointer = pointerActive && Math.hypot(point.x - pointerX, point.y - pointerY) < 94;
-      const alpha = (.16 + node.strength * .54 + (nearPointer ? .28 : 0)) * fragmentIn;
-      const radius = node.r * (.72 + fragmentIn * .28) + (nearPointer ? 1.1 : 0);
-      if (node.r > 2.8 || nearPointer) {
-        ctx.fillStyle = `rgba(${color[0]},${color[1]},${color[2]},${(.09 * fragmentIn).toFixed(3)})`;
-        ctx.beginPath();
-        ctx.arc(point.x, point.y, radius * 4.4, 0, Math.PI * 2);
-        ctx.fill();
-      }
+      // Far nodes stay pale; near nodes carry the colour. That is the depth cue.
+      const alpha = (.2 + node.depth * .5) * fragmentIn;
       ctx.fillStyle = `rgba(${color[0]},${color[1]},${color[2]},${alpha.toFixed(3)})`;
       ctx.beginPath();
-      ctx.arc(point.x, point.y, radius, 0, Math.PI * 2);
+      ctx.arc(point.x, point.y, node.r * (.7 + fragmentIn * .3), 0, Math.PI * 2);
       ctx.fill();
     });
 
     hubs.forEach((hub, index) => {
-      const point = hubPoints[index]!;
-      const appear = ease((progress - (.10 + index * .035)) / .22);
+      const point = points[index] ?? hubPoints[index]!;
+      const appear = ease((progress - (.12 + index * .035)) / .24);
       hub.style.opacity = appear.toFixed(3);
       hub.style.transform =
-        `translate(-50%,-50%) translate(${point.x}px,${point.y}px) scale(${(.88 + appear * .12).toFixed(3)})`;
+        `translate(-50%,-50%) translate(${point.x}px,${point.y}px) scale(${(.92 + appear * .08).toFixed(3)})`;
     });
 
-    const pulse = reduced ? 1 : 1 + Math.sin(time * .0018) * .018;
     center.style.opacity = conceptIn.toFixed(3);
     center.style.transform =
-      `translate(-50%,-50%) translate(${corePoint.x}px,${corePoint.y}px) scale(${((.84 + conceptIn * .16) * pulse).toFixed(3)})`;
+      `translate(-50%,-50%) translate(${corePoint.x}px,${corePoint.y}px) scale(${(.9 + conceptIn * .1).toFixed(3)})`;
 
-    const outputPulse = reduced ? 1 : 1 + Math.sin(time * .0015 + 1.2) * .012;
     output.style.opacity = outputIn.toFixed(3);
     output.style.transform =
-      `translate(-50%,-50%) translate(${outputPoint.x}px,${outputPoint.y}px) scale(${((.82 + outputIn * .18) * outputPulse).toFixed(3)})`;
+      `translate(-50%,-50%) translate(${outputPoint.x}px,${outputPoint.y}px) scale(${(.9 + outputIn * .1).toFixed(3)})`;
 
     raf = requestAnimationFrame(draw);
   };
@@ -307,17 +300,20 @@ export function initEthosConstellation(
 
   stage.addEventListener("pointermove", (event) => {
     const rect = stage.getBoundingClientRect();
-    pointerX = event.clientX - rect.left;
-    pointerY = event.clientY - rect.top;
-    pointerActive = true;
+    leanTargetX = clamp((event.clientX - rect.left) / rect.width - .5, -.5, .5) * 2;
+    leanTargetY = clamp((event.clientY - rect.top) / rect.height - .5, -.5, .5) * 2;
   }, { passive: true });
-  stage.addEventListener("pointerleave", () => { pointerActive = false; }, { passive: true });
+  stage.addEventListener("pointerleave", () => {
+    leanTargetX = 0;
+    leanTargetY = 0;
+  }, { passive: true });
 
   resize();
   addEventListener("resize", resize, { passive: true });
   addEventListener("scroll", measure, { passive: true });
   measure();
 
+  // Reduced motion gets the finished picture, not a faster animation.
   if (reduced) {
     target = 1;
     progress = 1;

@@ -368,48 +368,51 @@ export const recommendations = [
  * size は 6 列グリッド上での占有幅（原典のベントー配置）。
  * lg = 3列×2行、md = 3列、wide = 4列、sm = 2列。
  * 6列がちょうど埋まる組み合わせにしてある（行末に穴を残さない）。
- * image は後から差し込む。null の間はブランド面で埋める。
+ *
+ * 写真のない項目は image を null にし、代わりに motif を線画で描く。
+ * それらしいストック写真を当てるより、描いていないことを認めたほうが誠実で、
+ * 面の変化がベントー全体の単調さも同時に解いてくれる。
  */
 export const play = [
   {
     id: "hiking",
     size: "lg",
-    icon: "mountain",
     name: { ja: "山を歩く", en: "Hiking" },
     note: { ja: "考えが詰まったら、とりあえず登る", en: "When thinking stalls, go up a mountain" },
     image: "/play/hiking.webp",
+    motif: null,
   },
   {
-    id: "photo",
+    id: "running",
     size: "md",
-    icon: "camera",
-    name: { ja: "写真", en: "Photography" },
-    note: { ja: "風景と街。技術と表現が交わるところ", en: "Landscapes and cities" },
-    image: "/play/photography.webp",
+    name: { ja: "走る", en: "Running" },
+    note: { ja: "速さより、続く歩幅で", en: "Not fast — just a stride that lasts" },
+    image: null,
+    motif: "pace",
   },
   {
-    id: "coffee",
+    id: "cafe",
     size: "md",
-    icon: "coffee",
-    name: { ja: "珈琲", en: "Coffee" },
-    note: { ja: "ハンドドリップ", en: "Hand-drip" },
-    image: "/play/coffee.webp",
+    name: { ja: "カフェ", en: "Café" },
+    note: { ja: "一杯ぶんの時間で考えを整える", en: "One cup, one idea sorted out" },
+    image: "/play/cafe.webp",
+    motif: null,
   },
   {
-    id: "reading",
+    id: "sports",
     size: "sm",
-    icon: "book-open",
-    name: { ja: "読書", en: "Reading" },
-    note: { ja: "技術書からSFまで", en: "Technical books to sci-fi" },
-    image: "/play/reading.webp",
+    name: { ja: "スポーツ", en: "Sports" },
+    note: { ja: "バスケ・野球・テニス", en: "Basketball, baseball, tennis" },
+    image: null,
+    motif: "ball",
   },
   {
-    id: "vancouver",
+    id: "travel",
     size: "wide",
-    icon: "mountain",
-    name: { ja: "バンクーバー", en: "Vancouver" },
-    note: { ja: "海と山が近い街に住んでいます", en: "Living where the sea meets the mountains" },
-    image: "/play/vancouver.webp",
+    name: { ja: "旅", en: "Travel" },
+    note: { ja: "知らない街を、ただ歩く", en: "Walking a city I don't know yet" },
+    image: "/play/travel.webp",
+    motif: null,
   },
 ] as const;
 
@@ -420,7 +423,10 @@ export const play = [
  *
  * 価格の考え方: バンクーバー在住・Azure 系 Expert 資格3つ・2020年からの実務経験という
  * 前提での相場に寄せている。単発の相談は「試しやすさ」を優先して低く、
- * 継続と受託は実際に時間を使う分だけ取る。安く見せるための嘘の割引はしない。
+ * 継続と受託は実際に時間を使う分だけ取る。
+ *
+ * originalPrice は、実際に値下げしている項目にだけ置く。
+ * 見せかけの二重価格を作らないため、置いた分は必ず本当に下げた額にする。
  */
 export const services = [
   {
@@ -431,7 +437,9 @@ export const services = [
     badge: { ja: "まずはここから", en: "Start here" },
     title: { ja: "AI・技術相談", en: "AI & technical consultation" },
     subtitle: { ja: "オンライン · 60分", en: "Online · 60 min" },
-    price: { ja: "¥15,000", en: "CA$150" },
+    /** 実際に下げている元の価格。表示は打ち消し線 */
+    originalPrice: { ja: "¥10,000", en: "CA$100" },
+    price: { ja: "¥5,000", en: "CA$50" },
     unit: { ja: "/ 回", en: "/ session" },
     points: [
       { ja: "課題とAI活用ポイントを整理", en: "Map the problem and its AI opportunities" },
@@ -447,9 +455,10 @@ export const services = [
     featured: false,
     badge: { ja: "短期検証", en: "Fast validation" },
     title: { ja: "AIプロトタイプ", en: "AI prototype" },
-    subtitle: { ja: "1〜3週間", en: "1–3 weeks" },
-    price: { ja: "¥300,000", en: "CA$3,000" },
-    unit: { ja: "〜", en: "+" },
+    subtitle: { ja: "月ぎめで並走", en: "Monthly engagement" },
+    originalPrice: null,
+    price: { ja: "月30万円", en: "CA$3,000" },
+    unit: { ja: "から〜", en: "+ / month" },
     points: [
       { ja: "アイデアから触れる検証版へ", en: "From idea to something you can touch" },
       { ja: "生成AI・データ連携を実装", en: "Generative AI and data integration" },
@@ -465,6 +474,7 @@ export const services = [
     badge: { ja: "フラッグシップ", en: "Flagship" },
     title: { ja: "フルスタック開発", en: "Full stack product build" },
     subtitle: { ja: "設計＋実装 · 4〜8週間", en: "Architecture + build · 4–8 weeks" },
+    originalPrice: null,
     price: { ja: "¥800,000", en: "CA$8,000" },
     unit: { ja: "〜 / 件", en: "+ / project" },
     points: [
@@ -482,6 +492,7 @@ export const services = [
     badge: { ja: "プロダクト", en: "Product" },
     title: { ja: "プロダクト共同開発", en: "Product partnership" },
     subtitle: { ja: "設計から運用まで", en: "From design to operation" },
+    originalPrice: null,
     price: { ja: "応相談", en: "Let's talk" },
     unit: { ja: "", en: "" },
     points: [

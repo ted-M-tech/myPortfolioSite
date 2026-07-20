@@ -98,6 +98,19 @@ button {
   border-radius: 4px;
 }
 
+/* 目では読めないが読み上げには残す。打ち消し価格のように、
+   見た目だけでは意味が伝わらない表示に添える。 */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 /* ---------- 言語切替 ----------
    両言語をマークアップに持ち、CSS で出し分ける。
    JS が落ちても片方は必ず読める状態を保つため。 */

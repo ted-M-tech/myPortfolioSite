@@ -48,10 +48,22 @@ const mailto = (title: string) =>
 
             <p class="price">
               <span class="ja">
+                {s.originalPrice && (
+                  <s>
+                    <span class="sr-only">通常価格 </span>
+                    {s.originalPrice.ja}
+                  </s>
+                )}
                 {s.price.ja}
                 <small>{s.unit.ja}</small>
               </span>
               <span class="en">
+                {s.originalPrice && (
+                  <s>
+                    <span class="sr-only">Regular price </span>
+                    {s.originalPrice.en}
+                  </s>
+                )}
                 {s.price.en}
                 <small>{s.unit.en}</small>
               </span>
@@ -169,7 +181,17 @@ const mailto = (title: string) =>
     margin-top: 18px;
     font-size: 21px;
     font-weight: 600;
+    line-height: 1.3;
     letter-spacing: var(--tracking-tight);
+  }
+
+  /* 4枚が横に並ぶ幅では、英語の "AI & technical consultation" だけが2行になり、
+     そのカードだけ価格の行が下にずれる。見出しの高さを2行ぶんで揃えて、
+     価格の高さを4枚で合わせる。日本語はすべて1行なので影響しない */
+  @media (min-width: 1041px) {
+    :global([data-lang="en"]) h3 {
+      min-height: 2lh;
+    }
   }
 
   .sub {
@@ -196,6 +218,20 @@ const mailto = (title: string) =>
     font-weight: 500;
     letter-spacing: 0;
     color: var(--text-faint);
+  }
+
+  /* 値下げ前の額。現在価格より小さく淡くして、二重価格が主役にならないようにする */
+  .price s {
+    margin-right: 9px;
+    font-size: 19px;
+    font-weight: 500;
+    color: var(--text-faint);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0;
+  }
+
+  .plan--featured .price s {
+    color: var(--text-on-dark-muted);
   }
 
   .plan--featured .price small {
