@@ -43,8 +43,8 @@ export const person = {
    * 「前へ進む速度」と「自分のペース」— 屋号の二重の由来をそのまま言葉にしている。
    */
   headline: {
-    ja: "AIで、構想を<br /><em>プロダクトへ。</em>",
-    en: "Ideas into<br /><em>working products.</em>",
+    ja: "AIで、構想を<br /><em>速くプロダクトへ。</em>",
+    en: "Ideas into<br /><em>products, fast.</em>",
   } satisfies Bilingual,
   intro: {
     ja: "AIを開発の中核に。UI、API、データ、クラウドまで、一気通貫で設計・実装します。",
@@ -672,4 +672,18 @@ export const services = [
  * 連絡先。ここは連絡が取れれば十分な場所なので、見出しも説明文も置かない。
  * 以前は大見出しと補足文があったが、読ませたい情報ではなかった。
  */
+/**
+ * 各社マークの帰属表示。ページ最下部に置く。
+ *
+ * ヒーローに出していたが、帯ごと外した時に一緒に消えていた。
+ * 掲載しているマークのうち VS Code・Slack・Notion・AWS・Azure は、
+ * 各社のガイドライン上「参照目的」に限って許される（public/brand/tools/README.md）。
+ * この一文が、参照であって提携ではないと明示する唯一の要素なので、
+ * 目立たない場所でよいが、無くさないこと。
+ */
+export const marksNote = {
+  ja: "各社の製品名およびロゴは、それぞれの権利者に帰属します。提携・推奨関係を示すものではありません。",
+  en: "Product names and marks belong to their respective owners. No affiliation or endorsement implied.",
+} satisfies Bilingual;
+
 export const contact = {} as const;

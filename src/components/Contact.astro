@@ -1,5 +1,5 @@
 ---
-import { person, socials, site } from "../data/profile";
+import { person, socials, site, marksNote } from "../data/profile";
 import Icon from "./Icon.astro";
 
 const year = new Date().getFullYear();
@@ -34,6 +34,11 @@ const year = new Date().getFullYear();
       <span class="en">Forward, at my own pace.</span>
     </span>
   </footer>
+
+  <p class="marks-note">
+    <span class="ja">{marksNote.ja}</span>
+    <span class="en">{marksNote.en}</span>
+  </p>
 </section>
 
 <style>
@@ -114,7 +119,22 @@ const year = new Date().getFullYear();
     opacity: 0.6;
   }
 
+  /* 帰属表示。読ませる文ではないので、最下部にいちばん小さく置く */
+  .marks-note {
+    max-width: var(--wrap);
+    margin: 14px auto 0;
+    padding-inline: var(--pad-x);
+    font-size: 10.5px;
+    line-height: 1.6;
+    color: rgba(243, 240, 235, 0.34);
+    text-wrap: pretty;
+  }
+
   @media (max-width: 560px) {
+    .marks-note {
+      text-align: center;
+    }
+
     .foot {
       flex-direction: column;
       text-align: center;
