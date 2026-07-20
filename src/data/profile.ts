@@ -70,26 +70,31 @@ export const marquee = [
  * ヒーローはロゴだけを浮かべ、名前を出さない。名前で補えない以上、
  * 「再配布できる公式マークが実在するもの」だけを載せる。
  *
- * color は各社が公表しているブランド色（出典は Simple Icons が併記している
- * 各社ブランドページ）。マーク自体は改変せず、影の色味にだけ使う。
- * Cursor と ChatGPT の #000000 は手抜きではなく、公式が単色黒のマーク。
+ * アイコンは配布されたまま置き、こちらで色を付けない。
+ * Simple Icons 由来（Claude/Cursor/Gemini/Miro/n8n）は仕様として全部単色、
+ * Devicon 由来（Docker/Figma/Notion/Slack/VS Code/Xcode）はフルカラー。
+ * 見た目は揃わないが、揃えようとすると存在しない配色を作ることになる。
+ * Simple Icons が各ブランドに添えている hex は「ブランドの primary color」で
+ * あって「ロゴの色」ではない（Miro の #050038 は紺だが、ロゴは黄色）。
+ * 一度それでロゴを塗って間違えたので、二度とやらないこと。
  *
  * 載せていないもの: Codex / Microsoft Teams / Higgsfield / Sakana AI。
  * 再配布可能なアイコン集に公式マークが無い。特に Microsoft は Simple Icons が
  * ブランドポリシーを理由に収録対象外としているため、代替を自作しない。
  */
 export const toolchain = [
-  { name: "ChatGPT", color: "#000000", icon: "/brand/tools/chatgpt.svg" },
-  { name: "Claude", color: "#d97757", icon: "/brand/tools/claude.svg" },
-  { name: "Cursor", color: "#000000", icon: "/brand/tools/cursor.svg" },
-  { name: "Gemini", color: "#8e75b2", icon: "/brand/tools/gemini.svg" },
-  { name: "VS Code", color: "#007acc", icon: "/brand/tools/vscode.svg" },
-  { name: "Xcode", color: "#147efb", icon: "/brand/tools/xcode.svg" },
-  { name: "Figma", color: "#f24e1e", icon: "/brand/tools/figma.svg" },
-  { name: "Notion", color: "#000000", icon: "/brand/tools/notion.svg" },
-  { name: "Miro", color: "#050038", icon: "/brand/tools/miro.svg" },
-  { name: "Slack", color: "#611f69", icon: "/brand/tools/slack.svg" },
-  { name: "Docker", color: "#2496ed", icon: "/brand/tools/docker.svg" },
+  { name: "ChatGPT", icon: "/brand/tools/chatgpt.svg" },
+  { name: "Claude", icon: "/brand/tools/claude.svg" },
+  { name: "Cursor", icon: "/brand/tools/cursor.svg" },
+  { name: "Gemini", icon: "/brand/tools/gemini.svg" },
+  { name: "VS Code", icon: "/brand/tools/vscode.svg" },
+  { name: "Xcode", icon: "/brand/tools/xcode.svg" },
+  { name: "Figma", icon: "/brand/tools/figma.svg" },
+  { name: "Notion", icon: "/brand/tools/notion.svg" },
+  { name: "Miro", icon: "/brand/tools/miro.svg" },
+  { name: "n8n", icon: "/brand/tools/n8n.svg" },
+  { name: "Slack", icon: "/brand/tools/slack.svg" },
+  { name: "Docker", icon: "/brand/tools/docker.svg" },
 ] as const;
 
 export const stats = [
