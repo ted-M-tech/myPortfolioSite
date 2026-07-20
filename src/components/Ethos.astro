@@ -17,29 +17,44 @@ import { ethos, site } from "../data/profile";
         </span>
         <span class="en">
           {site.brand} carries two meanings at once — forward momentum, and going at your own pace.
-          Move fast, but at a pace you can sustain; drop either one and it stops working in the field.
+          Move fast, but at a pace you can sustain; drop either and it stops working in the field.
         </span>
       </p>
     </header>
 
     <!--
-      ロゴの構造をそのまま図にしている。
-      山と谷が歩幅、水平の尾が積み重ね、離れた正方形がまだ踏んでいない次の一歩。
+      スクロールで組み上がる星座。外周のノードが現れ、中心へスポークが伸び、
+      環が閉じ、最後に光が中心へ流れ込む。
     -->
-    <ol class="values reveal">
+    <div class="stage" id="ethos-stage">
+      <canvas id="ethos-canvas" aria-hidden="true"></canvas>
+
       {
-        ethos.values.map((v, i) => (
-          <li class="value" style={`--i:${i}`}>
-            <span class="dot" aria-hidden="true" />
-            <span class="ja">{v.ja}</span>
-            <span class="en">{v.en}</span>
-          </li>
+        ethos.values.map((v) => (
+          <div class="enode" data-ethos-node>
+            <b>
+              <span class="ja">{v.ja}</span>
+              <span class="en">{v.en}</span>
+            </b>
+            <span class="sub">
+              <span class="ja">{v.en}</span>
+              <span class="en">{v.ja}</span>
+            </span>
+          </div>
         ))
       }
-      <li class="value value--next" aria-hidden="true">
-        <span class="square" />
-      </li>
-    </ol>
+
+      <div class="enode enode--center" id="ethos-center">
+        <b>
+          <span class="ja">前へ</span>
+          <span class="en">Forward</span>
+        </b>
+        <span class="sub">
+          <span class="ja">MaePace</span>
+          <span class="en">マエペース</span>
+        </span>
+      </div>
+    </div>
 
     <p class="cap reveal">
       <span class="ja" set:html={ethos.caption.ja} />
@@ -48,75 +63,87 @@ import { ethos, site } from "../data/profile";
   </div>
 </section>
 
+<script>
+  import { initEthosConstellation } from "../scripts/ethos-constellation";
+
+  const stage = document.getElementById("ethos-stage");
+  const canvas = document.getElementById("ethos-canvas");
+  const center = document.getElementById("ethos-center");
+  if (stage && canvas instanceof HTMLCanvasElement && center) {
+    const outer = [...stage.querySelectorAll<HTMLElement>("[data-ethos-node]")];
+    initEthosConstellation(stage, canvas, outer, center);
+  }
+</script>
+
 <style>
-  .values {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px;
-    margin-top: 52px;
+  .stage {
+    position: relative;
+    margin: 48px auto 0;
+    max-width: 1000px;
+    height: min(62vh, 520px);
+    min-height: 420px;
   }
 
-  .value {
-    display: inline-flex;
+  #ethos-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .enode {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 10px;
-    padding: 12px 20px;
+    gap: 1px;
+    padding: 12px 22px;
     background: var(--surface-raised);
     border: 1px solid var(--line);
     border-radius: var(--radius-pill);
-    font-size: 15.5px;
+    box-shadow: var(--shadow);
+    white-space: nowrap;
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+
+  .enode b {
+    font-size: 16px;
     font-weight: 600;
     letter-spacing: var(--tracking-tight);
-    box-shadow: var(--shadow);
   }
 
-  .dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--text-faint);
-    flex: none;
+  .enode .sub {
+    font-size: 10px;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-faint);
   }
 
-  /* 最後だけ丸ではなく四角。ロゴの「前方の正方形」に対応させている */
-  .value--next {
-    padding: 12px;
-    background: none;
-    border: none;
-    box-shadow: none;
+  /* 中心だけ反転させて重心を作る */
+  .enode--center {
+    background: var(--surface-dark);
+    color: var(--text-on-dark);
+    padding: 18px 30px;
+    border-color: transparent;
+    box-shadow: 0 18px 50px rgba(20, 17, 15, 0.26);
+    z-index: 5;
   }
 
-  .square {
-    display: block;
-    width: 12px;
-    height: 12px;
-    background: var(--accent);
+  .enode--center b {
+    font-size: 20px;
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    .square {
-      animation: step 3.4s var(--ease-in-out) infinite;
-    }
-  }
-
-  /* 前へ出て、少し待って、戻る。踏み出す前の呼吸 */
-  @keyframes step {
-    0%,
-    62%,
-    100% {
-      transform: translateX(0);
-      opacity: 0.55;
-    }
-    30% {
-      transform: translateX(10px);
-      opacity: 1;
-    }
+  .enode--center .sub {
+    color: var(--text-on-dark-muted);
   }
 
   .cap {
-    margin-top: 44px;
-    font-size: clamp(18px, 2.4vw, 26px);
+    margin-top: 40px;
+    text-align: center;
+    font-size: clamp(17px, 2.2vw, 25px);
     font-weight: 500;
     letter-spacing: var(--tracking-tight);
     color: var(--text-muted);
@@ -127,5 +154,17 @@ import { ethos, site } from "../data/profile";
     font-style: normal;
     font-weight: 600;
     color: var(--accent);
+  }
+
+  @media (max-width: 720px) {
+    .enode {
+      padding: 9px 15px;
+    }
+    .enode b {
+      font-size: 13.5px;
+    }
+    .enode .sub {
+      display: none;
+    }
   }
 </style>

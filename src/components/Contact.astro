@@ -137,11 +137,12 @@ const year = new Date().getFullYear();
     gap: 9px;
   }
 
-  /* アイコンは M 単体。ロゴ規定どおり単色で置く */
+  /* アイコンは M 単体。暗い面なので反転させて紙色に合わせる */
   .brandline img {
     height: 18px;
     width: auto;
-    opacity: 0.75;
+    filter: invert(1);
+    opacity: 0.6;
   }
 
   @media (max-width: 560px) {

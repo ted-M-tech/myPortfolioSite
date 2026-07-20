@@ -1,13 +1,45 @@
 ---
 import { marquee } from "../data/profile";
 
-// 途切れなく流すため同じ列を2本並べ、-50% まで動かして繰り返す
 const row = [...marquee];
+const reversed = [...marquee].reverse();
 ---
 
+<!--
+  2本の帯を逆向きに流す。上は袋文字（輪郭だけ）、下は塗りを薄く落とす。
+  奥行きが出て、単なる文字列の羅列に見えなくなる。
+-->
 <div class="marq" aria-hidden="true">
   <div class="track">
-    {[0, 1].map(() => <span class="run">{row.map((w) => <span class="item">{w}</span>)}</span>)}
+    {
+      [0, 1].map(() => (
+        <span class="run">
+          {row.map((wd) => (
+            <span class="item">
+              {wd}
+              <i>·</i>
+            </span>
+          ))}
+        </span>
+      ))
+    }
+  </div>
+</div>
+
+<div class="marq marq--rev" aria-hidden="true">
+  <div class="track track--sub">
+    {
+      [0, 1].map(() => (
+        <span class="run">
+          {reversed.map((wd) => (
+            <span class="item">
+              {wd}
+              <i>·</i>
+            </span>
+          ))}
+        </span>
+      ))
+    }
   </div>
 </div>
 
@@ -15,15 +47,32 @@ const row = [...marquee];
   .marq {
     background: var(--surface-dark-2);
     color: var(--text-on-dark);
-    padding-block: 28px;
     overflow: hidden;
-    border-block: 1px solid var(--line-on-dark);
+    padding-block: 18px 0;
+  }
+
+  .marq:first-of-type {
+    border-top: 1px solid var(--line-on-dark);
+    padding-top: 30px;
+  }
+
+  .marq--rev {
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--line-on-dark);
   }
 
   .track {
     display: flex;
     width: max-content;
-    animation: slide 44s linear infinite;
+    animation: slide 46s linear infinite;
+  }
+
+  .marq--rev .track {
+    animation-direction: reverse;
+  }
+
+  .track--sub {
+    opacity: 0.34;
   }
 
   .run {
@@ -31,18 +80,28 @@ const row = [...marquee];
   }
 
   .item {
-    font-size: clamp(20px, 3vw, 34px);
+    display: inline-flex;
+    align-items: center;
+    gap: 34px;
+    padding-right: 34px;
+    font-size: clamp(26px, 4.2vw, 50px);
     font-weight: 600;
     letter-spacing: var(--tracking-tight);
     white-space: nowrap;
-    padding-inline: 26px;
-    color: var(--text-on-dark-muted);
+    /* 上の列は輪郭だけ。塗りを抜いて袋文字にする */
+    -webkit-text-stroke: 1px rgba(243, 240, 235, 0.5);
+    color: transparent;
   }
 
-  /* 区切りは中黒。ロゴの正方形と紛らわしくならないよう小さく置く */
-  .item::after {
-    content: "·";
-    margin-left: 52px;
+  /* 下の列は塗る。輪郭と塗りが交互になって帯にリズムが出る */
+  .track--sub .item {
+    -webkit-text-stroke: 0;
+    color: var(--text-on-dark);
+  }
+
+  .item i {
+    font-style: normal;
+    -webkit-text-stroke: 0;
     color: var(--accent-on-dark);
   }
 

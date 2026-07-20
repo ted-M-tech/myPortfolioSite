@@ -17,7 +17,7 @@ import ProjectPanel from "./ProjectPanel.astro";
     <ul class="list">
       {
         projects.map((p, i) => (
-          <li class="project reveal">
+          <li class="project reveal" data-tilt>
             <a href={p.href} target="_blank" rel="noopener noreferrer">
               <div class="media">
                 <span class="num">{String(i + 1).padStart(2, "0")}</span>
@@ -78,7 +78,12 @@ import ProjectPanel from "./ProjectPanel.astro";
 
   .project a:hover {
     box-shadow: var(--shadow-lg);
-    transform: translateY(-3px);
+  }
+
+  /* 傾きは tilt.ts が li 側に当てる。a 側で transform を触ると打ち消し合う */
+  .project {
+    transform-style: preserve-3d;
+    will-change: transform;
   }
 
   /* 交互に左右を入れ替えて単調さを避ける */

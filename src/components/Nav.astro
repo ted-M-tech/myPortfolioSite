@@ -102,10 +102,19 @@ const links = [
     flex: none;
   }
 
-  /* ロゴは currentColor。傾けない・歪めない・単色（ブランド規定） */
+  /*
+   * 傾けない・歪めない・単色（ブランド規定）。
+   * <img> の SVG は currentColor を継承しないため黒で出る。
+   * 暗い面のときだけ反転させて紙色に合わせる。
+   */
   .brand img {
     height: 26px;
     width: auto;
+    transition: filter var(--dur);
+  }
+
+  .nav.on-dark .brand img {
+    filter: invert(1);
   }
 
   .brand-name {
