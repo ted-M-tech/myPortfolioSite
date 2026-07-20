@@ -190,6 +190,30 @@ button {
   transition-delay: 280ms;
 }
 
+/* ---------- 面のテクスチャ ----------
+   原典は薄いぼかし写真を敷いて、広い面が平坦に見えるのを防いでいた。
+   写真は使わない方針なので、ごく薄い格子で同じ役割だけを持たせる。
+   不透明度は原典と同じ 0.07 前後に抑え、文字の可読性を落とさない。 */
+.section--textured {
+  position: relative;
+  isolation: isolate;
+}
+
+.section--textured::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, currentColor 1px, transparent 1px),
+    linear-gradient(to bottom, currentColor 1px, transparent 1px);
+  background-size: 72px 72px;
+  opacity: 0.035;
+  /* 端に向けて消し、境界線に見えないようにする */
+  mask-image: radial-gradient(120% 90% at 50% 40%, #000 30%, transparent 78%);
+}
+
 /* ---------- 部品 ---------- */
 .btn {
   display: inline-flex;

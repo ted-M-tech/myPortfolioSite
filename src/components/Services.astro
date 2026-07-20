@@ -31,6 +31,7 @@ const mailto = (title: string) =>
       {
         services.map((s) => (
           <li class:list={["plan", "reveal", s.featured && "plan--featured"]}>
+            {s.featured && <span class="blob" aria-hidden="true" />}
             <p class="badge">
               <span class="ja">{s.badge.ja}</span>
               <span class="en">{s.badge.en}</span>
@@ -94,7 +95,7 @@ const mailto = (title: string) =>
   .plan {
     display: flex;
     flex-direction: column;
-    padding: 28px 24px;
+    padding: 30px 26px;
     background: var(--surface-raised);
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
@@ -110,9 +111,25 @@ const mailto = (title: string) =>
 
   /* 推したいものだけ反転させる。色数を増やさずに序列をつける */
   .plan--featured {
+    position: relative;
     background: var(--surface-dark);
     color: var(--text-on-dark);
     border-color: transparent;
+    overflow: hidden;
+  }
+
+  /* 原典の cblob。反転面の角に光を置いて、平らな黒に見えないようにする */
+  .blob {
+    position: absolute;
+    top: -60px;
+    right: -40px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--accent), transparent 70%);
+    opacity: 0.4;
+    filter: blur(10px);
+    pointer-events: none;
   }
 
   .badge {
@@ -151,7 +168,7 @@ const mailto = (title: string) =>
 
   .price {
     margin-top: 20px;
-    font-size: 30px;
+    font-size: 34px;
     font-weight: 600;
     letter-spacing: var(--tracking-display);
     line-height: 1;

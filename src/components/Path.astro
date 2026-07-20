@@ -2,7 +2,7 @@
 import { timeline } from "../data/profile";
 ---
 
-<section class="section section--dark" id="path">
+<section class="section section--dark section--textured" id="path">
   <div class="wrap">
     <header class="reveal">
       <p class="eyebrow">The path</p>
@@ -16,6 +16,7 @@ import { timeline } from "../data/profile";
       {
         timeline.map((t) => (
           <li class="job reveal">
+            <span class="logo" aria-hidden="true">{t.org.charAt(0)}</span>
             <div>
               <p class="org">{t.org}</p>
               <p class="role">
@@ -39,16 +40,29 @@ import { timeline } from "../data/profile";
   }
 
   .job {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    align-items: center;
     gap: 24px;
-    padding-block: 22px;
+    padding-block: 26px;
     border-bottom: 1px solid var(--line-on-dark);
   }
 
-  .org {
+  /* 原典はここに企業ロゴを置く枠がある。頭文字で埋めて枠の役割を残す */
+  .logo {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(243, 240, 235, 0.06);
+    color: var(--text-on-dark-muted);
     font-size: 18px;
+    font-weight: 600;
+  }
+
+  .org {
+    font-size: 19px;
     font-weight: 600;
     letter-spacing: var(--tracking-tight);
     text-wrap: balance;
@@ -70,8 +84,11 @@ import { timeline } from "../data/profile";
 
   @media (max-width: 560px) {
     .job {
-      flex-direction: column;
-      gap: 6px;
+      grid-template-columns: 44px 1fr;
+      gap: 6px 16px;
+    }
+    .period {
+      grid-column: 2;
     }
   }
 </style>

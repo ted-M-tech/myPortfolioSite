@@ -1,5 +1,5 @@
 ---
-import { person, socials } from "../data/profile";
+import { person } from "../data/profile";
 import Icon from "./Icon.astro";
 
 /**
@@ -41,7 +41,7 @@ const orbit = [
     }
   </div>
 
-  <div class="hero-copy wrap">
+  <div class="hero-copy">
     <p class="eyebrow">
       <span class="ja">{person.role.ja} · {person.location.ja}</span>
       <span class="en">{person.role.en} · {person.location.en}</span>
@@ -64,17 +64,6 @@ const orbit = [
       </a>
     </div>
 
-    <ul class="socials">
-      {
-        socials.map((s) => (
-          <li>
-            <a href={s.href} aria-label={s.label} target="_blank" rel="noopener noreferrer">
-              <Icon name={s.icon} size={17} />
-            </a>
-          </li>
-        ))
-      }
-    </ul>
   </div>
 
   <a class="cue" href="#work" aria-label="Scroll">
@@ -230,10 +219,12 @@ const orbit = [
   }
 
   .hero-copy {
+    /* 原典は wrap に入れず左右いっぱい。見出しが幅を使えるようにするため */
     position: absolute;
-    left: 50%;
-    translate: -50% 0;
+    left: 0;
+    right: 0;
     bottom: 8vh;
+    padding-inline: 24px;
     z-index: 20;
     text-align: center;
     /* 軌道が先に動き出し、少し遅れて言葉が立ち上がる */
@@ -264,10 +255,14 @@ const orbit = [
   }
 
   /* 日本語は文字単位で折り返せてしまうので、アクセントは塊で扱う */
+  /* 原典と同じく抜き文字のグラデーション。単色にすると平坦になる */
   h1 :global(em) {
     display: inline-block;
     font-style: normal;
-    color: var(--accent-on-dark);
+    background: linear-gradient(100deg, var(--accent-on-dark), #f3c9a8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   .actions {
@@ -278,37 +273,11 @@ const orbit = [
     margin-top: 30px;
   }
 
-  .socials {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 26px;
-  }
-
-  .socials a {
-    display: grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 1px solid var(--line-on-dark);
-    color: var(--text-on-dark-muted);
-    transition:
-      color var(--dur-fast),
-      border-color var(--dur-fast),
-      transform var(--dur-fast) var(--ease-out);
-  }
-
-  .socials a:hover {
-    color: var(--text-on-dark);
-    border-color: var(--paper-inv);
-    transform: translateY(-2px);
-  }
 
   .cue {
     position: absolute;
     left: 50%;
-    bottom: 16px;
+    bottom: 18px;
     translate: -50% 0;
     z-index: 20;
     color: rgba(243, 240, 235, 0.4);
