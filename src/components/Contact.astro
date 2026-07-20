@@ -1,5 +1,5 @@
 ---
-import { contact, person, socials, site } from "../data/profile";
+import { person, socials, site } from "../data/profile";
 import Icon from "./Icon.astro";
 
 const year = new Date().getFullYear();
@@ -9,17 +9,7 @@ const year = new Date().getFullYear();
   <div class="wrap reveal">
     <p class="eyebrow">Contact</p>
 
-    <h2>
-      <span class="ja" set:html={contact.heading.ja} />
-      <span class="en" set:html={contact.heading.en} />
-    </h2>
-
     <a class="mail" href={`mailto:${person.email}`}>{person.email}</a>
-
-    <p class="note">
-      <span class="ja">{contact.note.ja}</span>
-      <span class="en">{contact.note.en}</span>
-    </p>
 
     <ul class="socials">
       {
@@ -51,26 +41,13 @@ const year = new Date().getFullYear();
     background: var(--surface-dark);
     color: var(--text-on-dark);
     text-align: center;
-    padding-block: clamp(96px, 14vw, 168px) 32px;
-  }
-
-  h2 {
-    margin-top: 14px;
-    font-size: clamp(38px, 8vw, 104px);
-    font-weight: 600;
-    letter-spacing: var(--tracking-display);
-    line-height: 1.02;
-    text-wrap: balance;
-  }
-
-  h2 :global(em) {
-    font-style: normal;
-    color: var(--accent-on-dark);
+    /* 見出しと説明文を落として中身が短くなったので、上下の余白も詰める */
+    padding-block: clamp(72px, 9vw, 116px) 32px;
   }
 
   .mail {
     display: inline-block;
-    margin-top: 34px;
+    margin-top: 18px;
     font-size: clamp(17px, 2.4vw, 27px);
     font-weight: 500;
     border-bottom: 1px solid var(--line-on-dark);
@@ -81,14 +58,6 @@ const year = new Date().getFullYear();
 
   .mail:hover {
     border-bottom-color: var(--paper-inv);
-  }
-
-  .note {
-    margin: 22px auto 0;
-    max-width: 46ch;
-    font-size: 14px;
-    color: var(--text-on-dark-muted);
-    text-wrap: pretty;
   }
 
   .socials {

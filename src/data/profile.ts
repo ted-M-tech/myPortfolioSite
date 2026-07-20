@@ -305,9 +305,18 @@ export const enablement = [
   },
 ] as const;
 
-/** 屋号の由来そのものを言葉にしたセクション。 */
+/**
+ * 知識・失敗・現場・対話をぜんぶ材料にして、実際に必要なものをつくる、という節。
+ *
+ * 以前は「まだない傑作へ」「まだ見ぬ最高傑作」と書いていたが、言い過ぎだった。
+ * 何をつくるかを宣言する場所ではなく、どう materials を扱うかを示す場所なので、
+ * 誇張のない言い方に戻してある。飾った言い換えを持ち込まないこと。
+ */
 export const ethos = {
-  heading: { ja: "すべてを繋ぎ、まだない傑作へ。", en: "Connect everything. Make what doesn't exist." },
+  heading: {
+    ja: "本当に必要なものを、つくる。",
+    en: "Build what's actually needed.",
+  },
   values: [
     { ja: "現場から", en: "Grounded" },
     { ja: "速く出す", en: "Ship fast" },
@@ -316,10 +325,6 @@ export const ethos = {
     { ja: "チームで", en: "With the team" },
     { ja: "次の一歩", en: "Next step" },
   ],
-  caption: {
-    ja: "大量の経験とデータを、<em>自分のコンセプト</em>で編み直し、まだ見ぬ最高傑作へ。",
-    en: "Reweave experience and data through <em>a distinct point of view</em> — into the next masterpiece.",
-  },
 } as const;
 
 export const skills = [
@@ -428,41 +433,37 @@ export const play = [
     id: "hiking",
     size: "lg",
     name: { ja: "山を歩く", en: "Hiking" },
-    note: { ja: "考えが詰まったら、とりあえず登る", en: "When thinking stalls, go up a mountain" },
+    note: null,
     image: "/play/hiking.webp",
-    motif: null,
   },
   {
     id: "running",
     size: "md",
     name: { ja: "走る", en: "Running" },
-    note: { ja: "速さより、続く歩幅で", en: "Not fast — just a stride that lasts" },
-    image: null,
-    motif: "pace",
+    note: null,
+    image: "/play/running.webp",
   },
   {
     id: "cafe",
     size: "md",
     name: { ja: "カフェ", en: "Café" },
-    note: { ja: "一杯ぶんの時間で考えを整える", en: "One cup, one idea sorted out" },
+    note: null,
     image: "/play/cafe.webp",
-    motif: null,
   },
   {
     id: "sports",
     size: "sm",
     name: { ja: "スポーツ", en: "Sports" },
+    /** 何をやるかは名前だけでは伝わらないので、ここだけ残す */
     note: { ja: "バスケ・野球・テニス", en: "Basketball, baseball, tennis" },
-    image: null,
-    motif: "ball",
+    image: "/play/sports.webp",
   },
   {
     id: "travel",
     size: "wide",
     name: { ja: "旅", en: "Travel" },
-    note: { ja: "知らない街を、ただ歩く", en: "Walking a city I don't know yet" },
+    note: null,
     image: "/play/travel.webp",
-    motif: null,
   },
 ] as const;
 
@@ -559,10 +560,8 @@ export const servicesNote = {
   en: "MaePace is an independent development practice run by Tetsuya Maeda. The first 30 minutes are free; no polished brief needed. Japanese or English.",
 } satisfies Bilingual;
 
-export const contact = {
-  heading: { ja: "次の「すごい」を、<em>一緒に</em>。", en: "Let's make the next <em>unmissable</em> thing." },
-  note: {
-    ja: "AIプロトタイプ、Webアプリ、業務システム、まだ名前のない企画でも。返信は2営業日以内に。",
-    en: "An AI prototype, web app, business system, or an idea without a name yet. I reply within two business days.",
-  },
-} as const;
+/**
+ * 連絡先。ここは連絡が取れれば十分な場所なので、見出しも説明文も置かない。
+ * 以前は大見出しと補足文があったが、読ませたい情報ではなかった。
+ */
+export const contact = {} as const;

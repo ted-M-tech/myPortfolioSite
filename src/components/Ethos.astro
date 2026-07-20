@@ -1,5 +1,5 @@
 ---
-import { ethos, person } from "../data/profile";
+import { ethos } from "../data/profile";
 ---
 
 <section class="ethos section" id="ethos">
@@ -15,11 +15,11 @@ import { ethos, person } from "../data/profile";
       <p class="section-lede">
         <span class="ja">
           知識、失敗、現場、技術、対話。<br />
-          断片を自分の視点でつなぎ、一つの強い体験へ。
+          ぜんぶ材料にして、必要なものを形にします。
         </span>
         <span class="en">
           Knowledge, failure, field work, technology and dialogue.<br />
-          Connect the fragments through a distinct point of view.
+          All of it is material for building the thing that is needed.
         </span>
       </p>
     </header>
@@ -63,17 +63,12 @@ import { ethos, person } from "../data/profile";
 
       <div class="gnode gnode--output" id="ethos-output">
         <b>
-          <span class="ja">まだ見ぬ<br />最高傑作</span>
-          <span class="en">The next<br />masterpiece</span>
+          <span class="ja">必要な<br />もの</span>
+          <span class="en">What's<br />needed</span>
         </b>
       </div>
     </div>
 
-    <p class="cap reveal">
-      <span class="ja" set:html={ethos.caption.ja} />
-      <span class="en" set:html={ethos.caption.en} />
-    </p>
-    <p class="sign reveal">— {person.name}</p>
   </div>
 </section>
 
@@ -234,31 +229,6 @@ import { ethos, person } from "../data/profile";
   }
 
   /* ---------- 結び ---------- */
-  .cap {
-    margin: clamp(38px, 5vw, 56px) auto 0;
-    max-width: 32ch;
-    text-align: center;
-    font-size: clamp(19px, 2.4vw, 31px);
-    font-weight: 500;
-    line-height: 1.35;
-    letter-spacing: var(--tracking-tight);
-    color: var(--text);
-    text-wrap: balance;
-  }
-
-  .cap :global(em) {
-    font-style: normal;
-    color: var(--accent);
-  }
-
-  .sign {
-    margin-top: 14px;
-    text-align: center;
-    font-size: 13px;
-    letter-spacing: .06em;
-    color: var(--text-faint);
-  }
-
   @media (max-width: 860px) {
     header { grid-template-columns: 1fr; gap: 22px; }
     header .section-lede { margin-top: 0; }
