@@ -36,7 +36,7 @@ export const person = {
     ja: "バンクーバー, カナダ",
     en: "Vancouver, Canada",
   } satisfies Bilingual,
-  email: "tetsuya.maeda@technomore.ltd",
+  email: "tetsuya.maeda.mail@gmail.com",
   /**
    * ヒーローの見出し。<em> で囲んだ箇所がアクセント表示になる。
    * 「前へ進む速度」と「自分のペース」— 屋号の二重の由来をそのまま言葉にしている。
@@ -353,15 +353,15 @@ export const services = [
     points: [
       { ja: "アイデア段階からの技術検証", en: "Technical validation from day one" },
       { ja: "AI・データを中核にした設計", en: "AI and data at the product core" },
-      { ja: "継続改善できるチームと基盤", en: "A team and system built to evolve" },
+      { ja: "お客様のチームに馴染む運用基盤", en: "A maintainable system that fits your team" },
     ],
     cta: { ja: "話をする", en: "Start a conversation" },
   },
 ] as const;
 
 export const servicesNote = {
-  ja: "初回30分は無料です。まだ企画書がなくても大丈夫。課題と「こうなったら最高」を聞かせてください。日本語 / English どちらでも。",
-  en: "The first 30 minutes are free. No polished brief needed — bring the problem and your best-case vision. Japanese or English.",
+  ja: "MaePaceは前田哲也が個人で運営する開発事業です。初回30分は無料。まだ企画書がなくても大丈夫です。日本語 / English どちらでも。",
+  en: "MaePace is an independent development practice run by Tetsuya Maeda. The first 30 minutes are free; no polished brief needed. Japanese or English.",
 } satisfies Bilingual;
 
 export const contact = {
