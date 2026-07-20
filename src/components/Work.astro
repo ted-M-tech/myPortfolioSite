@@ -94,9 +94,14 @@ import ProjectPanel from "./ProjectPanel.astro";
     order: 2;
   }
 
+  /*
+   * 高さはテキスト側が決め、メディアはそれに追従する。
+   * aspect-ratio でメディアに高さを決めさせると、幅が広い画面で
+   * カードが縦に伸び、テキスト側に空白が残る。
+   */
   .media {
     position: relative;
-    aspect-ratio: 16 / 11;
+    min-height: 340px;
     background: var(--surface-dark);
     overflow: hidden;
   }
@@ -138,8 +143,11 @@ import ProjectPanel from "./ProjectPanel.astro";
 
   .desc {
     margin-top: 14px;
+    /* 行長が伸びすぎると読みにくい。幅が広い画面でも文章は 58ch で止める */
+    max-width: 58ch;
     color: var(--text-muted);
     font-size: 15.5px;
+    line-height: 1.6;
     text-wrap: pretty;
   }
 
