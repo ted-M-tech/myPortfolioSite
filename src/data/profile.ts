@@ -42,12 +42,12 @@ export const person = {
    * 「前へ進む速度」と「自分のペース」— 屋号の二重の由来をそのまま言葉にしている。
    */
   headline: {
-    ja: "AIで、構想を<em>動くプロダクト</em>へ。",
-    en: "AI-driven ideas, <em>built end to end.</em>",
+    ja: "AIで、構想を<em>プロダクトへ。</em>",
+    en: "Ideas into <em>working products.</em>",
   } satisfies Bilingual,
   intro: {
-    ja: "生成AIを、飾りではなく開発の推進力に。5年以上の実務経験をもとに、アイデア検証からUI、API、データ、クラウド、本番運用まで一気通貫で設計・実装します。",
-    en: "I use generative AI as an engineering multiplier, not decoration. With five-plus years of product experience, I take ideas from validation through UI, APIs, data, cloud and production.",
+    ja: "AIを開発の中核に。UI、API、データ、クラウドまで、一気通貫で設計・実装します。",
+    en: "AI at the core of development. I design and build across UI, APIs, data and cloud.",
   } satisfies Bilingual,
 } as const;
 

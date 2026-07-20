@@ -5,20 +5,35 @@ import Icon from "./Icon.astro";
 
 <section class="hero on-dark" id="top">
   <canvas id="hero-three" aria-hidden="true"></canvas>
+  <div class="hero-vignette" aria-hidden="true"></div>
   <div class="noise" aria-hidden="true"></div>
+
+  <div class="intro-sequence" id="intro-sequence" aria-hidden="true">
+    <p class="intro-mark">MAEPACE® <span>AI DRIVEN ENGINEERING</span></p>
+    <div class="intro-words">
+      <p class="intro-word intro-word--one">
+        <span class="ja">構想</span><span class="en">IMAGINE</span>
+      </p>
+      <p class="intro-word intro-word--two">
+        <span class="ja">実装</span><span class="en">ENGINEER</span>
+      </p>
+      <p class="intro-word intro-word--three">
+        <span class="ja">前へ</span><span class="en">FORWARD</span>
+      </p>
+    </div>
+    <span class="intro-line"></span>
+    <button class="intro-skip" id="intro-skip" type="button" tabindex="-1">SKIP</button>
+  </div>
 
   <div class="hero-grid">
     <div class="hero-copy">
-      <p class="status">
+      <p class="availability">
         <i aria-hidden="true"></i>
         <span class="ja">2026年 秋以降のプロジェクト受付中</span>
-        <span class="en">Booking projects from Fall 2026</span>
+        <span class="en">Available for projects from Fall 2026</span>
       </p>
 
-      <p class="kicker">
-        <span class="ja">{person.role.ja} / {person.location.ja}</span>
-        <span class="en">{person.role.en} / {person.location.en}</span>
-      </p>
+      <p class="kicker">{person.role.en}</p>
 
       <h1>
         <span class="ja" set:html={person.headline.ja} />
@@ -33,34 +48,23 @@ import Icon from "./Icon.astro";
       <div class="actions">
         <a href="#work" class="btn btn--light">
           <span class="ja">制作を見る</span>
-          <span class="en">Explore the work</span>
+          <span class="en">View selected work</span>
           <Icon name="arrow-right" size={17} />
         </a>
         <a href="#contact" class="text-link">
-          <span class="ja">プロジェクトを相談</span>
-          <span class="en">Start a project</span>
+          <span class="ja">相談する</span>
+          <span class="en">Start a conversation</span>
           <Icon name="arrow-up-right" size={15} />
         </a>
       </div>
     </div>
-
-    <div class="spatial-labels" aria-hidden="true">
-      <span class="label label--ai">ENGINEER / CORE <i>01</i></span>
-      <span class="label label--motion">TECH STACK / ORBITING <i>10</i></span>
-      <span class="label label--three">PRODUCTION / ACTIVE <i>→</i></span>
-      <span class="axis">THREE.JS / GLTF / LIVE<br />FULL STACK IN MOTION</span>
-    </div>
   </div>
 
-  <div class="hero-foot">
-    <p>MAEPACE® / INDEPENDENT AI DRIVEN DEVELOPMENT</p>
-    <a href="#work">
-      <span class="ja">スクロールして体験</span>
-      <span class="en">Scroll to experience</span>
-      <Icon name="chevron-down" size={18} />
-    </a>
-    <p>VANCOUVER / JAPAN</p>
-  </div>
+  <a class="hero-scroll" href="#work" aria-label="Scroll to selected work">
+    <span></span>
+    <span class="ja">SCROLL</span>
+    <span class="en">SCROLL</span>
+  </a>
 </section>
 
 <script>
@@ -68,24 +72,89 @@ import Icon from "./Icon.astro";
 
   const canvas = document.getElementById("hero-three");
   if (canvas instanceof HTMLCanvasElement) initHeroThree(canvas);
+
+  const root = document.documentElement;
+  const sequence = document.getElementById("intro-sequence");
+  const skip = document.getElementById("intro-skip");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const forceIntro = new URLSearchParams(location.search).get("intro") === "1";
+  const alreadySeen = sessionStorage.getItem("maepace-intro-seen") === "1";
+  let introTimer = 0;
+
+  const finishIntro = () => {
+    window.clearTimeout(introTimer);
+    root.classList.remove("intro-active");
+    root.classList.add("intro-complete");
+    sequence?.setAttribute("inert", "");
+    sessionStorage.setItem("maepace-intro-seen", "1");
+    window.dispatchEvent(new CustomEvent("maepace:intro-complete"));
+  };
+
+  if (!reduced && (!alreadySeen || forceIntro)) {
+    root.classList.add("intro-active");
+    skip?.removeAttribute("tabindex");
+    introTimer = window.setTimeout(finishIntro, 4400);
+    skip?.addEventListener("click", finishIntro, { once: true });
+    addEventListener("keydown", (event) => {
+      if (event.key === "Escape" || event.key === "Enter" || event.key === " ") finishIntro();
+    }, { once: true });
+  } else {
+    root.classList.add("intro-complete");
+    sequence?.setAttribute("inert", "");
+  }
 </script>
 
 <style>
+  :global(html.intro-active) {
+    overflow: hidden;
+  }
+
+  :global(html.intro-active .nav) {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-16px);
+  }
+
+  :global(.nav) {
+    transition:
+      opacity 600ms var(--ease-out),
+      transform 600ms var(--ease-out),
+      background var(--dur),
+      color var(--dur),
+      border-color var(--dur);
+  }
+
   .hero {
     position: relative;
-    min-height: max(760px, 100svh);
+    min-height: max(720px, 100svh);
     overflow: hidden;
     isolation: isolate;
-    background: #090807;
+    background: #080807;
     color: var(--text-on-dark);
   }
 
   #hero-three {
     position: absolute;
     inset: 0;
-    z-index: -3;
+    z-index: -4;
     width: 100%;
     height: 100%;
+  }
+
+  .hero-vignette {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 72% 48%, transparent 0 19%, rgba(8, 8, 7, 0.08) 46%, rgba(8, 8, 7, 0.56) 83%),
+      linear-gradient(90deg, rgba(8, 8, 7, 0.98) 0%, rgba(8, 8, 7, 0.76) 36%, rgba(8, 8, 7, 0.08) 66%, transparent 82%),
+      linear-gradient(0deg, rgba(8, 8, 7, 0.55), transparent 28%);
+    transition: opacity 1.1s var(--ease-out);
+  }
+
+  :global(html.intro-active) .hero-vignette {
+    opacity: 0.12;
   }
 
   .noise {
@@ -93,27 +162,16 @@ import Icon from "./Icon.astro";
     inset: 0;
     z-index: -2;
     pointer-events: none;
-    opacity: 0.11;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.32'/%3E%3C/svg%3E");
+    opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitchTiles'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.3'/%3E%3C/svg%3E");
     mix-blend-mode: soft-light;
   }
 
-  .hero::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background:
-      linear-gradient(90deg, rgba(7, 6, 5, 0.94) 0%, rgba(7, 6, 5, 0.65) 36%, rgba(7, 6, 5, 0.1) 61%, transparent 78%),
-      linear-gradient(0deg, rgba(7, 6, 5, 0.66), transparent 30%);
-  }
-
   .hero-grid {
-    min-height: max(760px, 100svh);
-    padding: clamp(130px, 16vh, 180px) var(--pad-x) 112px;
+    min-height: max(720px, 100svh);
+    padding: clamp(132px, 16vh, 176px) var(--pad-x) 112px;
     display: grid;
-    grid-template-columns: minmax(0, 0.93fr) minmax(420px, 1.07fr);
+    grid-template-columns: minmax(0, 0.82fr) minmax(440px, 1.18fr);
     align-items: center;
     max-width: 1840px;
     margin-inline: auto;
@@ -122,78 +180,73 @@ import Icon from "./Icon.astro";
   .hero-copy {
     position: relative;
     z-index: 3;
-    max-width: 760px;
+    max-width: 680px;
     opacity: 0;
-    transform: translateY(28px);
-    animation: enter 1.1s var(--ease-out) 0.14s forwards;
+    transform: translateY(18px);
   }
 
-  @keyframes enter {
-    to { opacity: 1; transform: none; }
+  :global(html.intro-complete) .hero-copy {
+    animation: reveal-copy 1s var(--ease-out) 120ms forwards;
   }
 
-  .status {
+  @keyframes reveal-copy {
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .availability {
     display: inline-flex;
     align-items: center;
-    gap: 9px;
-    padding: 7px 12px;
-    border: 1px solid rgba(243, 240, 235, 0.16);
-    border-radius: var(--radius-pill);
-    background: rgba(10, 9, 8, 0.3);
-    backdrop-filter: blur(14px);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    color: rgba(243, 240, 235, 0.74);
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: rgba(243, 240, 235, 0.52);
+    text-transform: uppercase;
   }
 
-  .status i {
-    width: 7px;
-    height: 7px;
+  .availability i {
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
-    background: #7cff9d;
-    box-shadow: 0 0 14px #7cff9d;
-    animation: pulse 2.2s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    50% { opacity: 0.45; transform: scale(0.75); }
+    background: #79dd8b;
+    box-shadow: 0 0 12px rgba(121, 221, 139, 0.62);
   }
 
   .kicker {
-    margin-top: clamp(36px, 6vh, 62px);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.19em;
-    text-transform: uppercase;
-    color: rgba(243, 240, 235, 0.5);
+    margin-top: clamp(42px, 7vh, 72px);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: rgba(243, 240, 235, 0.42);
   }
 
   h1 {
-    margin-top: 18px;
-    max-width: 10.5ch;
-    font-size: clamp(52px, 6.7vw, 108px);
+    margin-top: 20px;
+    max-width: 9ch;
+    font-size: clamp(56px, 6.2vw, 100px);
     font-weight: 520;
     letter-spacing: -0.065em;
-    line-height: 0.87;
+    line-height: 0.94;
     text-wrap: balance;
   }
 
   h1 :global(em) {
-    display: inline-block;
+    display: inline;
     font-style: normal;
-    font-weight: 420;
-    color: transparent;
-    -webkit-text-stroke: 1.4px rgba(255, 150, 92, 0.95);
-    text-shadow: 0 0 38px rgba(235, 75, 19, 0.18);
+    font-weight: inherit;
+    color: #ff7541;
   }
 
   .intro {
-    margin-top: 30px;
-    max-width: 58ch;
-    font-size: clamp(14px, 1.15vw, 17px);
-    line-height: 1.75;
-    color: rgba(243, 240, 235, 0.64);
+    margin-top: 28px;
+    max-width: 47ch;
+    font-size: clamp(14px, 1vw, 16px);
+    line-height: 1.78;
+    color: rgba(243, 240, 235, 0.6);
     text-wrap: pretty;
   }
 
@@ -206,14 +259,14 @@ import Icon from "./Icon.astro";
   }
 
   .btn--light {
+    min-height: 50px;
     background: var(--paper-inv);
     color: var(--ink);
-    min-height: 50px;
   }
 
   .btn--light:hover {
     transform: translateY(-2px);
-    box-shadow: 0 16px 50px rgba(255, 104, 46, 0.18);
+    box-shadow: 0 16px 50px rgba(255, 104, 46, 0.14);
   }
 
   .text-link {
@@ -221,7 +274,7 @@ import Icon from "./Icon.astro";
     align-items: center;
     gap: 7px;
     padding-block: 8px;
-    border-bottom: 1px solid rgba(243, 240, 235, 0.3);
+    border-bottom: 1px solid rgba(243, 240, 235, 0.26);
     font-size: 14px;
     font-weight: 600;
   }
@@ -234,155 +287,278 @@ import Icon from "./Icon.astro";
     transform: translate(3px, -3px);
   }
 
-  .spatial-labels {
+  .hero-scroll {
     position: absolute;
-    inset: 0;
-    pointer-events: none;
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    color: rgba(243, 240, 235, 0.55);
-  }
-
-  .label {
-    position: absolute;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    padding: 7px 9px;
-    border: 1px solid rgba(243, 240, 235, 0.14);
-    background: rgba(9, 8, 7, 0.26);
-    backdrop-filter: blur(12px);
-    animation: drift 7s var(--ease-in-out) infinite;
-  }
-
-  .label::before {
-    content: "";
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: var(--accent-on-dark);
-    box-shadow: 0 0 9px var(--accent-on-dark);
-  }
-
-  .label i {
-    font-style: normal;
-    opacity: 0.45;
-  }
-
-  .label--ai { left: 55%; top: 19%; }
-  .label--motion { right: 5%; top: 42%; animation-delay: -2s; }
-  .label--three { left: 59%; bottom: 19%; animation-delay: -4s; }
-
-  @keyframes drift {
-    50% { transform: translateY(-9px); }
-  }
-
-  .axis {
-    position: absolute;
-    right: 3%;
-    bottom: 17%;
-    padding-left: 28px;
-    opacity: 0.42;
-  }
-
-  .axis::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 3px;
-    width: 18px;
-    border-top: 1px solid currentColor;
-  }
-
-  .hero-foot {
-    position: absolute;
-    left: var(--pad-x);
-    right: var(--pad-x);
-    bottom: 24px;
-    z-index: 3;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: end;
-    gap: 20px;
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.14em;
-    color: rgba(243, 240, 235, 0.4);
-  }
-
-  .hero-foot > :last-child { text-align: right; }
-
-  .hero-foot a {
+    z-index: 4;
+    left: 50%;
+    bottom: 25px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    color: rgba(243, 240, 235, 0.62);
+    gap: 8px;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 7px;
+    letter-spacing: 0.22em;
+    color: rgba(243, 240, 235, 0.38);
+    opacity: 0;
   }
 
-  .hero-foot a :global(svg) {
-    animation: bounce 2.4s var(--ease-in-out) infinite;
+  :global(html.intro-complete) .hero-scroll {
+    animation: reveal-scroll 700ms var(--ease-out) 750ms forwards;
   }
 
-  @keyframes bounce {
-    50% { transform: translateY(5px); }
+  .hero-scroll > span:first-child {
+    display: block;
+    width: 1px;
+    height: 30px;
+    background: linear-gradient(transparent, rgba(243, 240, 235, 0.65));
+    transform-origin: top;
+    animation: scroll-line 2s var(--ease-in-out) infinite;
+  }
+
+  @keyframes reveal-scroll {
+    to { opacity: 1; }
+  }
+
+  @keyframes scroll-line {
+    0%, 100% { transform: scaleY(0.35); opacity: 0.35; }
+    50% { transform: scaleY(1); opacity: 1; }
+  }
+
+  .intro-sequence {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    background: radial-gradient(circle at center, rgba(17, 13, 11, 0.06), rgba(8, 8, 7, 0.28));
+  }
+
+  :global(html.intro-active) .intro-sequence {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  :global(html.intro-complete) .intro-sequence {
+    transition: opacity 850ms var(--ease-out), visibility 850ms;
+  }
+
+  .intro-mark {
+    position: absolute;
+    top: 28px;
+    left: var(--pad-x);
+    display: flex;
+    gap: 16px;
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    color: rgba(243, 240, 235, 0.48);
+  }
+
+  .intro-mark span {
+    color: rgba(243, 240, 235, 0.2);
+  }
+
+  .intro-words {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  .intro-word {
+    position: absolute;
+    margin: 0;
+    font-size: clamp(104px, 20vw, 380px);
+    font-weight: 560;
+    letter-spacing: -0.09em;
+    line-height: 0.8;
+    color: rgba(243, 240, 235, 0.035);
+    -webkit-text-stroke: 1.2px rgba(243, 240, 235, 0.72);
+    opacity: 0;
+    transform: scale(0.9);
+    text-shadow: 0 0 80px rgba(255, 116, 64, 0.1);
+    white-space: nowrap;
+  }
+
+  :global(html.intro-active) .intro-word--one {
+    animation: intro-word 1.3s var(--ease-out) 0.18s both;
+  }
+
+  :global(html.intro-active) .intro-word--two {
+    animation: intro-word 1.3s var(--ease-out) 1.35s both;
+  }
+
+  :global(html.intro-active) .intro-word--three {
+    color: rgba(255, 117, 65, 0.055);
+    -webkit-text-stroke-color: rgba(255, 117, 65, 0.92);
+    animation: intro-word-last 1.65s var(--ease-out) 2.52s both;
+  }
+
+  @keyframes intro-word {
+    0% { opacity: 0; transform: scale(0.9); filter: blur(14px); }
+    20%, 62% { opacity: 0.88; transform: scale(1); filter: blur(0); }
+    100% { opacity: 0; transform: scale(1.08); filter: blur(7px); }
+  }
+
+  @keyframes intro-word-last {
+    0% { opacity: 0; transform: scale(0.88); filter: blur(14px); }
+    20%, 68% { opacity: 0.92; transform: scale(1); filter: blur(0); }
+    100% { opacity: 0; transform: scale(1.12); filter: blur(8px); }
+  }
+
+  .intro-line {
+    position: absolute;
+    left: var(--pad-x);
+    right: var(--pad-x);
+    bottom: 29px;
+    height: 1px;
+    background: rgba(243, 240, 235, 0.14);
+    transform-origin: left;
+  }
+
+  :global(html.intro-active) .intro-line::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #ff7541;
+    transform-origin: left;
+    animation: intro-progress 4.15s linear both;
+  }
+
+  @keyframes intro-progress {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  .intro-skip {
+    position: absolute;
+    z-index: 3;
+    right: var(--pad-x);
+    top: 25px;
+    padding: 8px;
+    pointer-events: auto;
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    color: rgba(243, 240, 235, 0.42);
   }
 
   @media (max-width: 900px) {
     .hero-grid {
       grid-template-columns: 1fr;
       align-items: end;
-      padding-top: 150px;
-      padding-bottom: 126px;
+      padding-top: 132px;
+      padding-bottom: 120px;
     }
-    .hero::after {
-      background: linear-gradient(0deg, rgba(7, 6, 5, 0.97) 0%, rgba(7, 6, 5, 0.84) 44%, rgba(7, 6, 5, 0.08) 78%, transparent 92%);
+
+    .hero-vignette {
+      background:
+        linear-gradient(0deg, rgba(8, 8, 7, 0.98) 0%, rgba(8, 8, 7, 0.8) 48%, rgba(8, 8, 7, 0.04) 79%, transparent 94%);
     }
-    .hero-copy { max-width: 720px; }
-    h1 { max-width: 10ch; }
-    .spatial-labels { opacity: 0.7; }
-    .label--ai { left: 6%; right: auto; top: 14%; }
-    .label--motion { right: 6%; top: 24%; }
-    .label--three { left: auto; right: 8%; bottom: 48%; }
-    .axis { display: none; }
+
+    .hero-copy {
+      max-width: 680px;
+    }
+
+    .kicker {
+      margin-top: 34px;
+    }
+
+    h1 {
+      max-width: 9ch;
+    }
   }
 
   @media (max-width: 600px) {
-    .hero { min-height: 820px; }
+    .hero,
     .hero-grid {
-      min-height: 820px;
+      min-height: 800px;
+    }
+
+    .hero-grid {
       padding-inline: 20px;
-      padding-top: 124px;
-      padding-bottom: 104px;
+      padding-top: 118px;
+      padding-bottom: 96px;
     }
-    .status { font-size: 9.5px; }
-    .kicker { margin-top: 30px; }
+
+    .availability {
+      font-size: 8px;
+    }
+
+    .kicker {
+      margin-top: 28px;
+      font-size: 8px;
+    }
+
     h1 {
-      font-size: clamp(49px, 15.8vw, 74px);
-      line-height: 0.91;
+      margin-top: 16px;
+      max-width: 8.8ch;
+      font-size: clamp(50px, 15vw, 72px);
+      line-height: 0.94;
     }
+
     .intro {
-      margin-top: 24px;
-      max-width: 44ch;
-      font-size: 13.5px;
-      line-height: 1.65;
+      margin-top: 22px;
+      max-width: 38ch;
+      font-size: 13px;
+      line-height: 1.66;
     }
-    .actions { gap: 18px; margin-top: 28px; }
-    .label--ai { top: 15%; }
-    .label--motion { top: 24%; }
-    .label--three { display: none; }
-    .hero-foot {
+
+    .actions {
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .hero-scroll {
+      display: none;
+    }
+
+    .intro-mark {
+      top: 22px;
+      left: 20px;
+    }
+
+    .intro-mark span {
+      display: none;
+    }
+
+    .intro-skip {
+      top: 18px;
+      right: 20px;
+    }
+
+    .intro-line {
       left: 20px;
       right: 20px;
-      bottom: 18px;
-      grid-template-columns: 1fr auto;
+      bottom: 24px;
     }
-    .hero-foot > :last-child { display: none; }
+
+    .intro-word {
+      font-size: clamp(92px, 31vw, 148px);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-copy { opacity: 1; transform: none; animation: none; }
-    .status i, .label, .hero-foot a :global(svg) { animation: none; }
+    .intro-sequence {
+      display: none;
+    }
+
+    .hero-copy,
+    .hero-scroll {
+      opacity: 1;
+      transform: none;
+      animation: none !important;
+    }
+
+    .hero-scroll > span:first-child {
+      animation: none;
+    }
   }
 </style>

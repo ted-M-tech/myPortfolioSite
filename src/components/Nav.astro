@@ -2,11 +2,9 @@
 import { site } from "../data/profile";
 
 const links = [
-  { href: "#work", ja: "制作", en: "Work", no: "01" },
-  { href: "#lab", ja: "実験", en: "Lab", no: "02" },
-  { href: "#skills", ja: "領域", en: "Capabilities", no: "03" },
-  { href: "#process", ja: "進め方", en: "Process", no: "04" },
-  { href: "#services", ja: "ご依頼", en: "Services", no: "05" },
+  { href: "#work", ja: "制作", en: "Work" },
+  { href: "#skills", ja: "領域", en: "Capabilities" },
+  { href: "#process", ja: "進め方", en: "Process" },
 ];
 ---
 
@@ -22,7 +20,6 @@ const links = [
     {
       links.map((l) => (
         <a href={l.href}>
-          <small>{l.no}</small>
           <span class="ja">{l.ja}</span>
           <span class="en">{l.en}</span>
         </a>
@@ -148,17 +145,8 @@ const links = [
   }
 
   .links a {
-    display: flex;
-    align-items: baseline;
-    gap: 6px;
     opacity: 0.62;
     transition: opacity var(--dur-fast);
-  }
-
-  .links small {
-    font-family: var(--font-mono);
-    font-size: 7px;
-    opacity: .6;
   }
 
   .links a:hover {
