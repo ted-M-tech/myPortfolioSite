@@ -16,10 +16,10 @@ export const site = {
   /** 屋号。表記は CamelCase 固定（docs/brand/maepace.md） */
   brand: "MaePace",
   brandJa: "マエペース",
-  title: "Tetsuya Maeda — Creative Technologist / AI, Motion & 3D",
+  title: "Tetsuya Maeda — AI Driven Full Stack Developer",
   description: {
-    ja: "前田哲也 / Tetsuya Maeda。AI・モーション・3Dと堅牢な実装を横断し、思わず触れたくなるデジタル体験をつくるクリエイティブ・テクノロジスト。",
-    en: "Tetsuya Maeda is a creative technologist crafting memorable digital experiences across AI, motion, 3D and production-grade engineering.",
+    ja: "前田哲也 / Tetsuya Maeda。AIを開発プロセスの中核に据え、フロントエンド、バックエンド、クラウドまで一気通貫で構築するAI Driven Full Stack Developer。",
+    en: "Tetsuya Maeda is an AI Driven Full Stack Developer building production-ready products across frontend, backend, cloud and AI.",
   } satisfies Bilingual,
 } as const;
 
@@ -29,8 +29,8 @@ export const person = {
   /** 普段使っている呼び名 */
   alias: "Ted",
   role: {
-    ja: "クリエイティブ・テクノロジスト",
-    en: "Creative Technologist",
+    ja: "AI Driven Full Stack Developer",
+    en: "AI Driven Full Stack Developer",
   } satisfies Bilingual,
   location: {
     ja: "バンクーバー, カナダ",
@@ -42,12 +42,12 @@ export const person = {
    * 「前へ進む速度」と「自分のペース」— 屋号の二重の由来をそのまま言葉にしている。
    */
   headline: {
-    ja: "まだ見たことのない体験を、<em>動くかたち</em>に。",
-    en: "Ideas become <em>experiences</em> people feel.",
+    ja: "AIで、構想を<em>動くプロダクト</em>へ。",
+    en: "AI-driven ideas, <em>built end to end.</em>",
   } satisfies Bilingual,
   intro: {
-    ja: "AIの速さ、モーションの感情、3Dの没入感。そこに5年以上のプロダクト開発力を重ね、ブランドサイトから実運用プロダクトまで、驚きで終わらない体験を設計・実装します。",
-    en: "The speed of AI, the emotion of motion, the depth of 3D — grounded in five-plus years of shipping real products. From expressive brand sites to production systems, I make the wonder work.",
+    ja: "生成AIを、飾りではなく開発の推進力に。5年以上の実務経験をもとに、アイデア検証からUI、API、データ、クラウド、本番運用まで一気通貫で設計・実装します。",
+    en: "I use generative AI as an engineering multiplier, not decoration. With five-plus years of product experience, I take ideas from validation through UI, APIs, data, cloud and production.",
   } satisfies Bilingual,
 } as const;
 
@@ -59,16 +59,16 @@ export const socials = [
 
 /** 帯を流れる技術キーワード。実際に使うものだけを並べる。 */
 export const marquee = [
-  "Creative Direction", "Generative AI", "WebGL", "3D", "Motion",
-  "TypeScript", "Astro", "React", "SwiftUI", "Python", "Real-time Data",
-  "Product Design", "Rapid Prototyping", "Cloud", "Storytelling",
+  "AI Driven Development", "Full Stack", "Generative AI", "TypeScript", "React",
+  "Next.js", "Astro", "Python", "C#", "SwiftUI", "API Design", "Real-time Data",
+  "Cloud Architecture", "Rapid Prototyping", "DevOps",
 ] as const;
 
 export const stats = [
   { value: 5, suffix: "+", label: { ja: "年のプロダクト開発", en: "Years shipping products" } },
   { value: 4, suffix: "×", label: { ja: "リリース頻度を向上", en: "Faster release cadence" } },
   { value: 25, suffix: "%", label: { ja: "運用効率を改善", en: "Operational efficiency gained" } },
-  { value: 6, suffix: "", label: { ja: "領域横断の制作事例", en: "Cross-discipline builds" } },
+  { value: 6, suffix: "", label: { ja: "領域横断のプロダクト", en: "Cross-domain products" } },
 ] as const;
 
 export type Project = {
@@ -83,7 +83,7 @@ export type Project = {
 export const projects: readonly Project[] = [
   {
     id: "factory-ai",
-    role: { ja: "AI体験 · データビジュアライゼーション", en: "AI Experience · Data Visualization" },
+    role: { ja: "AI開発 · フルスタック", en: "AI Engineering · Full Stack" },
     title: {
       ja: "製造業向け AI 分析システム",
       en: "AI Analytics for Manufacturing",
@@ -97,7 +97,7 @@ export const projects: readonly Project[] = [
   },
   {
     id: "annoscene",
-    role: { ja: "プロダクトデザイン · 空間UI", en: "Product Design · Spatial UI" },
+    role: { ja: "iOS開発 · MapKit", en: "iOS Engineering · MapKit" },
     title: { ja: "AnnoScene", en: "AnnoScene" },
     description: {
       ja: "旅の移動そのものを主役にする iOS アプリ。走った経路が地図上に自分で描かれ、写真や短い動画がそれぞれの場所と時刻に現れます。訪れた国を貯める Atlas 付き。写真の位置情報は端末内だけで処理します。",
@@ -108,7 +108,7 @@ export const projects: readonly Project[] = [
   },
   {
     id: "helpkansai",
-    role: { ja: "音声体験 · モーションUI", en: "Voice Experience · Motion UI" },
+    role: { ja: "iOS開発 · 音声学習", en: "iOS Engineering · Voice Learning" },
     title: { ja: "Help Kansai", en: "Help Kansai" },
     description: {
       ja: "いまの関西弁を、標準語と並べて学ぶ iOS アプリ。ネイティブ音声での発話練習と間隔反復を組み合わせ、教科書には出てこない自然な言い回しを扱います。",
@@ -119,7 +119,7 @@ export const projects: readonly Project[] = [
   },
   {
     id: "wellnesspet",
-    role: { ja: "キャラクター体験 · ヘルスケア", en: "Character Experience · Health" },
+    role: { ja: "iOS開発 · HealthKit", en: "iOS Engineering · HealthKit" },
     title: { ja: "Wellness Pet", en: "Wellness Pet" },
     description: {
       ja: "歩数と睡眠、夜のひと押しの気分記録が、一匹のピクセルの犬の様子に変わる iOS アプリ。点数をつける道具ではなく、そばにいるものとして設計しています。",
@@ -130,7 +130,7 @@ export const projects: readonly Project[] = [
   },
   {
     id: "scada-viz",
-    role: { ja: "リアルタイム可視化 · 制御UI", en: "Real-time Visualization · Control UI" },
+    role: { ja: "フルスタック開発 · 制御システム", en: "Full Stack Engineering · Control Systems" },
     title: {
       ja: "データ可視化・遠隔制御システム",
       en: "Data Visualization & Remote Control",
@@ -144,7 +144,7 @@ export const projects: readonly Project[] = [
   },
   {
     id: "saas-scrum",
-    role: { ja: "プロダクト基盤 · デザインシステム", en: "Product Platform · Design System" },
+    role: { ja: "フルスタック開発 · Scrum", en: "Full Stack Engineering · Scrum" },
     title: {
       ja: "製造業向け SaaS の開発",
       en: "Manufacturing SaaS Platform",
@@ -177,18 +177,18 @@ export const ethos = {
 
 export const skills = [
   {
-    group: { ja: "体験設計", en: "Experience" },
-    items: ["Creative Direction", "Interaction Design", "Motion Design", "3D / WebGL", "Rapid Prototyping"],
+    group: { ja: "AI駆動開発", en: "AI Driven Development" },
+    items: ["Generative AI", "AI-assisted Engineering", "Rapid Prototyping", "RAG", "AI/ML Integration"],
   },
   {
-    group: { ja: "AI・開発", en: "AI & Engineering" },
-    items: ["Generative AI", "Python", "TypeScript", "React", "Astro", "SwiftUI"],
+    group: { ja: "フルスタック", en: "Full Stack" },
+    items: ["TypeScript", "React", "Next.js", "Astro", "Python", "C#", "SwiftUI", "REST APIs"],
   },
   {
-    group: { ja: "基盤・ツール", en: "Platform & Tools" },
+    group: { ja: "クラウド・データ", en: "Cloud & Data" },
     items: [
-      "GLSL", "Canvas", "Microsoft Azure", "Docker", "PostgreSQL",
-      "Snowflake", "Power BI", "Figma", "Git",
+      "Microsoft Azure", "Docker", "PostgreSQL", "SQL Server",
+      "Snowflake", "Power BI", "DevOps", "Git",
     ],
   },
 ] as const;
@@ -203,7 +203,7 @@ export const certifications = [
 
 export const timeline = [
   {
-    org: "Fullstack Developer (Contract)",
+    org: "AI Driven Full Stack Developer (Contract)",
     role: {
       ja: "工場自動化 × リアルタイム分析 × AI",
       en: "Factory automation · real-time analytics · AI",
@@ -295,14 +295,14 @@ export const services = [
     tone: 1,
     featured: false,
     badge: { ja: "まずはここから", en: "Start here" },
-    title: { ja: "体験デザイン相談", en: "Experience direction" },
+    title: { ja: "AI・技術相談", en: "AI & technical consultation" },
     subtitle: { ja: "オンライン · 60分", en: "Online · 60 min" },
     price: { ja: "¥15,000", en: "CA$150" },
     unit: { ja: "/ 回", en: "/ session" },
     points: [
-      { ja: "ブランドの強みと言葉を整理", en: "Clarify the brand and its story" },
-      { ja: "AI・モーション・3Dの活かし方", en: "Find the right role for AI, motion and 3D" },
-      { ja: "実現方法とロードマップを具体化", en: "Leave with a practical roadmap" },
+      { ja: "課題とAI活用ポイントを整理", en: "Map the problem and its AI opportunities" },
+      { ja: "技術構成と実現性を検討", en: "Assess architecture and feasibility" },
+      { ja: "開発ロードマップを具体化", en: "Leave with a practical build roadmap" },
     ],
     cta: { ja: "相談を申し込む", en: "Book a session" },
   },
@@ -329,14 +329,14 @@ export const services = [
     tone: 0,
     featured: true,
     badge: { ja: "フラッグシップ", en: "Flagship" },
-    title: { ja: "没入型Webサイト", en: "Immersive website" },
-    subtitle: { ja: "デザイン＋実装 · 4〜8週間", en: "Design + build · 4–8 weeks" },
+    title: { ja: "フルスタック開発", en: "Full stack product build" },
+    subtitle: { ja: "設計＋実装 · 4〜8週間", en: "Architecture + build · 4–8 weeks" },
     price: { ja: "¥800,000", en: "CA$8,000" },
     unit: { ja: "〜 / 件", en: "+ / project" },
     points: [
-      { ja: "戦略・コピー・体験設計から", en: "Strategy, copy and experience design" },
-      { ja: "WebGL・3D・モーションの実装", en: "WebGL, 3D and motion engineering" },
-      { ja: "公開後の計測・改善まで", en: "Launch, measurement and iteration" },
+      { ja: "フロントエンド・API・DBを一貫構築", en: "Frontend, APIs and database as one system" },
+      { ja: "AI・外部サービス・データ連携", en: "AI, external services and data integration" },
+      { ja: "クラウド公開・計測・改善まで", en: "Cloud launch, measurement and iteration" },
     ],
     cta: { ja: "見積もりを相談する", en: "Request a quote" },
   },
@@ -367,7 +367,7 @@ export const servicesNote = {
 export const contact = {
   heading: { ja: "次の「すごい」を、<em>一緒に</em>。", en: "Let's make the next <em>unmissable</em> thing." },
   note: {
-    ja: "Webサイト、AIプロトタイプ、3D体験、まだ名前のない企画でも。返信は2営業日以内に。",
-    en: "A website, AI prototype, 3D experience, or an idea without a name yet. I reply within two business days.",
+    ja: "AIプロトタイプ、Webアプリ、業務システム、まだ名前のない企画でも。返信は2営業日以内に。",
+    en: "An AI prototype, web app, business system, or an idea without a name yet. I reply within two business days.",
   },
 } as const;
