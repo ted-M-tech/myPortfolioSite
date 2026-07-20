@@ -35,19 +35,17 @@ const enablementId = (id: string) => id as (typeof enablement)[number]["id"];
  * 上下で同じ案件を見せない。
  * 上段はAI・モバイル・個人プロダクト、下段は業務システム・クラウド・組織導入。
  * 同一段を2回描画するのは、継ぎ目のないループを作るためだけ。
+ *
+ * id で引く。以前は projects の添字を直接書いていたので、並び順を変えるたびに
+ * 段の中身が黙って入れ替わった。id なら並び替えても壊れず、消えていれば落ちる。
  */
-const rowA = [
-  projectCards[1],
-  projectCards[2],
-  projectCards[3],
-  projectCards[0],
-  projectCards[6],
-];
-const rowB = [
-  projectCards[4],
-  projectCards[5],
-  ...enablementCards,
-];
+const pick = (id: string) => {
+  const card = projectCards.find((c) => c.item.id === id);
+  if (!card) throw new Error(`WorkStrip: 不明な案件 id "${id}"`);
+  return card;
+};
+const rowA = ["annoscene", "helpkansai", "wellnesspet", "factory-ai", "canada-community"].map(pick);
+const rowB = [...["scada-viz", "saas-scrum"].map(pick), ...enablementCards];
 ---
 
 <div class="strip" aria-hidden="true">

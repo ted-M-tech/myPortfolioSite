@@ -163,6 +163,25 @@ export const projects: readonly Project[] = [
     },
   },
   {
+    id: "saas-scrum",
+    role: { ja: "フルスタック開発 · Scrum", en: "Full Stack Engineering · Scrum" },
+    title: {
+      ja: "製造業向け SaaS の開発",
+      en: "Manufacturing SaaS Platform",
+    },
+    description: {
+      ja: "ファウンディングエンジニアとして立ち上げ。100を超えるAPIとダッシュボード、日次17万件の設備データを受けるクラウド基盤まで。",
+      en: "Built from zero as founding engineer — 100+ APIs, a dashboard, and cloud infrastructure ingesting 170,000 device data points a day.",
+    },
+    tech: ["Python", "FastAPI", "React", "AWS", "Terraform", "IoT"],
+    href: "https://www.linkedin.com/in/tetsuya-maeda-629b70294/",
+    image: "/work/manufacturing-saas-case-v2.webp",
+    imageAlt: {
+      ja: "SIM経由の設備データとScrum開発をつなぐ製造業向けSaaSの画面イメージ",
+      en: "Concept connecting cellular equipment data with Scrum delivery in a manufacturing SaaS",
+    },
+  },
+  {
     id: "annoscene",
     role: { ja: "iOS開発 · MapKit", en: "iOS Engineering · MapKit" },
     title: { ja: "AnnoScene", en: "AnnoScene" },
@@ -176,22 +195,6 @@ export const projects: readonly Project[] = [
     imageAlt: {
       ja: "AnnoSceneで旅を再生する実際のiPhone画面",
       en: "Actual iPhone screen for replaying a journey in AnnoScene",
-    },
-  },
-  {
-    id: "helpkansai",
-    role: { ja: "iOS開発 · 音声学習", en: "iOS Engineering · Voice Learning" },
-    title: { ja: "Help Kansai", en: "Help Kansai" },
-    description: {
-      ja: "いまの関西弁を標準語と並べて学ぶ iOS アプリ。ネイティブ音声と間隔反復で、自然な言い回しを身につける。",
-      en: "An iOS app for learning modern Kansai Japanese through native audio, comparison and spaced repetition.",
-    },
-    tech: ["Swift", "SwiftUI", "AVFoundation", "SRS"],
-    href: "https://helpkansai.maepace.com",
-    image: "/work/help-kansai-case-v2.webp",
-    imageAlt: {
-      ja: "Help Kansaiの音声学習画面を表示したiPhoneのコンセプト",
-      en: "Concept iPhone view of Help Kansai's voice lesson",
     },
   },
   {
@@ -230,25 +233,6 @@ export const projects: readonly Project[] = [
     },
   },
   {
-    id: "saas-scrum",
-    role: { ja: "フルスタック開発 · Scrum", en: "Full Stack Engineering · Scrum" },
-    title: {
-      ja: "製造業向け SaaS の開発",
-      en: "Manufacturing SaaS Platform",
-    },
-    description: {
-      ja: "ファウンディングエンジニアとして立ち上げ。100を超えるAPIとダッシュボード、日次17万件の設備データを受けるクラウド基盤まで。",
-      en: "Built from zero as founding engineer — 100+ APIs, a dashboard, and cloud infrastructure ingesting 170,000 device data points a day.",
-    },
-    tech: ["Python", "FastAPI", "React", "AWS", "Terraform", "IoT"],
-    href: "https://www.linkedin.com/in/tetsuya-maeda-629b70294/",
-    image: "/work/manufacturing-saas-case-v2.webp",
-    imageAlt: {
-      ja: "SIM経由の設備データとScrum開発をつなぐ製造業向けSaaSの画面イメージ",
-      en: "Concept connecting cellular equipment data with Scrum delivery in a manufacturing SaaS",
-    },
-  },
-  {
     id: "canada-community",
     role: { ja: "ボランティア · Web開発", en: "Volunteer · Web Development" },
     title: {
@@ -265,6 +249,22 @@ export const projects: readonly Project[] = [
     imageAlt: {
       ja: "カナダのコミュニティサイトをデスクトップとスマートフォンで表示したコンセプト",
       en: "Concept desktop and mobile views of a Canadian community website",
+    },
+  },
+  {
+    id: "helpkansai",
+    role: { ja: "iOS開発 · 音声学習", en: "iOS Engineering · Voice Learning" },
+    title: { ja: "Help Kansai", en: "Help Kansai" },
+    description: {
+      ja: "いまの関西弁を標準語と並べて学ぶ iOS アプリ。ネイティブ音声と間隔反復で、自然な言い回しを身につける。",
+      en: "An iOS app for learning modern Kansai Japanese through native audio, comparison and spaced repetition.",
+    },
+    tech: ["Swift", "SwiftUI", "AVFoundation", "SRS"],
+    href: "https://helpkansai.maepace.com",
+    image: "/work/help-kansai-case-v2.webp",
+    imageAlt: {
+      ja: "Help Kansaiの音声学習画面を表示したiPhoneのコンセプト",
+      en: "Concept iPhone view of Help Kansai's voice lesson",
     },
   },
 ] as const;
@@ -548,11 +548,6 @@ export const services = [
     cta: { ja: "話をする", en: "Start a conversation" },
   },
 ] as const;
-
-export const servicesNote = {
-  ja: "MaePaceは前田哲也が個人で運営する開発事業です。初回30分は無料。まだ企画書がなくても大丈夫です。日本語 / English どちらでも。",
-  en: "MaePace is an independent development practice run by Tetsuya Maeda. The first 30 minutes are free; no polished brief needed. Japanese or English.",
-} satisfies Bilingual;
 
 /**
  * 連絡先。ここは連絡が取れれば十分な場所なので、見出しも説明文も置かない。

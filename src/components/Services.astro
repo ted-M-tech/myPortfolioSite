@@ -1,5 +1,5 @@
 ---
-import { services, servicesNote, person } from "../data/profile";
+import { services, person } from "../data/profile";
 import Icon from "./Icon.astro";
 
 /** 問い合わせは mailto に寄せる。予約基盤を挟まない分、壊れる箇所が減る */
@@ -88,10 +88,6 @@ const mailto = (title: string) =>
       }
     </ul>
 
-    <p class="note reveal">
-      <span class="ja">{servicesNote.ja}</span>
-      <span class="en">{servicesNote.en}</span>
-    </p>
   </div>
 </section>
 
@@ -291,14 +287,6 @@ const mailto = (title: string) =>
   .cta:hover {
     transform: translateY(-1px);
     box-shadow: var(--shadow);
-  }
-
-  .note {
-    margin-top: 30px;
-    font-size: 13.5px;
-    color: var(--text-faint);
-    text-align: center;
-    text-wrap: pretty;
   }
 
   @media (max-width: 1040px) {
