@@ -160,9 +160,10 @@ export const stats = [
     label: { ja: "運用効率を改善", en: "Operational efficiency gained" },
   },
   {
-    value: 6,
+    value: 10,
+    /* 制作7件 + 組織支援3件。後者はプロダクトではないので「案件」で数える */
     suffix: "",
-    label: { ja: "領域横断のプロダクト", en: "Cross-domain products" },
+    label: { ja: "領域横断の案件", en: "Cross-domain projects" },
   },
 ] as const;
 
