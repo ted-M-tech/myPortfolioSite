@@ -91,13 +91,17 @@ import { ethos, person } from "../data/profile";
 </script>
 
 <style>
-  /* 反転面ではなく、紙にごく薄い色を差した面。前後のセクションと地続きに見せる */
+  /*
+   * 反転面をやめた代わりに、一段沈めた面にしている。
+   * 紙のままだと Work → Ethos → Skills → Process が明るい面の四連になり、
+   * 節目が消えて一枚の長い面に見えてしまう。
+   */
   .ethos {
     overflow: hidden;
     background:
-      radial-gradient(72% 58% at 74% 46%, rgba(154, 168, 206, .16), transparent 68%),
-      radial-gradient(64% 56% at 28% 58%, rgba(206, 172, 152, .13), transparent 66%),
-      var(--paper);
+      radial-gradient(72% 58% at 74% 46%, rgba(154, 168, 206, .18), transparent 68%),
+      radial-gradient(64% 56% at 28% 58%, rgba(206, 172, 152, .14), transparent 66%),
+      var(--surface-sunken);
   }
 
   header {
