@@ -15,10 +15,12 @@
     "deploy": "astro build && wrangler deploy"
   },
   "dependencies": {
-    "astro": "^7.1.1"
+    "astro": "^7.1.1",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
+    "@types/three": "^0.185.1",
     "typescript": "^5.7.3",
     "wrangler": "^4.112.0"
   }
