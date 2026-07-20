@@ -3,100 +3,136 @@ import { projects } from "../data/profile";
 import ProjectPanel from "./ProjectPanel.astro";
 
 /**
- * 作品の横流し一覧。
+ * 作品の横流し一覧。2列を逆方向に、継ぎ目なく流し続ける。
  *
- * 縦積みのカードに入る前に、全件をサムネで一度に見せる。
- * 件数が増えたときに「厚み」が伝わるのは、こちらの並べ方のほう。
+ * 縦積みのカードは一度に1件しか見えない。全件を面として見せるのがこの帯の役目。
  *
- * 動きはスクロール連動。自動で流れ続ける帯にすると、読んでいる最中も
- * 動き続けて目障りになる。スクロール量に紐づけると、手を止めれば絵も止まる。
+ * 実装は CSS アニメーションだけ。同じ並びを2回描いて -50% まで動かすと、
+ * 折り返した瞬間に絵が元の位置と一致するので、ループの継ぎ目が出ない。
+ * スクロール連動も試したが、上下に間隔さえ取れば流し続けて問題ないので、
+ * JS の依存を持たない方を選んだ。
+ *
+ * 上下で並び順を変えているのは、2列が鏡写しに見えないようにするため。
  */
-const items = [...projects];
+const rowA = projects.map((p, i) => ({ p, i }));
+const rowB = [...rowA].reverse();
 ---
 
-<section class="strip" aria-label="Projects overview">
-  <div class="rail" id="work-rail">
-    {
-      items.map((p, i) => (
-        <article class="card">
-          <div class="thumb">
-            <ProjectPanel index={i} animate={false} />
-            <span class="num">{String(i + 1).padStart(2, "0")}</span>
+<div class="strip" aria-hidden="true">
+  <div class="row">
+    <div class="track track--left">
+      {
+        [0, 1].map(() => (
+          <div class="run">
+            {rowA.map(({ p, i }) => (
+              <article class="card">
+                <div class="thumb">
+                  <ProjectPanel index={i} animate={false} />
+                </div>
+                <p class="title">
+                  <span class="ja">{p.title.ja}</span>
+                  <span class="en">{p.title.en}</span>
+                </p>
+                <p class="role">
+                  <span class="ja">{p.role.ja}</span>
+                  <span class="en">{p.role.en}</span>
+                </p>
+              </article>
+            ))}
           </div>
-          <p class="title">
-            <span class="ja">{p.title.ja}</span>
-            <span class="en">{p.title.en}</span>
-          </p>
-          <p class="role">
-            <span class="ja">{p.role.ja}</span>
-            <span class="en">{p.role.en}</span>
-          </p>
-        </article>
-      ))
-    }
-  </div>
-</section>
-
-<script>
-  import { scroll } from "motion";
-
-  const rail = document.getElementById("work-rail");
-  const strip = rail?.closest("section");
-
-  if (rail && strip && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    // 画面からはみ出している分だけ動かす。行が短ければ何もしない
-    const overflow = () => Math.max(0, rail.scrollWidth - innerWidth);
-
-    let stop: (() => void) | null = null;
-
-    const wire = () => {
-      stop?.();
-      const distance = overflow();
-      if (distance === 0) {
-        rail.style.transform = "";
-        return;
+        ))
       }
+    </div>
+  </div>
 
-      // animate() を挟むとアニメーションエンジン全体が入って gzip 24KB になる。
-      // ここでやりたいのは進捗から transform を1つ決めることだけなので、
-      // 進捗のコールバックだけ受け取って自分で当てる。
-      stop = scroll(
-        (progress: number) => {
-          rail.style.transform = `translateX(${-(distance * progress).toFixed(2)}px)`;
-        },
-        {
-          target: strip,
-          // 帯が下から入り、上へ抜けるまでを 0→1 に写す
-          offset: ["start end", "end start"],
-        },
-      );
-    };
+  <div class="row">
+    <div class="track track--right">
+      {
+        [0, 1].map(() => (
+          <div class="run">
+            {rowB.map(({ p, i }) => (
+              <article class="card">
+                <div class="thumb">
+                  <ProjectPanel index={i} animate={false} />
+                </div>
+                <p class="title">
+                  <span class="ja">{p.title.ja}</span>
+                  <span class="en">{p.title.en}</span>
+                </p>
+                <p class="role">
+                  <span class="ja">{p.role.ja}</span>
+                  <span class="en">{p.role.en}</span>
+                </p>
+              </article>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
 
-    wire();
-    // 幅が変われば移動量も変わる
-    addEventListener("resize", wire, { passive: true });
-  }
-</script>
+  <!-- 端を地の色に溶かす。切り落としに見せないための覆い -->
+  <div class="fade"></div>
+</div>
 
 <style>
   .strip {
-    /* wrap に入れない。端から端まで使うことがこの帯の意味 */
-    padding-block: clamp(40px, 6vw, 76px) 0;
+    position: relative;
+    /*
+     * 上下に間隔を取る。流れ続けるものが読んでいる本文のすぐ隣にあると
+     * 気が散るが、離してしまえば「奥で動いている」だけになる。
+     */
+    margin-block: clamp(48px, 6vw, 88px);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .row {
     overflow: hidden;
   }
 
-  .rail {
+  .track {
     display: flex;
-    gap: 20px;
     width: max-content;
-    /* 左端に少し余白を残し、切り落とされた感じにしない */
-    padding-inline: var(--pad-x);
-    will-change: transform;
+  }
+
+  .run {
+    display: flex;
+    gap: 16px;
+    padding-right: 16px;
+  }
+
+  /* 同じ並びを2つ描いて -50% まで動かすと、継ぎ目が出ない */
+  .track--left {
+    animation: rail-left 64s linear infinite;
+  }
+  .track--right {
+    animation: rail-right 64s linear infinite;
+  }
+
+  @keyframes rail-left {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes rail-right {
+    from {
+      transform: translateX(-50%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  /* 見たいものが通り過ぎるのを追わせない */
+  .strip:hover .track {
+    animation-play-state: paused;
   }
 
   .card {
     flex: none;
-    width: clamp(240px, 24vw, 340px);
+    width: clamp(210px, 19vw, 268px);
   }
 
   .thumb {
@@ -105,47 +141,55 @@ const items = [...projects];
     border-radius: var(--radius);
     overflow: hidden;
     border: 1px solid var(--line);
-    transition: transform var(--dur) var(--ease-out);
-  }
-
-  .card:hover .thumb {
-    transform: translateY(-4px);
-  }
-
-  .num {
-    position: absolute;
-    top: 12px;
-    left: 14px;
-    z-index: 2;
-    font-size: 12px;
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    color: var(--text-on-dark-muted);
   }
 
   .title {
-    margin-top: 14px;
-    font-size: 16px;
+    margin-top: 12px;
+    font-size: 14.5px;
     font-weight: 600;
     letter-spacing: var(--tracking-tight);
+    /* 題名が折り返すと列の高さが揃わなくなる */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .role {
     margin-top: 2px;
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 600;
     letter-spacing: var(--tracking-wide);
     text-transform: uppercase;
     color: var(--text-faint);
   }
 
+  .fade {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(
+      to right,
+      var(--surface) 0%,
+      transparent 14%,
+      transparent 86%,
+      var(--surface) 100%
+    );
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    /* 動かさないなら、横スクロールで自分で見られるようにする */
-    .strip {
+    .track {
+      animation: none;
+    }
+    /* 止めるなら自分で送れるようにする。1列あれば足りる */
+    .row {
       overflow-x: auto;
     }
-    .card:hover .thumb {
-      transform: none;
+    .row + .row {
+      display: none;
+    }
+    .fade {
+      display: none;
     }
   }
 </style>
