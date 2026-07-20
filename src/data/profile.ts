@@ -39,12 +39,15 @@ export const person = {
   } satisfies Bilingual,
   email: "tetsuya.maeda.mail@gmail.com",
   /**
-   * ヒーローの見出し。<em> で囲んだ箇所がアクセント表示になる。
-   * 「前へ進む速度」と「自分のペース」— 屋号の二重の由来をそのまま言葉にしている。
+   * ヒーローの見出し。<em> の中は Hero.astro が字幅で強調する（色は変えない）。
+   * 連絡先の <em> はアクセント色だが、ここは無彩色のまま。
+   *
+   * 速さは売りの中心なので見出しで言う。ただし「構想を速くプロダクトへ」のように
+   * 係る動詞のない副詞を置かないこと（日本語として壊れる）。
    */
   headline: {
-    ja: "AIで、構想を<br /><em>速くプロダクトへ。</em>",
-    en: "Ideas into<br /><em>products, fast.</em>",
+    ja: "人とAIの協調で、<br /><em>高速開発。</em>",
+    en: "People and AI together,<br /><em>building fast.</em>",
   } satisfies Bilingual,
   intro: {
     ja: "AIを開発の中核に。UI、API、データ、クラウドまで、一気通貫で設計・実装します。",
