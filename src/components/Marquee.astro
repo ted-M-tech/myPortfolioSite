@@ -1,8 +1,31 @@
 ---
 import { marquee } from "../data/profile";
+import Icon from "./Icon.astro";
 
-const row = [...marquee];
-const reversed = [...marquee].reverse();
+type StackLabel = (typeof marquee)[number];
+type StackIcon = "brain" | "code" | "database" | "cloud";
+
+const genericIcons: Partial<Record<StackLabel, StackIcon>> = {
+  "AI Driven Development": "brain",
+  "Generative AI": "brain",
+  "Full Stack": "code",
+  "API Design": "code",
+  "Real-time Data": "database",
+  "Cloud Architecture": "cloud",
+  "Rapid Prototyping": "code",
+  "DevOps": "cloud",
+};
+
+const brandIcons: Partial<Record<StackLabel, string>> = {
+  "Next.js": "/brand/stack/nextjs.svg",
+};
+
+const row = marquee.map((label) => ({
+  label,
+  icon: genericIcons[label],
+  brand: brandIcons[label],
+}));
+const reversed = [...row].reverse();
 ---
 
 <!--
@@ -14,10 +37,17 @@ const reversed = [...marquee].reverse();
     {
       [0, 1].map(() => (
         <span class="run">
-          {row.map((wd) => (
+          {row.map((item) => (
             <span class="item">
-              {wd}
-              <i>·</i>
+              {
+                item.brand
+                  ? <img class="brand-icon" src={item.brand} alt="" width="38" height="38" />
+                  : item.icon
+                    ? <span class="stack-icon"><Icon name={item.icon} size={34} /></span>
+                    : null
+              }
+              <span>{item.label}</span>
+              <i class="separator">·</i>
             </span>
           ))}
         </span>
@@ -31,10 +61,17 @@ const reversed = [...marquee].reverse();
     {
       [0, 1].map(() => (
         <span class="run">
-          {reversed.map((wd) => (
+          {reversed.map((item) => (
             <span class="item">
-              {wd}
-              <i>·</i>
+              {
+                item.brand
+                  ? <img class="brand-icon" src={item.brand} alt="" width="38" height="38" />
+                  : item.icon
+                    ? <span class="stack-icon"><Icon name={item.icon} size={34} /></span>
+                    : null
+              }
+              <span>{item.label}</span>
+              <i class="separator">·</i>
             </span>
           ))}
         </span>
@@ -64,7 +101,7 @@ const reversed = [...marquee].reverse();
   .track {
     display: flex;
     width: max-content;
-    animation: slide 34s linear infinite;
+    animation: slide 27s linear infinite;
   }
 
   .marq--rev .track {
@@ -82,7 +119,7 @@ const reversed = [...marquee].reverse();
   .item {
     display: inline-flex;
     align-items: center;
-    gap: 34px;
+    gap: 12px;
     padding-right: 34px;
     font-size: clamp(28px, 4.4vw, 52px);
     font-weight: 600;
@@ -93,13 +130,37 @@ const reversed = [...marquee].reverse();
     color: transparent;
   }
 
+  .brand-icon,
+  .stack-icon {
+    flex: 0 0 auto;
+    width: clamp(24px, 2.5vw, 38px);
+    height: clamp(24px, 2.5vw, 38px);
+    -webkit-text-stroke: 0;
+  }
+
+  .brand-icon {
+    object-fit: contain;
+  }
+
+  .stack-icon {
+    display: grid;
+    place-items: center;
+    color: rgba(243, 240, 235, 0.66);
+  }
+
+  .stack-icon :global(svg) {
+    width: 100%;
+    height: 100%;
+  }
+
   /* 下の列は塗る。輪郭と塗りが交互になって帯にリズムが出る */
   .track--sub .item {
     -webkit-text-stroke: 0;
     color: var(--text-on-dark);
   }
 
-  .item i {
+  .separator {
+    margin-left: 22px;
     font-style: normal;
     -webkit-text-stroke: 0;
     color: var(--accent-on-dark);

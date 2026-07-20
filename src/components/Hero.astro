@@ -32,14 +32,20 @@ import Icon from "./Icon.astro";
     </div>
   </div>
 
-  <div class="visual" aria-label="Interactive geometric study">
+  <div class="visual" aria-label="AI-driven software architecture assembling in three dimensions">
     <div class="puzzle-pane puzzle-pane--one">
+      <span class="pane-label">01 / AI ORCHESTRATION</span>
+      <span class="pane-state">ASSEMBLING → LIVE</span>
       <canvas data-hero-geometry aria-hidden="true"></canvas>
     </div>
     <div class="puzzle-pane puzzle-pane--two">
+      <span class="pane-label">02 / PRODUCT SYSTEM</span>
+      <span class="pane-state">MODULES → CONNECTED</span>
       <canvas data-hero-geometry aria-hidden="true"></canvas>
     </div>
     <div class="puzzle-pane puzzle-pane--three">
+      <span class="pane-label">03 / PRODUCTION FLOW</span>
+      <span class="pane-state">VERIFIED → SHIPPED</span>
       <canvas data-hero-geometry aria-hidden="true"></canvas>
     </div>
   </div>
@@ -172,6 +178,28 @@ import Icon from "./Icon.astro";
   .puzzle-pane canvas {
     width: 100%;
     height: 100%;
+  }
+
+  .pane-label,
+  .pane-state {
+    position: absolute;
+    z-index: 2;
+    font-family: var(--font-mono);
+    font-size: clamp(6px, 0.48vw, 8px);
+    letter-spacing: 0.13em;
+    color: rgba(245, 242, 237, 0.5);
+    pointer-events: none;
+  }
+
+  .pane-label {
+    top: 14px;
+    left: 16px;
+  }
+
+  .pane-state {
+    right: 16px;
+    bottom: 14px;
+    color: rgba(240, 130, 78, 0.68);
   }
 
   .puzzle-pane--one {

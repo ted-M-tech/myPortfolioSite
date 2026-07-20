@@ -1,12 +1,22 @@
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
+import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
 
-type Orb = {
-  mesh: THREE.Mesh;
+type ArchitectureNode = {
+  group: THREE.Group;
   origin: THREE.Vector3;
-  phase: number;
-  amplitude: number;
-  speed: number;
+  target: THREE.Vector3;
+  rotation: THREE.Euler;
+  delay: number;
+  core: boolean;
+};
+
+type Connection = {
+  from: ArchitectureNode;
+  to: ArchitectureNode;
+  line: THREE.Line<THREE.BufferGeometry, THREE.LineBasicMaterial>;
+  signal: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>;
+  offset: number;
 };
 
 type GeometryView = {
@@ -15,24 +25,167 @@ type GeometryView = {
   scene: THREE.Scene;
   camera: THREE.PerspectiveCamera;
   group: THREE.Group;
-  orbs: Orb[];
-  ring: THREE.Mesh | null;
+  nodes: ArchitectureNode[];
+  connections: Connection[];
+  halo: THREE.Mesh<THREE.TorusGeometry, THREE.MeshBasicMaterial> | null;
   width: number;
   height: number;
 };
 
-const palette = [0xc9d2ea, 0xe7d8de, 0xd3e2df, 0xefe4cf] as const;
+type ModuleDefinition = {
+  title: string;
+  meta: string;
+};
 
-function createMaterial(viewIndex: number, orbIndex: number) {
-  const isDark = (viewIndex + orbIndex) % 4 === 0;
-  return new THREE.MeshPhysicalMaterial({
-    color: isDark ? 0x111110 : palette[(viewIndex + orbIndex) % palette.length],
-    roughness: isDark ? 0.07 : 0.2,
-    metalness: isDark ? 0.5 : 0.03,
+const moduleSets: readonly (readonly ModuleDefinition[])[] = [
+  [
+    { title: "SIGNAL", meta: "INPUT" },
+    { title: "AI CORE", meta: "ORCHESTRATE" },
+    { title: "TOOLS", meta: "CONTEXT" },
+    { title: "UI", meta: "EXPERIENCE" },
+    { title: "MEMORY", meta: "STATE" },
+  ],
+  [
+    { title: "AUTH", meta: "GUARD" },
+    { title: "API", meta: "ROUTE" },
+    { title: "QUEUE", meta: "EVENT" },
+    { title: "DATA", meta: "STORE" },
+    { title: "CACHE", meta: "SPEED" },
+  ],
+  [
+    { title: "TEST", meta: "VERIFY" },
+    { title: "CI / CD", meta: "AUTOMATE" },
+    { title: "CLOUD", meta: "RUNTIME" },
+    { title: "OBSERVE", meta: "MEASURE" },
+    { title: "LIVE", meta: "SHIP" },
+  ],
+] as const;
+
+const colors = [
+  [0xe5d9df, 0xe7b99e, 0xd7e2df, 0xcdd7eb, 0x1d1d1b],
+  [0xcbd6ea, 0xe5d9df, 0xd8e3df, 0x1d1d1b, 0xefe4cf],
+  [0xd5e3de, 0xefd8c9, 0xcbd6ea, 0x1d1d1b, 0xe7dce1],
+] as const;
+
+const targets = [
+  new THREE.Vector3(-1.42, 1.15, -0.12),
+  new THREE.Vector3(0, 0.08, 0.22),
+  new THREE.Vector3(1.42, 1.15, -0.08),
+  new THREE.Vector3(-1.42, -1.18, 0.02),
+  new THREE.Vector3(1.42, -1.18, 0),
+] as const;
+
+const origins = [
+  new THREE.Vector3(-4.8, 2.7, 1.6),
+  new THREE.Vector3(0.2, 4.1, -1.8),
+  new THREE.Vector3(4.9, 2.5, 1.3),
+  new THREE.Vector3(-4.5, -3.1, -1.2),
+  new THREE.Vector3(4.6, -3.2, 1.5),
+] as const;
+
+const connectionPairs = [
+  [0, 1],
+  [1, 2],
+  [1, 3],
+  [1, 4],
+] as const;
+
+const clamp01 = (value: number) => THREE.MathUtils.clamp(value, 0, 1);
+const ease = (value: number) => {
+  const clamped = clamp01(value);
+  return 1 - Math.pow(1 - clamped, 4);
+};
+
+function createLabelTexture(title: string, meta: string, lightText: boolean) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 640;
+  canvas.height = 240;
+  const context = canvas.getContext("2d");
+  if (!context) throw new Error("Unable to create architecture label");
+
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  context.fillStyle = lightText ? "#f5f2ed" : "#171716";
+  context.font = "600 58px Inter, Arial, sans-serif";
+  context.fillText(title, 320, 100);
+  context.globalAlpha = 0.52;
+  context.font = "500 24px ui-monospace, SFMono-Regular, Menlo, monospace";
+  context.letterSpacing = "5px";
+  context.fillText(meta, 320, 170);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.anisotropy = 4;
+  texture.needsUpdate = true;
+  return texture;
+}
+
+function createModule(
+  definition: ModuleDefinition,
+  color: number,
+  index: number,
+  viewIndex: number,
+) {
+  const dark = color === 0x1d1d1b;
+  const group = new THREE.Group();
+  const geometry = new RoundedBoxGeometry(1.62, 0.76, 0.34, 5, 0.13);
+  const material = new THREE.MeshPhysicalMaterial({
+    color,
+    roughness: dark ? 0.16 : 0.24,
+    metalness: dark ? 0.32 : 0.02,
     clearcoat: 1,
-    clearcoatRoughness: isDark ? 0.06 : 0.16,
-    envMapIntensity: isDark ? 1.3 : 0.9,
+    clearcoatRoughness: 0.16,
+    envMapIntensity: dark ? 1.15 : 0.82,
   });
+  const box = new THREE.Mesh(geometry, material);
+  box.castShadow = false;
+  box.receiveShadow = false;
+  group.add(box);
+
+  const label = new THREE.Mesh(
+    new THREE.PlaneGeometry(1.45, 0.56),
+    new THREE.MeshBasicMaterial({
+      map: createLabelTexture(definition.title, definition.meta, dark),
+      transparent: true,
+      depthWrite: false,
+      toneMapped: false,
+    }),
+  );
+  label.position.z = 0.181;
+  group.add(label);
+
+  const indicator = new THREE.Mesh(
+    new THREE.SphereGeometry(0.045, 18, 12),
+    new THREE.MeshBasicMaterial({
+      color: index === 1 ? 0xff7a45 : 0xf6f1eb,
+      toneMapped: false,
+    }),
+  );
+  indicator.position.set(-0.68, 0.25, 0.19);
+  group.add(indicator);
+
+  const origin = origins[index].clone();
+  origin.x += (viewIndex - 1) * 0.36;
+  origin.y += ((index + viewIndex) % 2 === 0 ? 0.35 : -0.25);
+  const target = targets[index].clone();
+  const rotation = new THREE.Euler(
+    ((index % 3) - 1) * 0.44,
+    ((index % 2) * 2 - 1) * 0.58,
+    ((index % 4) - 1.5) * 0.24,
+  );
+
+  group.position.copy(origin);
+  group.rotation.copy(rotation);
+
+  return {
+    group,
+    origin,
+    target,
+    rotation,
+    delay: index * 0.28 + viewIndex * 0.12,
+    core: index === 1,
+  } satisfies ArchitectureNode;
 }
 
 function createView(canvas: HTMLCanvasElement, viewIndex: number, compact: boolean): GeometryView {
@@ -45,14 +198,14 @@ function createView(canvas: HTMLCanvasElement, viewIndex: number, compact: boole
   renderer.setClearColor(0x171716, 1);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.06;
+  renderer.toneMappingExposure = 1.02;
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x171716);
-  scene.fog = new THREE.FogExp2(0x171716, 0.048);
+  scene.fog = new THREE.FogExp2(0x171716, 0.055);
 
-  const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 40);
-  camera.position.set(0, 0, compact ? 9.7 : 8.7);
+  const camera = new THREE.PerspectiveCamera(37, 1, 0.1, 40);
+  camera.position.set(0, 0, compact ? 9.7 : 8.5);
 
   const environment = new RoomEnvironment();
   const pmrem = new THREE.PMREMGenerator(renderer);
@@ -60,60 +213,82 @@ function createView(canvas: HTMLCanvasElement, viewIndex: number, compact: boole
   environment.dispose();
   pmrem.dispose();
 
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x242321, 2.35));
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x242321, 2.15));
 
-  const warm = new THREE.PointLight(0xf0d5c4, 30, 16, 1.55);
+  const warm = new THREE.PointLight(0xf2c2a8, 24, 15, 1.7);
   warm.position.set(-3, 3, 4);
   scene.add(warm);
 
-  const cool = new THREE.PointLight(0xc9d2ea, 26, 15, 1.6);
+  const cool = new THREE.PointLight(0xb7c9ee, 22, 15, 1.7);
   cool.position.set(3, -1, 4);
   scene.add(cool);
 
   const group = new THREE.Group();
   scene.add(group);
 
-  const sphereGeometry = new THREE.SphereGeometry(1, compact ? 30 : 44, compact ? 20 : 30);
-  const orbs: Orb[] = [];
-  const count = compact ? 5 : 7;
+  const definitions = moduleSets[viewIndex] ?? moduleSets[0];
+  const viewColors = colors[viewIndex] ?? colors[0];
+  const nodes = definitions.map((definition, index) => {
+    const node = createModule(definition, viewColors[index], index, viewIndex);
+    group.add(node.group);
+    return node;
+  });
 
-  for (let orbIndex = 0; orbIndex < count; orbIndex += 1) {
-    const mesh = new THREE.Mesh(sphereGeometry, createMaterial(viewIndex, orbIndex));
-    const angle = orbIndex * 1.82 + viewIndex * 0.9;
-    const radius = 1.25 + (orbIndex % 3) * 0.72;
-    const x = Math.cos(angle) * radius;
-    const y = Math.sin(angle) * radius * 1.28;
-    const z = Math.cos(angle * 1.4) * 1.15;
-    const scale = 0.55 + ((orbIndex * 0.37 + viewIndex * 0.16) % 1) * 0.72;
-
-    mesh.position.set(x, y, z);
-    mesh.scale.setScalar(scale);
-    group.add(mesh);
-    orbs.push({
-      mesh,
-      origin: new THREE.Vector3(x, y, z),
-      phase: orbIndex * 0.78 + viewIndex,
-      amplitude: 0.1 + (orbIndex % 3) * 0.045,
-      speed: 0.13 + (orbIndex % 4) * 0.02,
-    });
-  }
-
-  let ring: THREE.Mesh | null = null;
-  if (viewIndex === 1) {
-    ring = new THREE.Mesh(
-      new THREE.TorusGeometry(1.15, 0.19, 20, 80),
-      new THREE.MeshPhysicalMaterial({
-        color: 0xe7d8de,
-        roughness: 0.18,
-        metalness: 0.04,
-        clearcoat: 1,
-        clearcoatRoughness: 0.14,
-        envMapIntensity: 0.9,
+  const connections = connectionPairs.map(([fromIndex, toIndex], index) => {
+    const from = nodes[fromIndex];
+    const to = nodes[toIndex];
+    const geometry = new THREE.BufferGeometry().setFromPoints([from.target, to.target]);
+    const line = new THREE.Line(
+      geometry,
+      new THREE.LineBasicMaterial({
+        color: index === 0 ? 0xe99468 : 0xbcc9e2,
+        transparent: true,
+        opacity: 0,
+        depthWrite: false,
       }),
     );
-    ring.position.set(0.7, 0.3, -0.35);
-    ring.rotation.set(0.72, 0.18, 0.3);
-    group.add(ring);
+    line.position.z = -0.2;
+    group.add(line);
+
+    const signal = new THREE.Mesh(
+      new THREE.SphereGeometry(0.055, 18, 12),
+      new THREE.MeshBasicMaterial({
+        color: index === 0 ? 0xff8a54 : 0xdce6ff,
+        transparent: true,
+        opacity: 0,
+        toneMapped: false,
+        depthWrite: false,
+      }),
+    );
+    signal.position.copy(from.target);
+    signal.position.z = 0.35;
+    group.add(signal);
+
+    return {
+      from,
+      to,
+      line,
+      signal,
+      offset: index * 0.23 + viewIndex * 0.09,
+    } satisfies Connection;
+  });
+
+  let halo: GeometryView["halo"] = null;
+  if (viewIndex === 0) {
+    halo = new THREE.Mesh(
+      new THREE.TorusGeometry(1.02, 0.018, 12, 100),
+      new THREE.MeshBasicMaterial({
+        color: 0xf28b5b,
+        transparent: true,
+        opacity: 0,
+        toneMapped: false,
+        depthWrite: false,
+      }),
+    );
+    halo.position.copy(nodes[1].target);
+    halo.position.z = -0.08;
+    halo.rotation.x = 0.18;
+    group.add(halo);
   }
 
   return {
@@ -122,17 +297,17 @@ function createView(canvas: HTMLCanvasElement, viewIndex: number, compact: boole
     scene,
     camera,
     group,
-    orbs,
-    ring,
+    nodes,
+    connections,
+    halo,
     width: 0,
     height: 0,
   };
 }
 
 /**
- * Three independent viewports move as coordinated puzzle pieces.
- * Keeping each pane structurally whole prevents the thin-line mask artifacts
- * that occurred when paper-colored overlays covered a single WebGL canvas.
+ * Three architecture slices assemble from loose modules into a working system.
+ * Once locked, signals move AI → API/data → production to show software in motion.
  */
 export function initHeroGeometry(canvases: HTMLCanvasElement[]) {
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -157,7 +332,7 @@ export function initHeroGeometry(canvases: HTMLCanvasElement[]) {
     view.renderer.setPixelRatio(dpr);
     view.renderer.setSize(width, height, false);
     view.camera.aspect = width / height;
-    view.camera.position.z = width < 300 ? 10.2 : 8.7;
+    view.camera.position.z = width < 300 ? 10.6 : 8.5;
     view.camera.updateProjectionMatrix();
   };
 
@@ -166,29 +341,60 @@ export function initHeroGeometry(canvases: HTMLCanvasElement[]) {
   const render = () => {
     if (!running && !reduced) return;
     const elapsed = reduced
-      ? 8
+      ? 5.5
       : elapsedBeforePause + (performance.now() - startedAt) / 1000;
+    const cycle = reduced ? 5.5 : elapsed % 12;
 
     pointer.lerp(pointerTarget, 0.035);
     views.forEach((view, viewIndex) => {
-      view.camera.position.x = pointer.x * 0.18;
-      view.camera.position.y = -pointer.y * 0.12;
-      view.camera.lookAt(pointer.x * 0.07, pointer.y * -0.05, 0);
+      view.camera.position.x = pointer.x * 0.16;
+      view.camera.position.y = -pointer.y * 0.1;
+      view.camera.lookAt(pointer.x * 0.06, pointer.y * -0.04, 0);
 
-      view.orbs.forEach((orb, orbIndex) => {
-        orb.mesh.position.x = orb.origin.x
-          + Math.sin(elapsed * orb.speed + orb.phase) * orb.amplitude;
-        orb.mesh.position.y = orb.origin.y
-          + Math.cos(elapsed * orb.speed * 1.18 + orb.phase) * orb.amplitude;
-        orb.mesh.rotation.y = elapsed * (0.02 + orbIndex * 0.001);
+      let systemProgress = 1;
+      view.nodes.forEach((node, nodeIndex) => {
+        const enter = ease((cycle - 0.35 - node.delay) / 1.45);
+        const leave = ease((cycle - 9.65 - nodeIndex * 0.08) / 1.15);
+        const progress = enter * (1 - leave);
+        systemProgress = Math.min(systemProgress, progress);
+
+        node.group.position.lerpVectors(node.origin, node.target, progress);
+        node.group.rotation.set(
+          node.rotation.x * (1 - progress),
+          node.rotation.y * (1 - progress),
+          node.rotation.z * (1 - progress),
+        );
+
+        const breathe = node.core && progress > 0.98
+          ? 1 + Math.sin(elapsed * 2.4 + viewIndex) * 0.018
+          : 0.84 + progress * 0.16;
+        node.group.scale.setScalar(breathe);
       });
 
-      view.group.position.x = Math.sin(elapsed * 0.055 + viewIndex) * 0.16;
-      view.group.position.y = Math.cos(elapsed * 0.07 + viewIndex) * 0.1;
-      if (view.ring) {
-        view.ring.rotation.x = 0.72 + Math.sin(elapsed * 0.1) * 0.14;
-        view.ring.rotation.y = 0.18 + elapsed * 0.035;
+      const live = THREE.MathUtils.smoothstep(systemProgress, 0.72, 1);
+      view.connections.forEach((connection, index) => {
+        connection.line.material.opacity = live * (index === 0 ? 0.62 : 0.34);
+        connection.signal.material.opacity = live;
+        const progress = (elapsed * (0.2 + viewIndex * 0.018) + connection.offset) % 1;
+        connection.signal.position.lerpVectors(
+          connection.from.target,
+          connection.to.target,
+          progress,
+        );
+        connection.signal.position.z = 0.36;
+        const pulse = 0.78 + Math.sin(elapsed * 5 + index) * 0.18;
+        connection.signal.scale.setScalar(pulse);
+      });
+
+      if (view.halo) {
+        view.halo.material.opacity = live * 0.52;
+        view.halo.rotation.z = elapsed * 0.08;
+        const haloPulse = 1 + Math.sin(elapsed * 1.7) * 0.035;
+        view.halo.scale.setScalar(haloPulse);
       }
+
+      view.group.rotation.y = pointer.x * 0.025;
+      view.group.rotation.x = pointer.y * 0.018;
       view.renderer.render(view.scene, view.camera);
     });
 
