@@ -18,14 +18,14 @@ export const site = {
   brandJa: "マエペース",
   title: "Tetsuya Maeda — AI Driven Full Stack Developer",
   description: {
-    ja: "前田哲也 / Tetsuya Maeda。AIを開発プロセスの中核に据え、フロントエンド、バックエンド、クラウドまで一気通貫で構築するAI Driven Full Stack Developer。",
+    ja: "前田哲哉 / Tetsuya Maeda。AIを開発プロセスの中核に据え、フロントエンド、バックエンド、クラウドまで一気通貫で構築するAI Driven Full Stack Developer。",
     en: "Tetsuya Maeda is an AI Driven Full Stack Developer building production-ready products across frontend, backend, cloud and AI.",
   } satisfies Bilingual,
 } as const;
 
 export const person = {
   name: "Tetsuya Maeda",
-  nameJa: "前田 哲也",
+  nameJa: "前田 哲哉",
   /** 普段使っている呼び名 */
   alias: "Ted",
   role: {
@@ -53,22 +53,38 @@ export const person = {
   /** ヒーロー直下の自己紹介。人が一度も出てこないサイトにしないための一枚 */
   photo: "/profile-photo.webp",
   bio: {
-    ja: "2020年からソフトウェアをつくっています。いまは AI を開発の中核に置き、UI からクラウドまで一人で通して形にします。新しいものが出たら、まず試す。それが続けかたです。",
-    en: "I have been building software since 2020. AI now sits at the centre of how I work, and I take things end to end — UI through to cloud. When something new shows up, I try it first. That is the habit.",
+    ja: "AIを開発の中核に置き、UIUXから開発・デプロイまで一人で通して形にします。新しい技術が出たら、まず試す。常に最新の情報をキャッチし、スピード・効率を重視した開発を実施します。",
+    en: "Putting AI at the core of my workflow, I independently handle everything from UI/UX design to development and deployment. I embrace new technologies early, stay on top of the latest trends, and focus on fast, high-efficiency development.",
   } satisfies Bilingual,
 } as const;
 
 export const socials = [
-  { label: "LinkedIn", icon: "linkedin", href: "https://www.linkedin.com/in/tetsuya-maeda-629b70294/" },
+  {
+    label: "LinkedIn",
+    icon: "linkedin",
+    href: "https://www.linkedin.com/in/tetsuya-maeda-629b70294/",
+  },
   { label: "GitHub", icon: "github", href: "https://github.com/ted-M-tech" },
   { label: "Email", icon: "mail", href: `mailto:${person.email}` },
 ] as const;
 
 /** 帯を流れる技術キーワード。実際に使うものだけを並べる。 */
 export const marquee = [
-  "AI Driven Development", "Full Stack", "Generative AI", "TypeScript", "React",
-  "Next.js", "Astro", "Python", "C#", "SwiftUI", "API Design", "Real-time Data",
-  "Cloud Architecture", "Rapid Prototyping", "DevOps",
+  "AI Driven Development",
+  "Full Stack",
+  "Generative AI",
+  "TypeScript",
+  "React",
+  "Next.js",
+  "Astro",
+  "Python",
+  "C#",
+  "SwiftUI",
+  "API Design",
+  "Real-time Data",
+  "Cloud Architecture",
+  "Rapid Prototyping",
+  "DevOps",
 ] as const;
 
 /**
@@ -125,10 +141,26 @@ export const toolchain = [
 ] as const;
 
 export const stats = [
-  { value: 6, suffix: "+", label: { ja: "年のプロダクト開発", en: "Years shipping products" } },
-  { value: 4, suffix: "×", label: { ja: "リリース頻度を向上", en: "Faster release cadence" } },
-  { value: 25, suffix: "%", label: { ja: "運用効率を改善", en: "Operational efficiency gained" } },
-  { value: 6, suffix: "", label: { ja: "領域横断のプロダクト", en: "Cross-domain products" } },
+  {
+    value: 6,
+    suffix: "+",
+    label: { ja: "年のプロダクト開発", en: "Years shipping products" },
+  },
+  {
+    value: 4,
+    suffix: "×",
+    label: { ja: "リリース頻度を向上", en: "Faster release cadence" },
+  },
+  {
+    value: 25,
+    suffix: "%",
+    label: { ja: "運用効率を改善", en: "Operational efficiency gained" },
+  },
+  {
+    value: 6,
+    suffix: "",
+    label: { ja: "領域横断のプロダクト", en: "Cross-domain products" },
+  },
 ] as const;
 
 export type Project = {
@@ -164,7 +196,10 @@ export const projects: readonly Project[] = [
   },
   {
     id: "saas-scrum",
-    role: { ja: "フルスタック開発 · Scrum", en: "Full Stack Engineering · Scrum" },
+    role: {
+      ja: "フルスタック開発 · Scrum",
+      en: "Full Stack Engineering · Scrum",
+    },
     title: {
       ja: "製造業向け SaaS の開発",
       en: "Manufacturing SaaS Platform",
@@ -215,7 +250,10 @@ export const projects: readonly Project[] = [
   },
   {
     id: "scada-viz",
-    role: { ja: "フルスタック開発 · 制御システム", en: "Full Stack Engineering · Control Systems" },
+    role: {
+      ja: "フルスタック開発 · 制御システム",
+      en: "Full Stack Engineering · Control Systems",
+    },
     title: {
       ja: "データ可視化・遠隔制御システム",
       en: "Data Visualization & Remote Control",
@@ -324,27 +362,69 @@ export const ethos = {
 export const skills = [
   {
     group: { ja: "AI駆動開発", en: "AI Driven Development" },
-    items: ["Generative AI", "AI-assisted Engineering", "Rapid Prototyping", "RAG", "AI/ML Integration"],
+    items: [
+      "Generative AI",
+      "AI-assisted Engineering",
+      "Rapid Prototyping",
+      "RAG",
+      "AI/ML Integration",
+    ],
   },
   {
     group: { ja: "フルスタック", en: "Full Stack" },
-    items: ["TypeScript", "React", "Next.js", "Astro", "Python", "C#", "SwiftUI", "REST APIs"],
+    items: [
+      "TypeScript",
+      "React",
+      "Next.js",
+      "Astro",
+      "Python",
+      "C#",
+      "SwiftUI",
+      "REST APIs",
+    ],
   },
   {
     group: { ja: "クラウド・データ", en: "Cloud & Data" },
     items: [
-      "AWS", "Microsoft Azure", "Terraform", "Docker",
-      "PostgreSQL", "Snowflake", "Power BI", "DevOps", "Git",
+      "AWS",
+      "Microsoft Azure",
+      "Terraform",
+      "Docker",
+      "PostgreSQL",
+      "Snowflake",
+      "Power BI",
+      "DevOps",
+      "Git",
     ],
   },
 ] as const;
 
 export const certifications = [
-  { name: "Microsoft Certified: DevOps Engineer Expert", issuer: "Microsoft", year: "2025", appIcon: false },
-  { name: "Microsoft Certified: Azure Solutions Architect Expert", issuer: "Microsoft", year: "2025", appIcon: false },
-  { name: "Microsoft Certified: Azure AI Engineer Associate", issuer: "Microsoft", year: "2025", appIcon: false },
-  { name: "Registered Product Owner", issuer: "Agile Education by Scrum Inc", year: "2024", appIcon: false },
-  { name: "Registered Scrum Master", issuer: "Agile Education by Scrum Inc", year: "2024", appIcon: false },
+  {
+    name: "Microsoft Certified: DevOps Engineer Expert",
+    issuer: "Microsoft",
+    year: "2025",
+  },
+  {
+    name: "Microsoft Certified: Azure Solutions Architect Expert",
+    issuer: "Microsoft",
+    year: "2025",
+  },
+  {
+    name: "Microsoft Certified: Azure AI Engineer Associate",
+    issuer: "Microsoft",
+    year: "2025",
+  },
+  {
+    name: "Registered Product Owner",
+    issuer: "Agile Education by Scrum Inc",
+    year: "2024",
+  },
+  {
+    name: "Registered Scrum Master",
+    issuer: "Agile Education by Scrum Inc",
+    year: "2024",
+  },
 ] as const;
 
 /**
@@ -487,9 +567,18 @@ export const services = [
     price: { ja: "¥5,000", en: "CA$50" },
     unit: { ja: "/ 回", en: "/ session" },
     points: [
-      { ja: "課題とAI活用ポイントを整理", en: "Map the problem and its AI opportunities" },
-      { ja: "技術構成と実現性を検討", en: "Assess architecture and feasibility" },
-      { ja: "開発ロードマップを具体化", en: "Leave with a practical build roadmap" },
+      {
+        ja: "課題とAI活用ポイントを整理",
+        en: "Map the problem and its AI opportunities",
+      },
+      {
+        ja: "技術構成と実現性を検討",
+        en: "Assess architecture and feasibility",
+      },
+      {
+        ja: "開発ロードマップを具体化",
+        en: "Leave with a practical build roadmap",
+      },
     ],
     cta: { ja: "相談を申し込む", en: "Book a session" },
   },
@@ -505,9 +594,18 @@ export const services = [
     price: { ja: "月30万円", en: "CA$3,000" },
     unit: { ja: "から〜", en: "+ / month" },
     points: [
-      { ja: "アイデアから触れる検証版へ", en: "From idea to something you can touch" },
-      { ja: "生成AI・データ連携を実装", en: "Generative AI and data integration" },
-      { ja: "本開発へ進める判断材料を提供", en: "Evidence for the next investment" },
+      {
+        ja: "アイデアから触れる検証版へ",
+        en: "From idea to something you can touch",
+      },
+      {
+        ja: "生成AI・データ連携を実装",
+        en: "Generative AI and data integration",
+      },
+      {
+        ja: "本開発へ進める判断材料を提供",
+        en: "Evidence for the next investment",
+      },
     ],
     cta: { ja: "検証を相談する", en: "Discuss a prototype" },
   },
@@ -518,14 +616,26 @@ export const services = [
     featured: true,
     badge: { ja: "フラッグシップ", en: "Flagship" },
     title: { ja: "フルスタック開発", en: "Full stack product build" },
-    subtitle: { ja: "設計＋実装 · 4〜8週間", en: "Architecture + build · 4–8 weeks" },
+    subtitle: {
+      ja: "設計＋実装 · 4〜8週間",
+      en: "Architecture + build · 4–8 weeks",
+    },
     originalPrice: null,
     price: { ja: "¥800,000", en: "CA$8,000" },
     unit: { ja: "〜 / 件", en: "+ / project" },
     points: [
-      { ja: "フロントエンド・API・DBを一貫構築", en: "Frontend, APIs and database as one system" },
-      { ja: "AI・外部サービス・データ連携", en: "AI, external services and data integration" },
-      { ja: "クラウド公開・計測・改善まで", en: "Cloud launch, measurement and iteration" },
+      {
+        ja: "フロントエンド・API・DBを一貫構築",
+        en: "Frontend, APIs and database as one system",
+      },
+      {
+        ja: "AI・外部サービス・データ連携",
+        en: "AI, external services and data integration",
+      },
+      {
+        ja: "クラウド公開・計測・改善まで",
+        en: "Cloud launch, measurement and iteration",
+      },
     ],
     cta: { ja: "見積もりを相談する", en: "Request a quote" },
   },
@@ -541,9 +651,18 @@ export const services = [
     price: { ja: "応相談", en: "Let's talk" },
     unit: { ja: "", en: "" },
     points: [
-      { ja: "アイデア段階からの技術検証", en: "Technical validation from day one" },
-      { ja: "AI・データを中核にした設計", en: "AI and data at the product core" },
-      { ja: "お客様のチームに馴染む運用基盤", en: "A maintainable system that fits your team" },
+      {
+        ja: "アイデア段階からの技術検証",
+        en: "Technical validation from day one",
+      },
+      {
+        ja: "AI・データを中核にした設計",
+        en: "AI and data at the product core",
+      },
+      {
+        ja: "お客様のチームに馴染む運用基盤",
+        en: "A maintainable system that fits your team",
+      },
     ],
     cta: { ja: "話をする", en: "Start a conversation" },
   },
