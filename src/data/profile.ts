@@ -49,7 +49,19 @@ export const person = {
     ja: "AIを開発の中核に。UI、API、データ、クラウドまで、一気通貫で設計・実装します。",
     en: "AI at the core of development. I design and build across UI, APIs, data and cloud.",
   } satisfies Bilingual,
+  /** ヒーロー直下の自己紹介。人が一度も出てこないサイトにしないための一枚 */
+  photo: "/profile-photo.webp",
+  bio: {
+    ja: "バンクーバーを拠点に、工場自動化の現場から AI プロダクトまでを一人で一気通貫に。2020年から製造業の制御と可視化に携わり、いまは AI を開発の中核に据えています。",
+    en: "Based in Vancouver, building end to end — from factory-floor automation to AI products. I have worked on industrial control and visualization since 2020, and now put AI at the centre of how I build.",
+  } satisfies Bilingual,
 } as const;
+
+/** 受付状況。ヒーローの足元と自己紹介の両方から参照する（二重管理にしない） */
+export const availability = {
+  ja: "2026年 秋以降のプロジェクト受付中",
+  en: "Available from Fall 2026",
+} satisfies Bilingual;
 
 export const socials = [
   { label: "LinkedIn", icon: "linkedin", href: "https://www.linkedin.com/in/tetsuya-maeda-629b70294/" },

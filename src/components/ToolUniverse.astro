@@ -1,5 +1,5 @@
 ---
-import { toolchain } from "../data/profile";
+import { toolchain, availability } from "../data/profile";
 import Icon from "./Icon.astro";
 ---
 
@@ -54,7 +54,7 @@ import Icon from "./Icon.astro";
   </div>
 
   <div class="hero-meta">
-    <p><i aria-hidden="true"></i><span class="ja">2026年 秋以降のプロジェクト受付中</span><span class="en">Available from Fall 2026</span></p>
+    <p><i aria-hidden="true"></i><span class="ja">{availability.ja}</span><span class="en">{availability.en}</span></p>
     <p class="tools-note" aria-hidden="true">
       <span>THINK</span>
       <span>DESIGN</span>

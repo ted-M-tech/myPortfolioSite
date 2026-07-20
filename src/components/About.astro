@@ -1,0 +1,120 @@
+---
+import { person } from "../data/profile";
+---
+
+{/*
+  ヒーローの下に一枚だけ人を出す帯。
+  上のツールのヒーローはロゴだけ、その下のヒーローは見出しと抽象的な図なので、
+  ここが無いと推薦欄まで人格が現れない。大きく扱わず、名前と一行の紹介に留める。
+
+  受付状況はここに置かない。すぐ上のヒーローの足元に同じ文が出ており、
+  290px しか離れていないので二重に見える（さらに最上部のツールのヒーローにもある）。
+  この帯の役目は「誰か」であって、状況は既に別の場所が担っている。
+*/}
+<section class="about section section--sunken" aria-labelledby="about-name">
+  <div class="wrap">
+    <div class="card reveal">
+      <img
+        class="portrait"
+        src={person.photo}
+        alt={`${person.nameJa}（${person.name}）`}
+        width="583"
+        height="583"
+        loading="lazy"
+        decoding="async"
+      />
+
+      <div class="body">
+        <p class="name" id="about-name">
+          <b>
+            <span class="ja">{person.nameJa}</span>
+            <span class="en">{person.name}</span>
+          </b>
+          <span class="alt">
+            <span class="ja">{person.name}</span>
+            <span class="en">{person.nameJa}</span>
+          </span>
+        </p>
+
+        <p class="role">{person.role.en}</p>
+
+        <p class="bio">
+          <span class="ja">{person.bio.ja}</span>
+          <span class="en">{person.bio.en}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* 前後がヒーロー（紙）とマーキー（反転）なので、ここは一段沈めて帯として切る */
+  .about {
+    padding-block: clamp(48px, 6vw, 80px);
+    border-top: 1px solid var(--line);
+  }
+
+  .card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(22px, 3.5vw, 44px);
+  }
+
+  /* 道具のマークが全部四角い面の中で、人だけは丸くしておく */
+  .portrait {
+    width: clamp(84px, 9vw, 116px);
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--surface-raised);
+  }
+
+  .body {
+    max-width: 62ch;
+  }
+
+  .name {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .name b {
+    font-size: clamp(19px, 2vw, 25px);
+    font-weight: 600;
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .name .alt {
+    font-size: 12.5px;
+    color: var(--text-faint);
+  }
+
+  .role {
+    margin-top: 3px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .bio {
+    margin-top: 14px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text-muted);
+    text-wrap: pretty;
+  }
+
+  @media (max-width: 620px) {
+    .card {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+</style>
