@@ -95,6 +95,12 @@ import { ethos, site } from "../data/profile";
     position: absolute;
     left: 0;
     top: 0;
+    /*
+     * 内容幅で止める。absolute + flex だけだと shrink-to-fit が効かず
+     * ステージ幅いっぱいまで伸び、狭い画面で横スクロールを生む。
+     */
+    width: max-content;
+    max-width: 46vw;
     display: flex;
     flex-direction: column;
     align-items: center;

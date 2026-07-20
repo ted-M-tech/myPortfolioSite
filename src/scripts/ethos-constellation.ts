@@ -63,7 +63,12 @@ export function initEthosConstellation(
 
     const cx = w / 2;
     const cy = h / 2;
-    const rx = Math.min(w * 0.4, 420);
+    /*
+     * 半径はノードの実寸から決める。固定値にすると、文字数や画面幅次第で
+     * ノードがステージからはみ出し、ページに横スクロールが出る。
+     */
+    const half = nodes.reduce((m, n) => Math.max(m, n.el.offsetWidth), 0) / 2;
+    const rx = Math.max(60, Math.min(w * 0.4, 420, w / 2 - half - 8));
     const ry = Math.min(h * 0.4, 210);
 
     // 外周ノードの座標。わずかに揺らして生きている感じを出す

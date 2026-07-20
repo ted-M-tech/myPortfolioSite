@@ -51,7 +51,7 @@
 
   /* --- 間隔・寸法 --- */
   --measure: 62ch;
-  --wrap: 1160px;
+  --wrap: 1280px;
   --pad-x: clamp(20px, 5vw, 48px);
   --section-y: clamp(88px, 12vw, 152px);
   --radius: 14px;

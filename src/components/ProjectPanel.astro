@@ -3,48 +3,101 @@
  * 案件カードの図版。
  *
  * 写真は使わない。実際の成果物（工場の制御画面や社内 SaaS）は出せないものが多く、
- * 代わりに汎用のストック画像を置くと、見た目が嘘になるうえブランドとも合わない。
- * ここではロゴの構造 — 歩幅の軌跡と、その先にあるまだ踏んでいない一歩 — を
- * そのまま図にして、案件ごとに歩幅を変えている。
+ * 汎用のストック画像を置くと見た目が嘘になる。
+ *
+ * 代わりに計器の画面を思わせる面を描く。格子の上に信号の履歴が重なり、
+ * 手前に現在の波形、その先に「まだ来ていない次の値」の四角が浮く。
+ * ロゴの歩幅モチーフと、前田さんが実際に扱っている領域の両方に掛けている。
+ *
+ * 枠いっぱいに描くことが要件。中央に小さく置くと、余白ばかりの箱になる。
  */
 interface Props {
-  /** 0 始まり。歩幅とドット密度がこれで変わる */
+  /** 0 始まり。波形・格子・密度がこれで変わる */
   index: number;
 }
 
 const { index } = Astro.props;
 
-// 案件ごとに山谷の形を変える。値は見た目で決めた固定値で、意味は持たせていない
-const shapes = [
-  { path: "M0,74 L16,30 L28,62 L44,20 L58,56 L72,52 L100,52", dots: 7 },
-  { path: "M0,66 L14,44 L26,68 L40,26 L54,60 L70,40 L100,40", dots: 9 },
-  { path: "M0,80 L18,34 L30,58 L42,38 L56,66 L74,46 L100,46", dots: 5 },
+/** 案件ごとの波形。viewBox 0 0 400 260 の座標系で、左端から右端まで貫く */
+const traces = [
+  {
+    main: "M-10,196 L44,96 L86,168 L134,52 L182,142 L232,128 L268,132 L410,132",
+    ghosts: [
+      "M-10,208 L40,120 L84,180 L130,74 L180,158 L230,146 L268,150 L410,150",
+      "M-10,182 L48,74 L90,156 L138,34 L186,126 L234,112 L268,116 L410,116",
+    ],
+    cols: 13,
+    rows: 8,
+  },
+  {
+    main: "M-10,176 L38,120 L78,192 L122,62 L166,158 L214,104 L262,118 L410,118",
+    ghosts: [
+      "M-10,190 L36,140 L76,204 L120,84 L164,174 L212,124 L262,136 L410,136",
+      "M-10,160 L42,100 L82,178 L126,42 L170,142 L216,86 L262,100 L410,100",
+    ],
+    cols: 11,
+    rows: 7,
+  },
+  {
+    main: "M-10,206 L52,88 L92,158 L128,102 L172,172 L226,120 L268,124 L410,124",
+    ghosts: [
+      "M-10,220 L50,110 L90,172 L126,120 L170,186 L224,138 L268,142 L410,142",
+      "M-10,192 L56,68 L96,144 L132,84 L176,158 L228,102 L268,106 L410,106",
+    ],
+    cols: 15,
+    rows: 9,
+  },
 ];
-const s = shapes[index % shapes.length]!;
 
-// 尾の終点の少し先に置く正方形。ロゴ規定どおり、離しすぎず近づけすぎない
-const squareX = 100;
-const squareY = index % 2 === 0 ? 52 : index % 3 === 1 ? 40 : 46;
+const t = traces[index % traces.length]!;
+/** 尾の終点の少し先。ロゴ規定どおり、近づけすぎず離しすぎない */
+const squareY = [132, 118, 124][index % 3]!;
+const uid = `pp${index}`;
 ---
 
 <div class="panel" aria-hidden="true">
-  <svg viewBox="0 0 120 100" preserveAspectRatio="xMidYMid meet" role="presentation">
-    <!-- 背景の点描。奥行きの気配だけ出す -->
-    <g class="dots">
+  <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="presentation">
+    <defs>
+      <!-- 手前の波形だけ、進むほど濃くする -->
+      <linearGradient id={`${uid}-stroke`} x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="rgba(243,240,235,0.35)"></stop>
+        <stop offset="62%" stop-color="rgba(243,240,235,0.95)"></stop>
+        <stop offset="100%" stop-color="rgba(243,240,235,0.95)"></stop>
+      </linearGradient>
+      <!-- 下端に向けて沈ませ、テキスト側との境目を柔らかくする -->
+      <linearGradient id={`${uid}-fade`} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="rgba(255,255,255,0.16)"></stop>
+        <stop offset="100%" stop-color="rgba(255,255,255,0)"></stop>
+      </linearGradient>
+    </defs>
+
+    <!-- 格子。計器の目盛りに見立てて枠いっぱいに敷く -->
+    <g class="grid">
       {
-        Array.from({ length: s.dots * 6 }, (_, i) => {
-          const col = i % s.dots;
-          const row = Math.floor(i / s.dots);
-          return <circle cx={8 + col * (104 / s.dots)} cy={12 + row * 15} r="0.9" />;
-        })
+        Array.from({ length: t.cols + 1 }, (_, i) => (
+          <line x1={(400 / t.cols) * i} y1="0" x2={(400 / t.cols) * i} y2="260" stroke="rgba(243,240,235,0.08)" stroke-width="0.6" />
+        ))
+      }
+      {
+        Array.from({ length: t.rows + 1 }, (_, i) => (
+          <line x1="0" y1={(260 / t.rows) * i} x2="400" y2={(260 / t.rows) * i} stroke="rgba(243,240,235,0.08)" stroke-width="0.6" />
+        ))
       }
     </g>
 
-    <!-- 歩幅の軌跡 -->
-    <path class="stride" d={s.path} fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    <!-- 上端の淡い光。面が真っ黒に沈まないようにする -->
+    <rect x="0" y="0" width="400" height="260" fill={`url(#${uid}-fade)`}></rect>
 
-    <!-- 次の一歩 -->
-    <rect class="next" x={squareX + 6} y={squareY - 3.5} width="7" height="7" />
+    <!-- 過去の履歴。奥に薄く重ねる -->
+    <g class="ghosts">
+      {t.ghosts.map((d) => <path d={d} fill="none" stroke="rgba(243,240,235,0.14)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />)}
+    </g>
+
+    <!-- 現在の波形 -->
+    <path class="trace" d={t.main} fill="none" stroke={`url(#${uid}-stroke)`} stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- まだ来ていない次の値 -->
+    <rect class="next" x="300" y={squareY - 9} width="18" height="18" rx="1"></rect>
   </svg>
 </div>
 
@@ -52,29 +105,22 @@ const squareY = index % 2 === 0 ? 52 : index % 3 === 1 ? 40 : 46;
   .panel {
     position: absolute;
     inset: 0;
-    display: grid;
-    place-items: center;
-    background:
-      radial-gradient(120% 100% at 20% 15%, #1f1c19 0%, #17150f 55%, var(--ink-inv) 100%);
     overflow: hidden;
+    background:
+      radial-gradient(120% 90% at 78% 30%, #2a2521 0%, #1a1714 44%, #0e0c0a 100%);
   }
 
   svg {
-    width: 78%;
-    height: auto;
-    overflow: visible;
+    width: 100%;
+    height: 100%;
+    display: block;
   }
 
-  .dots circle {
-    fill: rgba(243, 240, 235, 0.13);
-  }
-
-  .stride {
-    stroke: rgba(243, 240, 235, 0.85);
-    stroke-width: 2.4;
-    /* 線を引く長さ。実測より大きめに取っておけば全体が隠れる */
-    stroke-dasharray: 300;
-    stroke-dashoffset: 300;
+  /* 描画属性は SVG 側に直接書いてある。ここは動きの分だけ */
+  .trace {
+    /* 実測より長く取っておけば、どの波形でも全体が隠れる */
+    stroke-dasharray: 900;
+    stroke-dashoffset: 900;
   }
 
   .next {
@@ -82,22 +128,18 @@ const squareY = index % 2 === 0 ? 52 : index % 3 === 1 ? 40 : 46;
     opacity: 0;
   }
 
-  /*
-   * カードが画面に入ったら線が引かれ、最後に次の一歩が現れる。
-   * .is-in は reveal.ts か CSS scroll-driven がカード側に付ける。
-   */
+  /* カードが画面に入ったら波形が引かれ、最後に次の値が現れる */
   @media (prefers-reduced-motion: no-preference) {
-    :global(.reveal.is-in) .stride {
-      animation: draw 1.5s var(--ease-out) forwards;
+    :global(.reveal.is-in) .trace {
+      animation: draw 1.7s var(--ease-out) forwards;
     }
     :global(.reveal.is-in) .next {
-      animation: appear 0.5s var(--ease-out) 1.25s forwards;
+      animation: appear 0.5s var(--ease-out) 1.4s forwards;
     }
   }
 
-  /* 動きを止める設定では、引き終わった状態をそのまま見せる */
   @media (prefers-reduced-motion: reduce) {
-    .stride {
+    .trace {
       stroke-dashoffset: 0;
     }
     .next {
@@ -114,7 +156,7 @@ const squareY = index % 2 === 0 ? 52 : index % 3 === 1 ? 40 : 46;
   @keyframes appear {
     from {
       opacity: 0;
-      transform: translateX(-6px);
+      transform: translateX(-8px);
     }
     to {
       opacity: 1;
