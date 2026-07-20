@@ -25,7 +25,7 @@ function apply(lang: Lang) {
 }
 
 export function initLang() {
-  const current = (document.documentElement.getAttribute("data-lang") as Lang) ?? "ja";
+  const current = (document.documentElement.getAttribute("data-lang") as Lang) ?? "en";
   apply(current);
 
   for (const btn of document.querySelectorAll<HTMLButtonElement>("[data-lang-set]")) {

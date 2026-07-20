@@ -14,10 +14,10 @@ const ogImage = new URL("/og-v6.png", site.url).href;
 
 <!doctype html>
 <!--
-  data-lang は表示言語。既定は日本語で、lang.ts が localStorage の値で上書きする。
+  data-lang は表示言語。既定は英語で、lang.ts が localStorage の値で上書きする。
   head の inline script で先に当てているので、切り替え時にちらつかない。
 -->
-<html lang="ja" data-lang="ja">
+<html lang="en" data-lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -80,13 +80,13 @@ const ogImage = new URL("/og-v6.png", site.url).href;
           document.documentElement.lang = saved;
         }
       } catch {
-        /* localStorage が使えない環境では既定の日本語のまま */
+        /* localStorage が使えない環境では既定の英語のまま */
       }
     </script>
   </head>
 
   <body>
-    <a class="skip" href="#main">本文へスキップ / Skip to content</a>
+    <a class="skip" href="#main">Skip to content / 本文へスキップ</a>
     <slot />
   </body>
 </html>
