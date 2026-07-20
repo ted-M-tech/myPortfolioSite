@@ -228,26 +228,54 @@ export const timeline = [
   },
 ] as const;
 
-export const hobbies = [
+/**
+ * 「仕事のそと」のタイル。
+ *
+ * size は 6 列グリッド上での占有幅（原典のベントー配置）。
+ * lg = 3列×2行、md = 3列、wide = 4列、sm = 2列。
+ * 6列がちょうど埋まる組み合わせにしてある（行末に穴を残さない）。
+ * image は後から差し込む。null の間はブランド面で埋める。
+ */
+export const play = [
   {
-    icon: "camera",
-    name: { ja: "写真", en: "Photography" },
-    note: { ja: "風景と街。技術と表現が交わるところ", en: "Landscapes and cities — where craft meets expression" },
-  },
-  {
+    id: "hiking",
+    size: "lg",
     icon: "mountain",
     name: { ja: "山を歩く", en: "Hiking" },
     note: { ja: "考えが詰まったら、とりあえず登る", en: "When thinking stalls, go up a mountain" },
+    image: null as string | null,
   },
   {
-    icon: "book-open",
-    name: { ja: "読書", en: "Reading" },
-    note: { ja: "技術書からSFまで", en: "From technical books to science fiction" },
+    id: "photo",
+    size: "md",
+    icon: "camera",
+    name: { ja: "写真", en: "Photography" },
+    note: { ja: "風景と街。技術と表現が交わるところ", en: "Landscapes and cities" },
+    image: null as string | null,
   },
   {
+    id: "coffee",
+    size: "md",
     icon: "coffee",
     name: { ja: "珈琲", en: "Coffee" },
-    note: { ja: "ハンドドリップ。集中のスイッチ", en: "Hand-drip. The switch that starts the day" },
+    note: { ja: "ハンドドリップ", en: "Hand-drip" },
+    image: null as string | null,
+  },
+  {
+    id: "reading",
+    size: "sm",
+    icon: "book-open",
+    name: { ja: "読書", en: "Reading" },
+    note: { ja: "技術書からSFまで", en: "Technical books to sci-fi" },
+    image: null as string | null,
+  },
+  {
+    id: "vancouver",
+    size: "wide",
+    icon: "mountain",
+    name: { ja: "バンクーバー", en: "Vancouver" },
+    note: { ja: "海と山が近い街に住んでいます", en: "Living where the sea meets the mountains" },
+    image: null as string | null,
   },
 ] as const;
 
