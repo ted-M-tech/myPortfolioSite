@@ -4,15 +4,48 @@ import { projects } from "../data/profile";
 interface Props {
   index: number;
   animate?: boolean;
+  /**
+   * 動画を持つ案件でも静止画で描く。
+   * 帯（WorkStrip）は継ぎ目のないループのため同じ並びを2回描くので、
+   * そのまま動画を載せると同じ動画が4本同時に走る。帯はポスターで足りる。
+   */
+  still?: boolean;
 }
 
-const { index, animate = true } = Astro.props;
+const { index, animate = true, still = !animate } = Astro.props;
 const project = projects[index];
+const video = still ? null : project.video;
 ---
 
 <div class:list={["panel", `panel--${project.id}`, animate && "panel--animate"]}>
   {
-    project.id === "annoscene" ? (
+    video ? (
+      <div class="actual-product">
+        <div class="actual-copy" aria-hidden="true">
+          <span>GENERATIVE VIDEO</span>
+          <b>Made without<br />a camera.</b>
+        </div>
+        <div class="device">
+          {/*
+            preload="none" とポスターで、見えるまで 2MB を取りに行かせない。
+            再生・停止は下の script が交差監視で行う。
+            muted / playsinline はモバイルの自動再生に必須。
+          */}
+          <video
+            data-project-video
+            src={video.src}
+            poster={video.poster}
+            width="540"
+            height="960"
+            muted
+            loop
+            playsinline
+            preload="none"
+            aria-label={project.imageAlt.ja}
+          />
+        </div>
+      </div>
+    ) : project.id === "annoscene" ? (
       <div class="actual-product">
         <div class="actual-copy" aria-hidden="true">
           <span>ACTUAL PRODUCT / iOS</span>
@@ -46,7 +79,12 @@ const project = projects[index];
   <span class="veil" aria-hidden="true"></span>
   <span class="label">
     {
-      project.id === "annoscene" ? (
+      video ? (
+        <>
+          <span class="ja">生成AI</span>
+          <span class="en">AI generated</span>
+        </>
+      ) : project.id === "annoscene" ? (
         <>
           <span class="ja">実画面</span>
           <span class="en">Actual UI</span>
@@ -60,6 +98,36 @@ const project = projects[index];
     }
   </span>
 </div>
+
+<script>
+  /*
+   * 画面に入ったときだけ再生する。止まっている動画に帯域も電池も使わせない。
+   * 動きを減らす設定ではポスターのまま置く（再生しない）。
+   */
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const videos = [...document.querySelectorAll<HTMLVideoElement>("[data-project-video]")];
+
+  if (videos.length && !reduced) {
+    const io = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        const el = entry.target as HTMLVideoElement;
+        if (entry.isIntersecting) {
+          if (el.preload === "none") el.preload = "auto";
+          el.play().catch(() => {
+            /* 自動再生が拒否される環境ではポスターのまま。表示は壊れない */
+          });
+        } else {
+          el.pause();
+        }
+      }
+    }, { threshold: 0.25 });
+
+    for (const video of videos) io.observe(video);
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) for (const video of videos) video.pause();
+    });
+  }
+</script>
 
 <style>
   .panel {
@@ -149,7 +217,8 @@ const project = projects[index];
     rotate: 5deg;
   }
 
-  .device img {
+  .device img,
+  .device video {
     width: 100%;
     height: 100%;
     border-radius: 10% / 5%;
@@ -195,6 +264,39 @@ const project = projects[index];
     font-size: 9px;
     letter-spacing: .11em;
     text-transform: uppercase;
+  }
+
+  /*
+   * 端末枠の既定は AnnoScene の実画面（540x1094）に合わせてあり、
+   * 下辺からはみ出させる意匠になっている。動画は 9:16 で切れると
+   * 中身が読めないので、この案件だけ枠内に収める。
+   */
+  .panel--ai-video .device {
+    top: 8%;
+    right: 7%;
+    width: min(26%, 224px);
+    aspect-ratio: 9 / 16;
+  }
+
+  @media (max-width: 720px) {
+    /* 狭い画面では添え書きを畳んで、動画そのものを大きく見せる */
+    .panel--ai-video .actual-copy {
+      display: none;
+    }
+
+    /* 端末を中央に置くので、ラベルは右から左へ逃がす */
+    .panel--ai-video .label {
+      right: auto;
+      left: 12px;
+    }
+
+    .panel--ai-video .device {
+      top: 50%;
+      right: 50%;
+      width: 40%;
+      translate: 50% -50%;
+      rotate: 0deg;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

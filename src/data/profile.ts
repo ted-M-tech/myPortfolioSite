@@ -175,6 +175,11 @@ export type Project = {
   href: string;
   image: string;
   imageAlt: Bilingual;
+  /**
+   * 動画で見せる案件だけ持つ。image はポスター兼、帯（WorkStrip）用の静止画。
+   * 音声は載せていない（無音ループ前提。自動再生に音は要らないし、その分軽い）。
+   */
+  video?: { src: string; poster: string } | null;
 };
 
 export const projects: readonly Project[] = [
@@ -217,6 +222,29 @@ export const projects: readonly Project[] = [
     imageAlt: {
       ja: "SIM経由の設備データとScrum開発をつなぐ製造業向けSaaSの画面イメージ",
       en: "Concept connecting cellular equipment data with Scrum delivery in a manufacturing SaaS",
+    },
+  },
+  {
+    id: "ai-video",
+    role: { ja: "生成AI · マーケティング", en: "Generative AI · Marketing" },
+    title: {
+      ja: "AI動画生成によるマーケティング支援",
+      en: "AI Video for Marketing",
+    },
+    description: {
+      ja: "撮影せずに、プロダクトの世界観を映像に。生成AIでつくり、SNS向けに仕上げます。",
+      en: "A product's world on film, without a shoot. Generated with AI, finished for social.",
+    },
+    tech: ["Generative Video", "Higgsfield", "Motion Design", "Short-form"],
+    href: "https://annoscene.maepace.com",
+    image: "/work/ai-video-promo-poster.webp",
+    imageAlt: {
+      ja: "生成AIでつくった縦型のプロモーション動画",
+      en: "A vertical promotional film generated with AI",
+    },
+    video: {
+      src: "/work/ai-video-promo.mp4",
+      poster: "/work/ai-video-promo-poster.webp",
     },
   },
   {

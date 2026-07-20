@@ -1,9 +1,15 @@
 ---
-import { enablement, projects } from "../data/profile";
+import { enablement, person, projects } from "../data/profile";
 import EnablementPanel from "./EnablementPanel.astro";
 import Icon from "./Icon.astro";
 import ProjectPanel from "./ProjectPanel.astro";
 import WorkStrip from "./WorkStrip.astro";
+
+/* Hero を畳んだので、サイトの主張はこの節の見出しが引き受ける */
+const headline = {
+  ja: person.headline.ja.split(/<br\s*\/?\s*>/i),
+  en: person.headline.en.split(/<br\s*\/?\s*>/i),
+};
 
 const enablementIcons = {
   notion: "/brand/tools/notion.svg",
@@ -18,19 +24,13 @@ const enablementIcons = {
       <div>
         <p class="eyebrow">Selected work / 01</p>
         <h2 class="section-title">
-          <span class="ja">構想を、<br />本番で動かす。</span>
-          <span class="en">Ideas, running<br />in production.</span>
+          <span class="ja">{headline.ja.map((line) => <span set:html={line} />)}</span>
+          <span class="en">{headline.en.map((line) => <span set:html={line} />)}</span>
         </h2>
       </div>
       <p class="section-lede">
-        <span class="ja">
-          AI、モバイル、業務システム。<br />
-          構想から本番運用まで、一気通貫で。
-        </span>
-        <span class="en">
-          AI, mobile and business systems.<br />
-          From idea to production, end to end.
-        </span>
+        <span class="ja">{person.intro.ja}</span>
+        <span class="en">{person.intro.en}</span>
       </p>
     </header>
   </div>
@@ -43,7 +43,7 @@ const enablementIcons = {
         projects.map((p, i) => (
           <li class="project reveal" data-tilt>
             <a href={p.href} target="_blank" rel="noopener noreferrer">
-              <div class="media">
+              <div class:list={["media", p.video && "media--video"]}>
                 <span class="num">{String(i + 1).padStart(2, "0")}</span>
                 <ProjectPanel index={i} />
               </div>
@@ -128,6 +128,17 @@ const enablementIcons = {
 </section>
 
 <style>
+  /* 見出しの各行は span。<br /> ではなくブロックで折る */
+  .section-title :global(span > span) {
+    display: block;
+  }
+
+  /* Hero と同じ扱い。色は変えず字幅だけで強調する */
+  .section-title :global(em) {
+    font-style: normal;
+    font-weight: 700;
+  }
+
   .head {
     display: grid;
     grid-template-columns: 1.1fr .9fr;
@@ -434,6 +445,11 @@ const enablementIcons = {
     .media {
       min-height: 0;
       aspect-ratio: 16 / 10;
+    }
+
+    /* 縦 9:16 の動画を 16:10 に入れると帯しか見えない。この案件だけ枠を立てる */
+    .media--video {
+      aspect-ratio: 4 / 3;
     }
 
     .enablement-copy,
