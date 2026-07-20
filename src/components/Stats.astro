@@ -40,8 +40,14 @@ import { stats } from "../data/profile";
     font-weight: 600;
     letter-spacing: var(--tracking-display);
     line-height: 1;
-    /* 数字はアクセント。面はブランドの ink のまま保つ */
-    color: var(--paper-inv);
+    /*
+     * 数字は紙色からアクセントへ抜ける。原典が持っていた要素で、
+     * ベタ塗りにすると帯が一気に平坦になる。
+     */
+    background: linear-gradient(160deg, var(--paper-inv), var(--accent-on-dark));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     font-variant-numeric: tabular-nums;
   }
 

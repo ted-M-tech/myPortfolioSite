@@ -125,10 +125,10 @@ const orbit = [
   .core {
     position: absolute;
     left: 50%;
-    top: 34%;
+    top: 42%;
     translate: -50% -50%;
-    width: min(34vh, 290px);
-    height: min(34vh, 290px);
+    width: min(40vh, 360px);
+    height: min(40vh, 360px);
     z-index: 5;
     animation: float 10s var(--ease-in-out) infinite;
   }
@@ -225,7 +225,7 @@ const orbit = [
     position: absolute;
     inset: -14% -18%;
     z-index: -1;
-    background: radial-gradient(60% 55% at 50% 52%, rgba(10, 9, 8, 0.86), transparent 72%);
+    background: radial-gradient(58% 52% at 50% 54%, rgba(10, 9, 8, 0.62), transparent 74%);
     pointer-events: none;
   }
 
@@ -233,9 +233,20 @@ const orbit = [
     position: absolute;
     left: 50%;
     translate: -50% 0;
-    bottom: 6vh;
+    bottom: 8vh;
     z-index: 20;
     text-align: center;
+    /* 軌道が先に動き出し、少し遅れて言葉が立ち上がる */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: rise 1s var(--ease-out) 0.4s forwards;
+  }
+
+  @keyframes rise {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .eyebrow {
@@ -244,11 +255,11 @@ const orbit = [
 
   h1 {
     margin: 16px auto 0;
-    max-width: 17ch;
-    font-size: clamp(32px, 5.4vw, 66px);
+    max-width: 16ch;
+    font-size: clamp(38px, 7.2vw, 88px);
     font-weight: 600;
     letter-spacing: var(--tracking-display);
-    line-height: 1.02;
+    line-height: 0.98;
     text-wrap: balance;
   }
 
@@ -301,7 +312,7 @@ const orbit = [
     translate: -50% 0;
     z-index: 20;
     color: rgba(243, 240, 235, 0.4);
-    animation: bob 2.6s var(--ease-in-out) infinite;
+    animation: bob 2.4s var(--ease-in-out) infinite;
   }
 
   @keyframes float {
@@ -327,6 +338,11 @@ const orbit = [
   @media (prefers-reduced-motion: reduce) {
     .core,
     .cue {
+      animation: none;
+    }
+    .hero-copy {
+      opacity: 1;
+      transform: none;
       animation: none;
     }
   }

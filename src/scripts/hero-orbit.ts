@@ -89,8 +89,8 @@ export function initHeroOrbit(canvas: HTMLCanvasElement, stage: HTMLElement, nod
     canvas.height = Math.round(h * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     cx = w / 2;
-    cy = h * 0.34;
-    coreR = Math.min(h * 0.34, 290) / 2;
+    cy = h * 0.42;
+    coreR = Math.min(h * 0.4, 360) / 2;
     buildDust();
   };
 
@@ -107,8 +107,8 @@ export function initHeroOrbit(canvas: HTMLCanvasElement, stage: HTMLElement, nod
 
   /** ノードの位置だけ計算して DOM に当てる。静止画のときも一度だけ呼ぶ */
   const placeNodes = (t: number, ox: number, oy: number) => {
-    const rx = Math.min(w * 0.38, 500);
-    const ry = rx * 0.3;
+    const rx = Math.min(w * 0.4, 560);
+    const ry = rx * 0.34;
     const rot = -0.3;
     const positions = nodes.map((_, i) => {
       const a = (i / nodes.length) * Math.PI * 2 + t * 0.00009;

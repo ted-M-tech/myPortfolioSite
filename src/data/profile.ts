@@ -61,13 +61,13 @@ export const socials = [
 export const marquee = [
   "Python", "SQL", "C#", "TypeScript", "Azure", "Docker",
   "Power BI", "SCADA", "PLC", "PostgreSQL", "Snowflake",
-  "React", "Next.js", "Astro", "Azure DevOps", "Scrum",
+  "Swift", "SwiftUI", "React", "Next.js", "Astro", "Scrum",
 ] as const;
 
 export const stats = [
   { value: 5, suffix: "+", label: { ja: "年の実務経験", en: "Years in the field" } },
   { value: 25, suffix: "%", label: { ja: "運用効率の改善", en: "Operational efficiency gained" } },
-  { value: 4, suffix: "x", label: { ja: "リリース頻度", en: "Release frequency" } },
+  { value: 6, suffix: "", label: { ja: "公開プロジェクト", en: "Projects shipped" } },
   { value: 5, suffix: "", label: { ja: "保有資格", en: "Certifications" } },
 ] as const;
 
@@ -85,8 +85,8 @@ export const projects: readonly Project[] = [
     id: "factory-ai",
     role: { ja: "フルスタック · AI", en: "Fullstack · AI" },
     title: {
-      ja: "AI搭載 工場自動化システム",
-      en: "AI-Powered Factory Automation",
+      ja: "製造業向け AI 分析システム",
+      en: "AI Analytics for Manufacturing",
     },
     description: {
       ja: "リアルタイムのデータ分析と AI エンジンを組み込んだ工場自動化システム。前処理から本番デプロイまで一気通貫で構築し、工程最適化と予知保全を実現しています。",
@@ -94,6 +94,39 @@ export const projects: readonly Project[] = [
     },
     tech: ["Python", "Azure", "AI/ML", "Real-time Analytics", "Docker"],
     href: "https://www.linkedin.com/in/tetsuya-maeda-629b70294/",
+  },
+  {
+    id: "annoscene",
+    role: { ja: "個人開発 · iOS", en: "Solo · iOS" },
+    title: { ja: "AnnoScene", en: "AnnoScene" },
+    description: {
+      ja: "旅の移動そのものを主役にする iOS アプリ。走った経路が地図上に自分で描かれ、写真や短い動画がそれぞれの場所と時刻に現れます。訪れた国を貯める Atlas 付き。写真の位置情報は端末内だけで処理します。",
+      en: "An iOS app that makes the journey itself the subject. The route draws itself across the map while photos and clips surface at the place and moment they were taken, alongside an Atlas of countries visited. Photo location data never leaves the device.",
+    },
+    tech: ["Swift", "SwiftUI", "MapKit", "PhotosUI", "AVFoundation"],
+    href: "https://annoscene.maepace.com",
+  },
+  {
+    id: "helpkansai",
+    role: { ja: "個人開発 · iOS", en: "Solo · iOS" },
+    title: { ja: "Help Kansai", en: "Help Kansai" },
+    description: {
+      ja: "いまの関西弁を、標準語と並べて学ぶ iOS アプリ。ネイティブ音声での発話練習と間隔反復を組み合わせ、教科書には出てこない自然な言い回しを扱います。",
+      en: "An iOS app for learning modern Kansai Japanese by comparing it against standard Japanese — native-audio practice plus spaced repetition, covering the phrasing textbooks leave out.",
+    },
+    tech: ["Swift", "SwiftUI", "AVFoundation", "SRS"],
+    href: "https://helpkansai.maepace.com",
+  },
+  {
+    id: "wellnesspet",
+    role: { ja: "個人開発 · iOS", en: "Solo · iOS" },
+    title: { ja: "Wellness Pet", en: "Wellness Pet" },
+    description: {
+      ja: "歩数と睡眠、夜のひと押しの気分記録が、一匹のピクセルの犬の様子に変わる iOS アプリ。点数をつける道具ではなく、そばにいるものとして設計しています。",
+      en: "An iOS companion where steps, sleep and a one-tap evening mood check turn into small changes in a single pixel dog. Designed to sit beside you rather than score you.",
+    },
+    tech: ["Swift", "SwiftUI", "HealthKit", "WidgetKit"],
+    href: "https://wellnesspet.maepace.com",
   },
   {
     id: "scada-viz",
