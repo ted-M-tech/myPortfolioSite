@@ -59,18 +59,6 @@ const headline = {
     </div>
   </div>
 
-  <div class="hero-foot">
-    <p>
-      <i aria-hidden="true"></i>
-      <span class="ja">2026年 秋以降のプロジェクト受付中</span>
-      <span class="en">Available from Fall 2026</span>
-    </p>
-    <a href="#work">
-      <span>SCROLL</span>
-      <Icon name="chevron-down" size={16} />
-    </a>
-    <p>{person.location.en.toUpperCase()}</p>
-  </div>
 </section>
 
 <script>
@@ -262,52 +250,6 @@ const headline = {
     78% { transform: translate3d(0, 24%, 0); }
   }
 
-  .hero-foot {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: end;
-    gap: 20px;
-    width: 100%;
-    max-width: 1680px;
-    margin: 18px auto 0;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.13em;
-    color: var(--text-faint);
-  }
-
-  .hero-foot p {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .hero-foot p:last-child {
-    justify-content: flex-end;
-  }
-
-  .hero-foot i {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #82aa89;
-  }
-
-  .hero-foot a {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: var(--text-muted);
-  }
-
-  .hero-foot a :global(svg) {
-    transition: transform var(--dur-fast) var(--ease-out);
-  }
-
-  .hero-foot a:hover :global(svg) {
-    transform: translateY(3px);
-  }
-
   @media (max-width: 820px) {
     .hero {
       min-height: 820px;
@@ -343,13 +285,6 @@ const headline = {
       width: 28%;
     }
 
-    .hero-foot {
-      grid-template-columns: 1fr auto;
-    }
-
-    .hero-foot > :last-child {
-      display: none;
-    }
   }
 
   @media (max-width: 520px) {
@@ -379,10 +314,6 @@ const headline = {
       margin-top: 16px;
     }
 
-    .hero-foot {
-      margin-top: 14px;
-      font-size: 9px;
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {

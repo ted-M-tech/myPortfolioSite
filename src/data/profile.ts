@@ -58,12 +58,6 @@ export const person = {
   } satisfies Bilingual,
 } as const;
 
-/** 受付状況。ヒーローの足元と自己紹介の両方から参照する（二重管理にしない） */
-export const availability = {
-  ja: "2026年 秋以降のプロジェクト受付中",
-  en: "Available from Fall 2026",
-} satisfies Bilingual;
-
 export const socials = [
   { label: "LinkedIn", icon: "linkedin", href: "https://www.linkedin.com/in/tetsuya-maeda-629b70294/" },
   { label: "GitHub", icon: "github", href: "https://github.com/ted-M-tech" },
