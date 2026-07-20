@@ -97,7 +97,7 @@ export function initToolGravity(stage: HTMLElement) {
       // カードだった頃は名前の余白が緩衝材になっていて、多少重なっても
       // 平気だった。マークだけになると重なりがそのまま団子に見えるので、
       // 当たり判定を実寸へ近づけて離す。
-      body.radius = Math.max(box.width, box.height) * 0.54;
+      body.radius = Math.max(box.width, box.height) * 0.6;
       if (hasStarted) {
         body.x = clamp(body.x, 4, width - body.width - 4);
         body.y = clamp(body.y, 54, floor - body.height);
