@@ -69,12 +69,34 @@
       <article class="experiment experiment--type reveal" data-lab-card>
         <div class="meta">
           <span>EXP / 003</span>
-          <span>KINETIC TYPE</span>
+          <span>PRODUCT FEEDBACK</span>
         </div>
-        <div class="kinetic" aria-hidden="true">
-          <p>MOVE <i>WITH</i> MEANING</p>
-          <p>MOVE <i>WITH</i> MEANING</p>
-          <p>MOVE <i>WITH</i> MEANING</p>
+        <div class="feedback" aria-hidden="true">
+          <div class="feedback-line">
+            <span class="feedback-progress"></span>
+            <span class="feedback-pulse"></span>
+          </div>
+          <ol>
+            <li>
+              <i>01</i>
+              <b>INPUT</b>
+              <span>Signal captured</span>
+            </li>
+            <li>
+              <i>02</i>
+              <b>BUILD</b>
+              <span>Change running</span>
+            </li>
+            <li>
+              <i>03</i>
+              <b>LEARN</b>
+              <span>Next action</span>
+            </li>
+          </ol>
+          <div class="feedback-result">
+            <span class="feedback-check">✓</span>
+            <p><b>UPDATE LIVE</b><small>Feedback became behavior</small></p>
+          </div>
         </div>
         <div class="copy">
           <h3>
@@ -82,8 +104,8 @@
             <span class="en">Feedback that communicates</span>
           </h3>
           <p>
-            <span class="ja">状態変化や処理の流れを、説明を増やさず直感的に伝える。</span>
-            <span class="en">Use motion to explain state and progress without adding interface noise.</span>
+            <span class="ja">入力、処理、結果をひと続きに。説明を増やさず、いま何が起きたかを伝える。</span>
+            <span class="en">Connect input, processing and outcome so every change feels immediate and clear.</span>
           </p>
         </div>
       </article>
@@ -293,38 +315,151 @@
     color: rgba(243,240,235,.4);
   }
 
-  .kinetic {
+  .feedback {
     position: absolute;
-    inset: 60px 0 120px;
+    inset: 62px 22px 132px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .feedback-line {
+    position: absolute;
+    left: 9%;
+    right: 9%;
+    top: 50%;
+    height: 1px;
+    background: rgba(243, 240, 235, .14);
+  }
+
+  .feedback-progress {
+    position: absolute;
+    inset: -1px auto -1px 0;
+    width: 34%;
+    background: linear-gradient(90deg, #8072ed, #ff8d6a);
+    transform-origin: left;
+    animation: feedback-progress 4.8s var(--ease-in-out) infinite;
+  }
+
+  .feedback-pulse {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    translate: -50% -50%;
+    background: #ff9a73;
+    box-shadow: 0 0 0 7px rgba(255, 137, 97, .09), 0 0 25px rgba(255, 116, 70, .55);
+    animation: feedback-pulse 4.8s var(--ease-in-out) infinite;
+  }
+
+  .feedback ol {
+    position: relative;
+    z-index: 2;
     display: grid;
-    align-content: center;
-    gap: 5px;
-    transform: rotate(-4deg) scale(1.08);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
   }
 
-  .kinetic p {
-    width: max-content;
-    font-size: clamp(36px, 5vw, 76px);
-    font-weight: 650;
-    line-height: .88;
-    letter-spacing: -.06em;
+  .feedback li {
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid rgba(243, 240, 235, .13);
+    border-radius: 12px;
+    background: rgba(20, 18, 16, .88);
+    backdrop-filter: blur(10px);
+    animation: feedback-card 4.8s var(--ease-in-out) infinite;
+  }
+
+  .feedback li:nth-child(2) { animation-delay: -3.2s; }
+  .feedback li:nth-child(3) { animation-delay: -1.6s; }
+
+  .feedback li i,
+  .feedback li b,
+  .feedback li span {
+    display: block;
+    font-family: var(--font-mono);
+    font-style: normal;
+  }
+
+  .feedback li i {
+    color: #ff8b62;
+    font-size: 8px;
+    letter-spacing: .1em;
+  }
+
+  .feedback li b {
+    margin-top: 16px;
+    font-size: 10px;
+    letter-spacing: .08em;
+  }
+
+  .feedback li span {
+    margin-top: 4px;
+    overflow: hidden;
+    color: rgba(243, 240, 235, .42);
+    font-size: 7px;
     white-space: nowrap;
-    animation: type-slide 9s linear infinite;
+    text-overflow: ellipsis;
   }
 
-  .kinetic p:nth-child(2) {
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(243,240,235,.56);
-    animation-direction: reverse;
-    animation-duration: 12s;
+  .feedback-result {
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border: 1px solid rgba(138, 223, 179, .24);
+    border-radius: 999px;
+    background: rgba(30, 55, 42, .45);
+    opacity: .35;
+    transform: translateX(-50%) translateY(5px);
+    animation: feedback-result 4.8s var(--ease-in-out) infinite;
   }
 
-  .kinetic p:nth-child(3) { animation-duration: 15s; opacity: .34; }
-  .kinetic i { font-style: normal; color: var(--accent-on-dark); }
+  .feedback-check {
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #9be0b7;
+    color: #142219;
+    font-size: 11px;
+  }
 
-  @keyframes type-slide {
-    from { transform: translateX(-12%); }
-    to { transform: translateX(14%); }
+  .feedback-result p,
+  .feedback-result b,
+  .feedback-result small {
+    display: block;
+    font-family: var(--font-mono);
+  }
+
+  .feedback-result b { font-size: 8px; letter-spacing: .1em; }
+  .feedback-result small { margin-top: 2px; color: rgba(243,240,235,.48); font-size: 7px; white-space: nowrap; }
+
+  @keyframes feedback-progress {
+    0%, 9% { transform: scaleX(.03); opacity: .25; }
+    70%, 88% { transform: scaleX(2.92); opacity: 1; }
+    100% { transform: scaleX(2.92); opacity: .2; }
+  }
+
+  @keyframes feedback-pulse {
+    0%, 9% { left: 0; }
+    70%, 100% { left: 100%; }
+  }
+
+  @keyframes feedback-card {
+    0%, 28%, 100% { border-color: rgba(243,240,235,.13); transform: translateY(0); }
+    13% { border-color: rgba(255,143,101,.62); transform: translateY(-4px); }
+  }
+
+  @keyframes feedback-result {
+    0%, 64%, 100% { opacity: .3; transform: translateX(-50%) translateY(5px); }
+    76%, 90% { opacity: 1; transform: translateX(-50%) translateY(0); }
   }
 
   @media (max-width: 920px) {
@@ -347,6 +482,9 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .signal i, .plane, .orb, .kinetic p { animation: none; }
+    .signal i, .plane, .orb,
+    .feedback-progress, .feedback-pulse, .feedback li, .feedback-result {
+      animation: none;
+    }
   }
 </style>

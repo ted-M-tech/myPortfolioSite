@@ -109,10 +109,10 @@ const rowB = [...rowA].reverse();
 
   /* 同じ並びを2つ描いて -50% まで動かすと、継ぎ目が出ない */
   .track--left {
-    animation: rail-left 24s linear infinite;
+    animation: rail-left 20s linear infinite;
   }
   .track--right {
-    animation: rail-right 29s linear infinite;
+    animation: rail-right 24s linear infinite;
   }
 
   @keyframes rail-left {
@@ -131,12 +131,12 @@ const rowB = [...rowA].reverse();
 
   .card {
     flex: none;
-    width: clamp(210px, 19vw, 268px);
+    width: clamp(238px, 22vw, 320px);
   }
 
   .thumb {
     position: relative;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 3 / 2;
     border-radius: var(--radius);
     overflow: hidden;
     border: 1px solid var(--line);

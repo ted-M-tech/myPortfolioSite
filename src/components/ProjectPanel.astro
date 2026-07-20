@@ -1,361 +1,93 @@
 ---
+import { projects } from "../data/profile";
+
 interface Props {
   index: number;
   animate?: boolean;
 }
 
 const { index, animate = true } = Astro.props;
-const variant = index % 6;
+const project = projects[index];
 ---
 
-<div class:list={["panel", `panel--${variant}`, animate && "panel--animate"]} aria-hidden="true">
-  <div class="grid"></div>
-
-  {variant === 0 && (
-    <div class="neural">
-      <span class="brain">AI</span>
-      {Array.from({ length: 16 }, (_, i) => <i style={`--size:${42 + i * 11}px;--rot:${i * 22.5}deg`} />)}
-      <b>LIVE / INFERENCE</b>
-    </div>
-  )}
-
-  {variant === 1 && (
-    <div class="route">
-      <div class="ring ring--a"></div>
-      <div class="ring ring--b"></div>
-      <div class="ring ring--c"></div>
-      <span class="pin pin--a"></span>
-      <span class="pin pin--b"></span>
-      <span class="pin pin--c"></span>
-      <b>ROUTE / MEMORY</b>
-    </div>
-  )}
-
-  {variant === 2 && (
-    <div class="voice">
-      <p>なんでやねん</p>
-      <div>{Array.from({ length: 22 }, (_, i) => <i style={`--h:${14 + (i % 7) * 12}%;--delay:${i * -70}ms`} />)}</div>
-      <span>KANSAI / VOICE / 02</span>
-    </div>
-  )}
-
-  {variant === 3 && (
-    <div class="pet">
-      <div class="pixel-dog">
-        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-      </div>
-      <span class="sun"></span>
-      <p>8,426 <small>STEPS</small></p>
-      <b>MOOD / GOOD</b>
-    </div>
-  )}
-
-  {variant === 4 && (
-    <div class="control">
-      <div class="dial"><span>87</span><small>%</small></div>
-      <div class="bars">{Array.from({ length: 10 }, (_, i) => <i style={`--h:${22 + (i % 5) * 16}%;--delay:${i * -160}ms;--alpha:${0.52 + (i % 3) * 0.18}`} />)}</div>
-      <b>SYSTEM / NOMINAL</b>
-    </div>
-  )}
-
-  {variant === 5 && (
-    <div class="release">
-      {["IDEA", "BUILD", "SHIP", "LEARN"].map((word, i) => (
-        <div style={`--offset:${(i - 1.5) * 15}px`}><span>{String(i + 1).padStart(2, "0")}</span><b>{word}</b></div>
-      ))}
-      <p>4× <small>CADENCE</small></p>
-    </div>
-  )}
-
-  <span class="corner">MP / {String(index + 1).padStart(2, "0")}</span>
+<div class:list={["panel", animate && "panel--animate"]}>
+  <picture>
+    <img
+      src={project.image}
+      alt={project.imageAlt.ja}
+      loading="lazy"
+      decoding="async"
+      width="1536"
+      height="1024"
+    />
+  </picture>
+  <span class="veil" aria-hidden="true"></span>
+  <span class="label">
+    <span class="ja">画面イメージ</span>
+    <span class="en">Concept visual</span>
+  </span>
 </div>
 
 <style>
   .panel {
-    --hot: #ff5b28;
-    --cool: #4a35ff;
     position: absolute;
     inset: 0;
     overflow: hidden;
-    background:
-      radial-gradient(80% 80% at 70% 30%, color-mix(in srgb, var(--cool) 28%, transparent), transparent 65%),
-      #0d0c0b;
-    color: #f3f0eb;
+    background: #e9e5df;
   }
 
-  .panel > .grid {
+  picture,
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
+  picture {
+    display: block;
+  }
+
+  img {
+    display: block;
+    object-fit: cover;
+    transition: transform 900ms var(--ease-out);
+  }
+
+  .panel--animate img {
+    transform: scale(1.01);
+  }
+
+  :global(.project a:hover) .panel--animate img {
+    transform: scale(1.045);
+  }
+
+  .veil {
     position: absolute;
     inset: 0;
-    opacity: .42;
-    background-image:
-      linear-gradient(rgba(255,255,255,.055) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px);
-    background-size: 36px 36px;
-    mask-image: radial-gradient(90% 90% at 50% 45%, #000 35%, transparent 88%);
+    background:
+      linear-gradient(180deg, rgba(12, 11, 10, .09), transparent 22%),
+      linear-gradient(0deg, rgba(12, 11, 10, .18), transparent 26%);
+    pointer-events: none;
   }
 
-  .panel--1 { --hot: #ff7a2f; --cool: #0647ff; }
-  .panel--2 { --hot: #ff4d7e; --cool: #5b1aff; }
-  .panel--3 { --hot: #ffb12b; --cool: #ec3b18; }
-  .panel--4 { --hot: #56f2b2; --cool: #075dff; }
-  .panel--5 { --hot: #ff623e; --cool: #a221ff; }
-
-  .corner {
+  .label {
     position: absolute;
-    right: 16px;
-    bottom: 14px;
-    z-index: 8;
-    font-family: var(--font-mono);
-    font-size: 8px;
-    letter-spacing: .14em;
-    color: rgba(243,240,235,.38);
-  }
-
-  /* AI neural field */
-  .neural {
-    position: absolute;
-    inset: 10%;
-    display: grid;
-    place-items: center;
-  }
-  .brain {
-    position: relative;
-    z-index: 3;
-    font-size: clamp(62px, 9vw, 140px);
-    font-weight: 560;
-    line-height: 1;
-    letter-spacing: -.09em;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(255,189,157,.95);
-    filter: drop-shadow(0 0 28px rgba(255,91,40,.28));
-  }
-  .neural i {
-    position: absolute;
-    width: var(--size);
-    aspect-ratio: 1;
-    border: 1px solid rgba(255,121,69,.25);
-    border-radius: 42% 58% 63% 37%;
-    rotate: var(--rot);
-    animation: neural 8s linear infinite;
-  }
-  .neural b, .route b, .control b {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    font-family: var(--font-mono);
-    font-size: 8px;
-    font-weight: 400;
-    letter-spacing: .14em;
-    color: rgba(243,240,235,.45);
-  }
-  @keyframes neural { to { rotate: calc(360deg + var(--rot)); } }
-
-  /* Route / spatial memory */
-  .route {
-    position: absolute;
-    inset: 9%;
-    transform: rotate(-7deg);
-  }
-  .ring {
-    position: absolute;
-    border: 1px solid rgba(118,151,255,.52);
-    border-radius: 50%;
-    box-shadow: inset 0 0 24px rgba(31,74,255,.08);
-    animation: route-pulse 4s var(--ease-in-out) infinite;
-  }
-  .ring--a { width: 70%; height: 48%; left: 4%; top: 12%; }
-  .ring--b { width: 52%; height: 64%; right: 2%; bottom: 3%; animation-delay: -1.3s; }
-  .ring--c { width: 34%; height: 30%; left: 34%; top: 34%; animation-delay: -2.6s; }
-  .pin {
-    position: absolute;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--hot);
-    box-shadow: 0 0 18px var(--hot);
-  }
-  .pin--a { left: 18%; top: 19%; }
-  .pin--b { right: 19%; top: 43%; }
-  .pin--c { left: 47%; bottom: 19%; }
-  @keyframes route-pulse { 50% { scale: 1.035; opacity: .58; } }
-
-  /* Voice */
-  .voice {
-    position: absolute;
-    inset: 12% 8%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .voice p {
-    font-size: clamp(34px, 6vw, 84px);
-    font-weight: 600;
-    line-height: 1;
-    letter-spacing: -.08em;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(255,164,193,.92);
-  }
-  .voice div {
-    height: 64px;
-    margin-top: 18px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .voice i {
-    flex: 1;
-    height: var(--h);
-    min-height: 5px;
+    right: 14px;
+    bottom: 12px;
+    padding: 6px 9px;
+    border: 1px solid rgba(255, 255, 255, .45);
     border-radius: 999px;
-    background: linear-gradient(to top, var(--cool), var(--hot));
-    animation: voice 1.2s ease-in-out infinite alternate;
-    animation-delay: var(--delay);
-  }
-  .voice span {
+    background: rgba(16, 15, 14, .42);
+    color: rgba(255, 255, 255, .88);
+    backdrop-filter: blur(8px);
     font-family: var(--font-mono);
     font-size: 8px;
-    letter-spacing: .14em;
-    color: rgba(243,240,235,.42);
+    letter-spacing: .11em;
+    text-transform: uppercase;
   }
-  @keyframes voice { to { transform: scaleY(.35); opacity: .55; } }
-
-  /* Pixel companion */
-  .pet {
-    position: absolute;
-    inset: 9%;
-  }
-  .sun {
-    position: absolute;
-    right: 6%;
-    top: 3%;
-    width: 30%;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: radial-gradient(circle at 38% 34%, #fff2bb, #ff8a26 38%, #f03517 70%, transparent 72%);
-    filter: blur(.2px) drop-shadow(0 0 24px rgba(255,103,31,.34));
-  }
-  .pixel-dog {
-    position: absolute;
-    left: 12%;
-    top: 24%;
-    width: 42%;
-    aspect-ratio: 1.2;
-    filter: drop-shadow(16px 20px 28px rgba(0,0,0,.4));
-  }
-  .pixel-dog i {
-    position: absolute;
-    background: #fff0ce;
-    box-shadow: inset -8px -8px 0 rgba(255,139,59,.16);
-  }
-  .pixel-dog i:nth-child(1) { inset: 18% 16% 12% 12%; }
-  .pixel-dog i:nth-child(2) { width: 34%; height: 34%; left: 0; top: 0; }
-  .pixel-dog i:nth-child(3) { width: 34%; height: 34%; right: 0; top: 0; }
-  .pixel-dog i:nth-child(4) { width: 13%; height: 13%; left: 29%; top: 39%; background: #17120e; }
-  .pixel-dog i:nth-child(5) { width: 13%; height: 13%; right: 24%; top: 39%; background: #17120e; }
-  .pixel-dog i:nth-child(6) { width: 19%; height: 14%; left: 43%; top: 57%; background: #e05b31; }
-  .pixel-dog i:nth-child(7) { width: 13%; height: 34%; left: 18%; bottom: 0; }
-  .pixel-dog i:nth-child(8) { width: 13%; height: 34%; right: 21%; bottom: 0; }
-  .pet p {
-    position: absolute;
-    right: 3%;
-    bottom: 17%;
-    font-size: clamp(26px, 4vw, 54px);
-    font-weight: 550;
-    letter-spacing: -.06em;
-  }
-  .pet p small, .pet b {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 8px;
-    letter-spacing: .14em;
-    color: rgba(243,240,235,.45);
-  }
-  .pet b { position: absolute; left: 0; bottom: 0; font-weight: 400; }
-
-  /* Control dashboard */
-  .control {
-    position: absolute;
-    inset: 10%;
-    display: grid;
-    grid-template-columns: .8fr 1.2fr;
-    align-items: center;
-    gap: 12%;
-  }
-  .dial {
-    position: relative;
-    display: grid;
-    place-items: center;
-    aspect-ratio: 1;
-    border: 1px solid rgba(86,242,178,.22);
-    border-radius: 50%;
-    background: conic-gradient(var(--hot) 0 87%, rgba(255,255,255,.07) 87%);
-    box-shadow: 0 0 34px rgba(86,242,178,.14);
-  }
-  .dial::after {
-    content: "";
-    position: absolute;
-    inset: 11px;
-    border-radius: 50%;
-    background: #101210;
-  }
-  .dial span, .dial small { position: relative; z-index: 2; }
-  .dial span { font-size: clamp(36px, 6vw, 80px); font-weight: 530; letter-spacing: -.07em; }
-  .dial small { font-size: 10px; color: rgba(243,240,235,.45); }
-  .bars { height: 62%; display: flex; align-items: end; gap: 5px; }
-  .bars i {
-    flex: 1;
-    height: var(--h);
-    background: linear-gradient(var(--hot), color-mix(in srgb, var(--cool) 70%, #050505));
-    opacity: var(--alpha);
-    animation: bars 2.6s var(--ease-in-out) infinite alternate;
-    animation-delay: var(--delay);
-  }
-  @keyframes bars { to { transform: scaleY(.58); transform-origin: bottom; } }
-
-  /* Release cadence */
-  .release {
-    position: absolute;
-    inset: 10% 8%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 5px;
-    align-items: center;
-  }
-  .release > div {
-    position: relative;
-    padding: 14px 8px;
-    border: 1px solid rgba(243,240,235,.13);
-    background: rgba(255,255,255,.035);
-    transform: translateY(var(--offset));
-  }
-  .release > div::after {
-    content: "";
-    position: absolute;
-    left: 100%;
-    top: 50%;
-    width: 6px;
-    border-top: 1px solid rgba(243,240,235,.2);
-  }
-  .release > div:last-of-type::after { display: none; }
-  .release span, .release b {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 8px;
-    letter-spacing: .1em;
-  }
-  .release span { color: var(--hot); }
-  .release b { margin-top: 10px; font-weight: 500; }
-  .release p {
-    position: absolute;
-    right: 2%;
-    bottom: 0;
-    font-size: clamp(38px, 7vw, 96px);
-    font-weight: 550;
-    letter-spacing: -.08em;
-  }
-  .release p small { display: block; font-family: var(--font-mono); font-size: 8px; letter-spacing: .12em; color: rgba(243,240,235,.42); }
 
   @media (prefers-reduced-motion: reduce) {
-    .neural i, .ring, .voice i, .bars i { animation: none; }
+    img {
+      transition: none;
+    }
   }
 </style>

@@ -148,6 +148,12 @@ button {
   text-wrap: pretty;
 }
 
+/* 日本語の助詞だけが行頭・行末に残るのを避ける。未対応環境では通常の改行へ戻る。 */
+.ja {
+  line-break: strict;
+  word-break: auto-phrase;
+}
+
 .section--dark .section-lede {
   color: var(--text-on-dark-muted);
 }

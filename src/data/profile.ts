@@ -97,6 +97,8 @@ export type Project = {
   description: Bilingual;
   tech: readonly string[];
   href: string;
+  image: string;
+  imageAlt: Bilingual;
 };
 
 export const projects: readonly Project[] = [
@@ -108,44 +110,64 @@ export const projects: readonly Project[] = [
       en: "AI Analytics for Manufacturing",
     },
     description: {
-      ja: "リアルタイムのデータ分析と AI エンジンを組み込んだ工場自動化システム。前処理から本番デプロイまで一気通貫で構築し、工程最適化と予知保全を実現しています。",
-      en: "Factory automation with real-time analytics and AI engines built in — from data preprocessing through to production deployment, for process optimization and predictive maintenance.",
+      ja: "リアルタイム分析と AI を組み込んだ工場自動化システム。前処理から本番運用まで一気通貫で構築。",
+      en: "Factory automation with real-time analytics and AI, built from data preparation through production.",
     },
     tech: ["Python", "Azure", "AI/ML", "Real-time Analytics", "Docker"],
     href: "https://www.linkedin.com/in/tetsuya-maeda-629b70294/",
+    image: "/work/industrial-ops-case.webp",
+    imageAlt: {
+      ja: "製造設備とAIインサイトを表示する運用画面のコンセプト",
+      en: "Concept view of an operations interface with equipment and AI insights",
+    },
   },
   {
     id: "annoscene",
     role: { ja: "iOS開発 · MapKit", en: "iOS Engineering · MapKit" },
     title: { ja: "AnnoScene", en: "AnnoScene" },
     description: {
-      ja: "旅の移動そのものを主役にする iOS アプリ。走った経路が地図上に自分で描かれ、写真や短い動画がそれぞれの場所と時刻に現れます。訪れた国を貯める Atlas 付き。写真の位置情報は端末内だけで処理します。",
-      en: "An iOS app that makes the journey itself the subject. The route draws itself across the map while photos and clips surface at the place and moment they were taken, alongside an Atlas of countries visited. Photo location data never leaves the device.",
+      ja: "旅の経路と、その場所で撮った写真や動画が一本の記憶になる iOS アプリ。位置情報は端末内で処理。",
+      en: "An iOS app that turns routes, photos and clips into one travel memory, with location data kept on device.",
     },
     tech: ["Swift", "SwiftUI", "MapKit", "PhotosUI", "AVFoundation"],
     href: "https://annoscene.maepace.com",
+    image: "/work/annoscene-case.webp",
+    imageAlt: {
+      ja: "AnnoSceneの地図と旅程を表示したiPhone画面のコンセプト",
+      en: "Concept iPhone view of AnnoScene's route and travel timeline",
+    },
   },
   {
     id: "helpkansai",
     role: { ja: "iOS開発 · 音声学習", en: "iOS Engineering · Voice Learning" },
     title: { ja: "Help Kansai", en: "Help Kansai" },
     description: {
-      ja: "いまの関西弁を、標準語と並べて学ぶ iOS アプリ。ネイティブ音声での発話練習と間隔反復を組み合わせ、教科書には出てこない自然な言い回しを扱います。",
-      en: "An iOS app for learning modern Kansai Japanese by comparing it against standard Japanese — native-audio practice plus spaced repetition, covering the phrasing textbooks leave out.",
+      ja: "いまの関西弁を標準語と並べて学ぶ iOS アプリ。ネイティブ音声と間隔反復で、自然な言い回しを身につける。",
+      en: "An iOS app for learning modern Kansai Japanese through native audio, comparison and spaced repetition.",
     },
     tech: ["Swift", "SwiftUI", "AVFoundation", "SRS"],
     href: "https://helpkansai.maepace.com",
+    image: "/work/help-kansai-case.webp",
+    imageAlt: {
+      ja: "Help Kansaiの音声学習画面を表示したiPhoneのコンセプト",
+      en: "Concept iPhone view of Help Kansai's voice lesson",
+    },
   },
   {
     id: "wellnesspet",
     role: { ja: "iOS開発 · HealthKit", en: "iOS Engineering · HealthKit" },
     title: { ja: "Wellness Pet", en: "Wellness Pet" },
     description: {
-      ja: "歩数と睡眠、夜のひと押しの気分記録が、一匹のピクセルの犬の様子に変わる iOS アプリ。点数をつける道具ではなく、そばにいるものとして設計しています。",
-      en: "An iOS companion where steps, sleep and a one-tap evening mood check turn into small changes in a single pixel dog. Designed to sit beside you rather than score you.",
+      ja: "歩数・睡眠・気分が、一匹のピクセルの犬の様子に変わる iOS アプリ。評価せず、そっと寄り添う設計。",
+      en: "An iOS companion where steps, sleep and mood become small changes in a pixel dog—supportive, never judgmental.",
     },
     tech: ["Swift", "SwiftUI", "HealthKit", "WidgetKit"],
     href: "https://wellnesspet.maepace.com",
+    image: "/work/wellness-pet-case.webp",
+    imageAlt: {
+      ja: "Wellness Petの健康記録とピクセル犬を表示したiPhone画面のコンセプト",
+      en: "Concept iPhone view of Wellness Pet's daily check-in and pixel companion",
+    },
   },
   {
     id: "scada-viz",
@@ -155,11 +177,16 @@ export const projects: readonly Project[] = [
       en: "Data Visualization & Remote Control",
     },
     description: {
-      ja: "顧客と直接設計を詰めながら、工場・ビル自動化向けの可視化と遠隔制御を実装。運用効率を25%改善し、アラート対応までの時間を短縮しました。",
-      en: "Designed and shipped visualization and remote control for factory and building automation, working directly with clients. Operational efficiency up 25%, with faster response to system alerts.",
+      ja: "顧客と設計を詰めながら、工場・ビル自動化向けの可視化と遠隔制御を実装。運用効率を25%改善。",
+      en: "Designed and shipped visualization and remote control for factory and building automation, improving operational efficiency by 25%.",
     },
     tech: ["C#", "SQL Server", "Azure", "SCADA", "PLC"],
     href: "https://www.mitsubishielectric.co.jp/fa/products/software/visualisation/genesis64/index.html",
+    image: "/work/industrial-ops-case.webp",
+    imageAlt: {
+      ja: "設備状況と遠隔操作をまとめた運用画面のコンセプト",
+      en: "Concept view of equipment status and remote control",
+    },
   },
   {
     id: "saas-scrum",
@@ -169,11 +196,65 @@ export const projects: readonly Project[] = [
       en: "Manufacturing SaaS Platform",
     },
     description: {
-      ja: "クラウド SaaS 開発で Scrum Master を務め、リリースサイクルを月次から週次へ短縮。デリバリー頻度4倍、サイクルタイム基準でチーム生産性を20%改善しました。",
-      en: "Led Agile practice as Scrum Master on a cloud SaaS product — release cycle from monthly to weekly, 4x delivery frequency, and a 20% lift in team productivity measured by cycle time.",
+      ja: "クラウド SaaS 開発で Scrum Master を務め、月次リリースを週次へ。デリバリー頻度を4倍に改善。",
+      en: "Led Agile delivery for a cloud SaaS product, moving releases from monthly to weekly and increasing delivery frequency 4x.",
     },
     tech: ["React", "Next.js", "TypeScript", "Azure", "Snowflake", "Scrum"],
     href: "https://www.mitsubishielectric.co.jp/fa/about-us/fa-digitalsolution/index.html",
+    image: "/work/manufacturing-saas-case.webp",
+    imageAlt: {
+      ja: "製造業向けSaaSの資産管理とリリース画面のコンセプト",
+      en: "Concept view of asset management and releases in a manufacturing SaaS",
+    },
+  },
+  {
+    id: "canada-community",
+    role: { ja: "ボランティア · Web開発", en: "Volunteer · Web Development" },
+    title: {
+      ja: "カナダのコミュニティ Web 開発",
+      en: "Community Website in Canada",
+    },
+    description: {
+      ja: "地域の情報と参加への導線を、誰でも使いやすいレスポンシブ Web サイトとして設計・実装。",
+      en: "Designed and built an accessible responsive website connecting a Canadian community with information and ways to participate.",
+    },
+    tech: ["Web Design", "Frontend", "Responsive", "Accessibility"],
+    href: "https://www.linkedin.com/in/tetsuya-maeda-629b70294/",
+    image: "/work/canada-community-case.webp",
+    imageAlt: {
+      ja: "カナダのコミュニティサイトをデスクトップとスマートフォンで表示したコンセプト",
+      en: "Concept desktop and mobile views of a Canadian community website",
+    },
+  },
+] as const;
+
+export const enablement = [
+  {
+    id: "notion",
+    mark: "N",
+    title: { ja: "Notion 全社一元管理", en: "Company-wide Notion operations" },
+    description: {
+      ja: "散在する情報と業務を、チームが使い続けられる一つの運用基盤へ。",
+      en: "Bring scattered information and workflows into one maintainable operating system.",
+    },
+  },
+  {
+    id: "claude",
+    mark: "AI",
+    title: { ja: "Claude 企業導入支援", en: "Claude adoption support" },
+    description: {
+      ja: "導入だけで終わらせず、実務に定着する使い方とルールまで設計。",
+      en: "Design practical usage and guardrails so adoption becomes part of real work.",
+    },
+  },
+  {
+    id: "git",
+    mark: "GIT",
+    title: { ja: "Git 導入・運用支援", en: "Git enablement" },
+    description: {
+      ja: "チームの開発フローに合わせ、履歴・レビュー・リリースの型を整備。",
+      en: "Shape versioning, review and release practices around the way the team works.",
+    },
   },
 ] as const;
 
