@@ -90,13 +90,16 @@ export const marquee = [
  * - Xcode
  *   Apple はウェブサイトでの自社アイコン使用を名指しで禁じており、文字での
  *   言及しか認めていない。他社と違って例外規定が無いので、正しい表示が存在しない。
+ * - Gemini
+ *   実際のマークはグラデーションで、Google は単一の固定色を公開していない。
+ *   単色版は Simple Icons による改変で、公式の見た目ではない。正規版の入手には
+ *   Partner Marketing Hub での承認申請が要る。正しく出せないので載せない。
  *   詳細は public/brand/tools/README.md。
  */
 export const toolchain = [
   { name: "ChatGPT", icon: "/brand/tools/chatgpt.svg", appIcon: false },
   { name: "Claude", icon: "/brand/tools/claude.svg", appIcon: true },
   { name: "Cursor", icon: "/brand/tools/cursor-app-icon.png", appIcon: true },
-  { name: "Gemini", icon: "/brand/tools/gemini.svg", appIcon: false },
   { name: "VS Code", icon: "/brand/tools/vscode.svg", appIcon: false },
   { name: "Figma", icon: "/brand/tools/figma.svg", appIcon: false },
   { name: "Notion", icon: "/brand/tools/notion.svg", appIcon: false },
