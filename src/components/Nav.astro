@@ -8,7 +8,7 @@ const links = [
 ];
 ---
 
-<header class="nav on-dark" id="nav">
+<header class="nav" id="nav">
   <span class="progress" id="scroll-progress" aria-hidden="true"></span>
   <a class="brand" href="#top" aria-label={site.brand}>
     <!-- 横長ロゴ。currentColor なので親の色で単色化される（ブランド規定） -->
@@ -44,7 +44,7 @@ const links = [
   // 暗いセクションの上にいる間だけ .on-dark を付ける。
   const nav = document.getElementById("nav");
   if (nav) {
-    const dark = [...document.querySelectorAll<HTMLElement>(".section--dark, .hero")];
+    const dark = [...document.querySelectorAll<HTMLElement>(".section--dark")];
     const update = () => {
       nav.classList.toggle("is-scrolled", window.scrollY > 40);
       const probe = 34; // ヘッダー中心あたりの高さで判定する
