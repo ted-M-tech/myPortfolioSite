@@ -1,0 +1,38 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Hero from "../components/Hero.astro";
+import Marquee from "../components/Marquee.astro";
+import Stats from "../components/Stats.astro";
+import Work from "../components/Work.astro";
+import Ethos from "../components/Ethos.astro";
+import Skills from "../components/Skills.astro";
+import Services from "../components/Services.astro";
+import Path from "../components/Path.astro";
+import Contact from "../components/Contact.astro";
+import { site } from "../data/profile";
+---
+
+<Base title={site.title} description={site.description.en}>
+  <Nav />
+  <main id="main">
+    <Hero />
+    <Marquee />
+    <Stats />
+    <Work />
+    <Ethos />
+    <Skills />
+    <Services />
+    <Path />
+    <Contact />
+  </main>
+</Base>
+
+<script>
+  import { initLang } from "../scripts/lang";
+  import { initReveal, initCounters } from "../scripts/reveal";
+
+  initLang();
+  initReveal();
+  initCounters();
+</script>

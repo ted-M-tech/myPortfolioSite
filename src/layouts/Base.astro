@@ -1,0 +1,106 @@
+---
+import "../styles/global.css";
+import { site, person } from "../data/profile";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = site.title, description = site.description.en } = Astro.props;
+const canonical = new URL(Astro.url.pathname, site.url).href.replace(/\/$/, "") || site.url;
+const ogImage = new URL("/og.png", site.url).href;
+---
+
+<!doctype html>
+<!--
+  data-lang は表示言語。既定は日本語で、lang.ts が localStorage の値で上書きする。
+  head の inline script で先に当てているので、切り替え時にちらつかない。
+-->
+<html lang="ja" data-lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#F7F5F2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.brand} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+    />
+
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: person.name,
+        alternateName: person.nameJa,
+        jobTitle: person.role.en,
+        email: `mailto:${person.email}`,
+        url: site.url,
+        address: { "@type": "PostalAddress", addressLocality: "Vancouver", addressCountry: "CA" },
+        sameAs: ["https://www.linkedin.com/in/tetsuya-maeda-629b70294/", "https://github.com/ted-M-tech"],
+      })}
+    />
+
+    <!--
+      アニメーションの初期状態は .js が付いているときだけ適用する。
+      JS が無効なら要素は最初から見えたままになり、空白ページにならない。
+      描画前に付けたいので inline かつ is:inline。
+    -->
+    <script is:inline>
+      document.documentElement.classList.add("js");
+      try {
+        const saved = localStorage.getItem("mp-lang");
+        if (saved === "ja" || saved === "en") {
+          document.documentElement.setAttribute("data-lang", saved);
+          document.documentElement.lang = saved;
+        }
+      } catch {
+        /* localStorage が使えない環境では既定の日本語のまま */
+      }
+    </script>
+  </head>
+
+  <body>
+    <a class="skip" href="#main">本文へスキップ / Skip to content</a>
+    <slot />
+  </body>
+</html>
+
+<style>
+  .skip {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    padding: 12px 20px;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 0 0 var(--radius) 0;
+  }
+  .skip:focus {
+    left: 0;
+  }
+</style>

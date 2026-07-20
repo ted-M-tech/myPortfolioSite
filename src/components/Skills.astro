@@ -1,0 +1,116 @@
+---
+import { skills, certifications } from "../data/profile";
+---
+
+<section class="section" id="skills">
+  <div class="wrap">
+    <header class="reveal">
+      <p class="eyebrow">Capabilities</p>
+      <h2 class="section-title">
+        <span class="ja">できること。</span>
+        <span class="en">What I work with.</span>
+      </h2>
+    </header>
+
+    <div class="cols">
+      <div class="skills">
+        {
+          skills.map((s) => (
+            <div class="group reveal">
+              <h3>
+                <span class="ja">{s.group.ja}</span>
+                <span class="en">{s.group.en}</span>
+              </h3>
+              <ul class="tags">
+                {s.items.map((i) => (
+                  <li class="tag">{i}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+
+      <div class="certs reveal">
+        <h3>
+          <span class="ja">資格</span>
+          <span class="en">Certifications</span>
+        </h3>
+        <ul>
+          {
+            certifications.map((c) => (
+              <li>
+                <span class="cert-name">{c.name}</span>
+                <span class="cert-meta">
+                  {c.issuer} · {c.year}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cols {
+    margin-top: 52px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: start;
+  }
+
+  .skills {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  h3 {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .certs ul {
+    margin-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+
+  .certs li {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding-block: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .cert-name {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: var(--tracking-tight);
+    text-wrap: pretty;
+  }
+
+  .cert-meta {
+    font-size: 13px;
+    color: var(--text-faint);
+  }
+
+  @media (max-width: 860px) {
+    .cols {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

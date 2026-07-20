@@ -1,0 +1,64 @@
+---
+import { marquee } from "../data/profile";
+
+// 途切れなく流すため同じ列を2本並べ、-50% まで動かして繰り返す
+const row = [...marquee];
+---
+
+<div class="marq" aria-hidden="true">
+  <div class="track">
+    {[0, 1].map(() => <span class="run">{row.map((w) => <span class="item">{w}</span>)}</span>)}
+  </div>
+</div>
+
+<style>
+  .marq {
+    background: var(--surface-dark-2);
+    color: var(--text-on-dark);
+    padding-block: 28px;
+    overflow: hidden;
+    border-block: 1px solid var(--line-on-dark);
+  }
+
+  .track {
+    display: flex;
+    width: max-content;
+    animation: slide 44s linear infinite;
+  }
+
+  .run {
+    display: flex;
+  }
+
+  .item {
+    font-size: clamp(20px, 3vw, 34px);
+    font-weight: 600;
+    letter-spacing: var(--tracking-tight);
+    white-space: nowrap;
+    padding-inline: 26px;
+    color: var(--text-on-dark-muted);
+  }
+
+  /* 区切りは中黒。ロゴの正方形と紛らわしくならないよう小さく置く */
+  .item::after {
+    content: "·";
+    margin-left: 52px;
+    color: var(--accent-on-dark);
+  }
+
+  @keyframes slide {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .marq:hover .track {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .track {
+      animation: none;
+    }
+  }
+</style>

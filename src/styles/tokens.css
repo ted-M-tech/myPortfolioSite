@@ -1,0 +1,83 @@
+/*
+ * MaePace デザイントークン
+ *
+ * 色は docs/brand/maepace.md のロゴ仕様に従う。
+ * paper #F7F5F2 / ink #14110F、反転時 bg #121110 / fg #F3F0EB。
+ * ロゴは単色運用が規則なので、アクセントは面や文字にだけ使い、マークには載せない。
+ */
+
+:root {
+  /* --- ブランド基色 --- */
+  --paper: #f7f5f2;
+  --ink: #14110f;
+  --paper-inv: #f3f0eb;
+  --ink-inv: #121110;
+
+  /* --- 面 --- */
+  --surface: var(--paper);
+  --surface-raised: #ffffff;
+  --surface-sunken: #efece7;
+  --surface-dark: var(--ink-inv);
+  --surface-dark-2: #1b1917;
+
+  /* --- 文字 --- */
+  --text: var(--ink);
+  --text-muted: #6b635c;
+  --text-faint: #a39a91;
+  --text-on-dark: var(--paper-inv);
+  --text-on-dark-muted: rgba(243, 240, 235, 0.62);
+
+  /* --- 罫 --- */
+  --line: rgba(20, 17, 15, 0.1);
+  --line-strong: rgba(20, 17, 15, 0.18);
+  --line-on-dark: rgba(243, 240, 235, 0.14);
+
+  /*
+   * アクセント。ロゴの「前方の正方形＝まだ踏んでいない次の一歩」に対応する色。
+   * 素材感のある土色寄りの橙で、paper/ink のどちらの上でもコントラストが取れる。
+   */
+  --accent: #c2410c;
+  --accent-soft: #f0d5c4;
+  --accent-on-dark: #f0834f;
+
+  /* --- 文字組み --- */
+  --font-sans: "Inter", ui-sans-serif, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  --tracking-display: -0.035em;
+  --tracking-tight: -0.02em;
+  --tracking-wide: 0.16em;
+
+  /* --- 間隔・寸法 --- */
+  --measure: 62ch;
+  --wrap: 1160px;
+  --pad-x: clamp(20px, 5vw, 48px);
+  --section-y: clamp(88px, 12vw, 152px);
+  --radius: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+
+  /* --- 影。ロゴには使わないが、面の浮きには使う --- */
+  --shadow: 0 1px 2px rgba(20, 17, 15, 0.04), 0 8px 28px rgba(20, 17, 15, 0.06);
+  --shadow-lg: 0 2px 6px rgba(20, 17, 15, 0.05), 0 24px 60px rgba(20, 17, 15, 0.12);
+
+  /* --- 動き --- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 180ms;
+  --dur: 320ms;
+  --dur-slow: 900ms;
+}
+
+/*
+ * 動きを減らす設定では、時間を 0 にするのではなく“終わった状態”を配る。
+ * 速いだけの同じアニメーションを見せるのは対応にならない。
+ */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur: 0ms;
+    --dur-slow: 0ms;
+  }
+}

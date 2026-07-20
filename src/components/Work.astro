@@ -1,0 +1,174 @@
+---
+import { projects } from "../data/profile";
+import Icon from "./Icon.astro";
+import ProjectPanel from "./ProjectPanel.astro";
+---
+
+<section class="section" id="work">
+  <div class="wrap">
+    <header class="reveal">
+      <p class="eyebrow">Selected work</p>
+      <h2 class="section-title">
+        <span class="ja">つくってきたもの。</span>
+        <span class="en">What I've built.</span>
+      </h2>
+    </header>
+
+    <ul class="list">
+      {
+        projects.map((p, i) => (
+          <li class="project reveal">
+            <a href={p.href} target="_blank" rel="noopener noreferrer">
+              <div class="media">
+                <span class="num">{String(i + 1).padStart(2, "0")}</span>
+                <ProjectPanel index={i} />
+              </div>
+
+              <div class="body">
+                <p class="role">
+                  <span class="ja">{p.role.ja}</span>
+                  <span class="en">{p.role.en}</span>
+                </p>
+                <h3>
+                  <span class="ja">{p.title.ja}</span>
+                  <span class="en">{p.title.en}</span>
+                </h3>
+                <p class="desc">
+                  <span class="ja">{p.description.ja}</span>
+                  <span class="en">{p.description.en}</span>
+                </p>
+                <ul class="tags">
+                  {p.tech.map((t) => (
+                    <li class="tag">{t}</li>
+                  ))}
+                </ul>
+                <span class="more">
+                  <span class="ja">詳しく見る</span>
+                  <span class="en">View more</span>
+                  <Icon name="arrow-up-right" size={16} />
+                </span>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .list {
+    margin-top: 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .project a {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    background: var(--surface-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition:
+      box-shadow var(--dur) var(--ease-out),
+      transform var(--dur) var(--ease-out);
+  }
+
+  .project a:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
+  }
+
+  /* 交互に左右を入れ替えて単調さを避ける */
+  .project:nth-child(even) a {
+    grid-template-columns: 1fr 1.05fr;
+  }
+  .project:nth-child(even) .media {
+    order: 2;
+  }
+
+  .media {
+    position: relative;
+    aspect-ratio: 16 / 11;
+    background: var(--surface-dark);
+    overflow: hidden;
+  }
+
+  .num {
+    position: absolute;
+    top: 16px;
+    left: 18px;
+    z-index: 2;
+    font-size: 13px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-on-dark-muted);
+  }
+
+  .body {
+    padding: clamp(26px, 3.4vw, 44px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .role {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  h3 {
+    margin-top: 10px;
+    font-size: clamp(22px, 2.6vw, 32px);
+    font-weight: 600;
+    letter-spacing: var(--tracking-display);
+    line-height: 1.14;
+    text-wrap: balance;
+  }
+
+  .desc {
+    margin-top: 14px;
+    color: var(--text-muted);
+    font-size: 15.5px;
+    text-wrap: pretty;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 24px;
+    font-size: 14.5px;
+    font-weight: 600;
+  }
+
+  .more :global(svg) {
+    transition: translate var(--dur-fast) var(--ease-out);
+  }
+
+  .project a:hover .more :global(svg) {
+    translate: 3px -3px;
+  }
+
+  @media (max-width: 860px) {
+    .project a,
+    .project:nth-child(even) a {
+      grid-template-columns: 1fr;
+    }
+    .project:nth-child(even) .media {
+      order: 0;
+    }
+  }
+</style>

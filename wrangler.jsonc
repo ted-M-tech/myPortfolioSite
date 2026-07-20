@@ -1,20 +1,22 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "main": ".open-next/worker.js",
   "name": "maepace-site",
   "compatibility_date": "2026-07-19",
-  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
   "account_id": "76b7441b99478c7d2bb1accbee256299",
-  // apex が正。www も Worker に向け、middleware.ts で apex へ 301 する。
-  // （リダイレクト先が存在しないとホスト自体が 530 になるため、www も登録が要る）
-  "routes": [
-    { "pattern": "maepace.com", "custom_domain": true },
-    { "pattern": "www.maepace.com", "custom_domain": true }
-  ],
+
+  // main を書かない = Worker コードを持たない静的アセット配信。
+  // このサイトにサーバー処理は無いので、リクエストごとに Worker を起こす理由がない。
+  // サーバー処理が要るようになったら @astrojs/cloudflare ではなく
+  // その経路だけを持つ Worker を足すこと（サイト全体を SSR にしない）。
   "assets": {
-    "directory": ".open-next/assets",
-    "binding": "ASSETS"
+    "directory": "./dist",
+    "not_found_handling": "404-page"
   },
+
+  // apex を正とする。www → apex の 301 は Cloudflare の Redirect Rule 側で処理する
+  // （Worker が無いのでコードでは扱えない。README のデプロイ節を参照）。
+  "routes": [{ "pattern": "maepace.com", "custom_domain": true }],
+
   "observability": {
     "enabled": true
   }

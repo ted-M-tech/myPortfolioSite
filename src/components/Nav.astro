@@ -1,0 +1,203 @@
+---
+import { site } from "../data/profile";
+
+const links = [
+  { href: "#work", ja: "仕事", en: "Work" },
+  { href: "#ethos", ja: "考え方", en: "Ethos" },
+  { href: "#skills", ja: "できること", en: "Skills" },
+  { href: "#services", ja: "ご依頼", en: "Services" },
+  { href: "#path", ja: "経歴", en: "Path" },
+];
+---
+
+<header class="nav on-dark" id="nav">
+  <a class="brand" href="#top" aria-label={site.brand}>
+    <!-- 横長ロゴ。currentColor なので親の色で単色化される（ブランド規定） -->
+    <img src="/brand/maepace-logo.svg" alt="" width="112" height="57" />
+    <span class="brand-name">{site.brand}</span>
+  </a>
+
+  <nav class="links" aria-label="Sections">
+    {
+      links.map((l) => (
+        <a href={l.href}>
+          <span class="ja">{l.ja}</span>
+          <span class="en">{l.en}</span>
+        </a>
+      ))
+    }
+  </nav>
+
+  <div class="right">
+    <div class="lang" id="lang" role="group" aria-label="Language">
+      <button type="button" data-lang-set="ja">JP</button>
+      <button type="button" data-lang-set="en">EN</button>
+    </div>
+    <a href="#contact" class="say-hi">
+      <span class="ja">連絡する</span>
+      <span class="en">Say hi</span>
+    </a>
+  </div>
+</header>
+
+<script>
+  // ヘッダーの明暗をセクションに合わせて切り替える。
+  // 暗いセクションの上にいる間だけ .on-dark を付ける。
+  const nav = document.getElementById("nav");
+  if (nav) {
+    const dark = [...document.querySelectorAll<HTMLElement>(".section--dark, .hero")];
+    const update = () => {
+      nav.classList.toggle("is-scrolled", window.scrollY > 40);
+      const probe = 34; // ヘッダー中心あたりの高さで判定する
+      const onDark = dark.some((s) => {
+        const r = s.getBoundingClientRect();
+        return r.top <= probe && r.bottom >= probe;
+      });
+      nav.classList.toggle("on-dark", onDark);
+    };
+    addEventListener("scroll", update, { passive: true });
+    addEventListener("resize", update, { passive: true });
+    update();
+  }
+</script>
+
+<style>
+  .nav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 14px var(--pad-x);
+    color: var(--text);
+    transition:
+      background var(--dur),
+      color var(--dur),
+      border-color var(--dur);
+    border-bottom: 1px solid transparent;
+  }
+
+  .nav.on-dark {
+    color: var(--text-on-dark);
+  }
+
+  .nav.is-scrolled {
+    background: color-mix(in srgb, var(--paper) 82%, transparent);
+    backdrop-filter: saturate(180%) blur(18px);
+    -webkit-backdrop-filter: saturate(180%) blur(18px);
+    border-bottom-color: var(--line);
+  }
+
+  .nav.is-scrolled.on-dark {
+    background: color-mix(in srgb, var(--ink-inv) 76%, transparent);
+    border-bottom-color: var(--line-on-dark);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex: none;
+  }
+
+  /* ロゴは currentColor。傾けない・歪めない・単色（ブランド規定） */
+  .brand img {
+    height: 26px;
+    width: auto;
+  }
+
+  .brand-name {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .links {
+    display: flex;
+    gap: 28px;
+    font-size: 14px;
+  }
+
+  .links a {
+    opacity: 0.62;
+    transition: opacity var(--dur-fast);
+  }
+
+  .links a:hover {
+    opacity: 1;
+  }
+
+  .right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: none;
+  }
+
+  .lang {
+    display: flex;
+    border: 1px solid currentColor;
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .lang button {
+    padding: 6px 11px;
+    opacity: 0.5;
+    transition:
+      opacity var(--dur-fast),
+      background var(--dur-fast);
+  }
+
+  /*
+   * 選択中は塗りと文字を反転させる。background に currentColor を使うと
+   * 文字色の指定と循環して読めなくなるので、両方を明示する。
+   */
+  .lang button[aria-pressed="true"] {
+    opacity: 1;
+  }
+
+  .nav.on-dark .lang button[aria-pressed="true"] {
+    background: var(--paper-inv);
+    color: var(--ink-inv);
+  }
+
+  .nav:not(.on-dark) .lang button[aria-pressed="true"] {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .say-hi {
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 9px 18px;
+    border-radius: var(--radius-pill);
+    border: 1px solid currentColor;
+    transition:
+      background var(--dur-fast),
+      color var(--dur-fast);
+  }
+
+  .nav.on-dark .say-hi:hover {
+    background: var(--paper-inv);
+    color: var(--ink);
+  }
+
+  .nav:not(.on-dark) .say-hi:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  @media (max-width: 860px) {
+    .links {
+      display: none;
+    }
+    .brand-name {
+      display: none;
+    }
+  }
+</style>

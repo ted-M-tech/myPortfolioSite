@@ -1,0 +1,131 @@
+---
+import { ethos, site } from "../data/profile";
+---
+
+<section class="section section--sunken" id="ethos">
+  <div class="wrap">
+    <header class="reveal">
+      <p class="eyebrow">Ethos</p>
+      <h2 class="section-title">
+        <span class="ja">{ethos.heading.ja}</span>
+        <span class="en">{ethos.heading.en}</span>
+      </h2>
+      <p class="section-lede">
+        <span class="ja">
+          屋号の {site.brand} は「前へ進む速度」と「自分のペース」の二重の意味を持たせています。
+          速く動くことと、無理なく続けること。どちらも欠けると現場では続きません。
+        </span>
+        <span class="en">
+          {site.brand} carries two meanings at once — forward momentum, and going at your own pace.
+          Move fast, but at a pace you can sustain; drop either one and it stops working in the field.
+        </span>
+      </p>
+    </header>
+
+    <!--
+      ロゴの構造をそのまま図にしている。
+      山と谷が歩幅、水平の尾が積み重ね、離れた正方形がまだ踏んでいない次の一歩。
+    -->
+    <ol class="values reveal">
+      {
+        ethos.values.map((v, i) => (
+          <li class="value" style={`--i:${i}`}>
+            <span class="dot" aria-hidden="true" />
+            <span class="ja">{v.ja}</span>
+            <span class="en">{v.en}</span>
+          </li>
+        ))
+      }
+      <li class="value value--next" aria-hidden="true">
+        <span class="square" />
+      </li>
+    </ol>
+
+    <p class="cap reveal">
+      <span class="ja" set:html={ethos.caption.ja} />
+      <span class="en" set:html={ethos.caption.en} />
+    </p>
+  </div>
+</section>
+
+<style>
+  .values {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-top: 52px;
+  }
+
+  .value {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background: var(--surface-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    font-size: 15.5px;
+    font-weight: 600;
+    letter-spacing: var(--tracking-tight);
+    box-shadow: var(--shadow);
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--text-faint);
+    flex: none;
+  }
+
+  /* 最後だけ丸ではなく四角。ロゴの「前方の正方形」に対応させている */
+  .value--next {
+    padding: 12px;
+    background: none;
+    border: none;
+    box-shadow: none;
+  }
+
+  .square {
+    display: block;
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .square {
+      animation: step 3.4s var(--ease-in-out) infinite;
+    }
+  }
+
+  /* 前へ出て、少し待って、戻る。踏み出す前の呼吸 */
+  @keyframes step {
+    0%,
+    62%,
+    100% {
+      transform: translateX(0);
+      opacity: 0.55;
+    }
+    30% {
+      transform: translateX(10px);
+      opacity: 1;
+    }
+  }
+
+  .cap {
+    margin-top: 44px;
+    font-size: clamp(18px, 2.4vw, 26px);
+    font-weight: 500;
+    letter-spacing: var(--tracking-tight);
+    color: var(--text-muted);
+    text-wrap: balance;
+  }
+
+  .cap :global(em) {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--accent);
+  }
+</style>

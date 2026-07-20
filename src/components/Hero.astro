@@ -1,0 +1,183 @@
+---
+import { person, socials } from "../data/profile";
+import Icon from "./Icon.astro";
+---
+
+<section class="hero on-dark" id="top">
+  <!-- canvas は装飾。LCP 要素にしないよう、見出しは canvas と独立に即座に描画される -->
+  <canvas id="hero-field" aria-hidden="true"></canvas>
+
+  <div class="hero-inner wrap">
+    <p class="eyebrow">
+      <span class="ja">{person.role.ja} · {person.location.ja}</span>
+      <span class="en">{person.role.en} · {person.location.en}</span>
+    </p>
+
+    <h1>
+      <span class="ja" set:html={person.headline.ja} />
+      <span class="en" set:html={person.headline.en} />
+    </h1>
+
+    <p class="lede">
+      <span class="ja">{person.intro.ja}</span>
+      <span class="en">{person.intro.en}</span>
+    </p>
+
+    <div class="actions">
+      <a href="#work" class="btn btn--primary">
+        <span class="ja">仕事を見る</span>
+        <span class="en">See the work</span>
+        <Icon name="arrow-right" size={17} />
+      </a>
+      <a href="#services" class="btn btn--ghost">
+        <span class="ja">依頼を相談する</span>
+        <span class="en">Work with me</span>
+      </a>
+    </div>
+
+    <ul class="socials">
+      {
+        socials.map((s) => (
+          <li>
+            <a href={s.href} aria-label={s.label} target="_blank" rel="noopener noreferrer">
+              <Icon name={s.icon} size={18} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <a class="cue" href="#work" aria-label="Scroll to work">
+    <Icon name="chevron-down" size={22} />
+  </a>
+</section>
+
+<script>
+  import { initHeroField } from "../scripts/hero-field";
+
+  const canvas = document.getElementById("hero-field");
+  if (canvas instanceof HTMLCanvasElement) initHeroField(canvas);
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: min(100svh, 940px);
+    display: grid;
+    align-items: center;
+    /* 単色に近い暗色。ロゴ規定に合わせ、派手なグラデーションは避ける */
+    background:
+      radial-gradient(120% 90% at 68% 42%, #1d1a17 0%, #141210 48%, var(--ink-inv) 84%);
+    color: var(--text-on-dark);
+    overflow: hidden;
+    padding-block: 120px 96px;
+  }
+
+  #hero-field {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    /* 装飾なので操作を奪わない */
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+  }
+
+  .eyebrow {
+    color: var(--text-on-dark-muted);
+  }
+
+  h1 {
+    margin-top: 20px;
+    font-size: clamp(34px, 6.6vw, 78px);
+    font-weight: 600;
+    letter-spacing: var(--tracking-display);
+    line-height: 1.04;
+    text-wrap: balance;
+    max-width: 17ch;
+  }
+
+  /*
+   * アクセント部分は inline-block にして塊で折り返させる。
+   * 日本語は文字単位で改行できてしまうので、放っておくと
+   * 「動 / くシステム」のように語の途中で切れる。
+   */
+  h1 :global(em) {
+    display: inline-block;
+    font-style: normal;
+    color: var(--accent-on-dark);
+  }
+
+  .lede {
+    margin-top: 26px;
+    max-width: 54ch;
+    color: var(--text-on-dark-muted);
+    font-size: clamp(15px, 1.6vw, 18px);
+    text-wrap: pretty;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 36px;
+  }
+
+  .socials {
+    display: flex;
+    gap: 10px;
+    margin-top: 40px;
+  }
+
+  .socials a {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--line-on-dark);
+    color: var(--text-on-dark-muted);
+    transition:
+      color var(--dur-fast),
+      border-color var(--dur-fast),
+      transform var(--dur-fast) var(--ease-out);
+  }
+
+  .socials a:hover {
+    color: var(--text-on-dark);
+    border-color: var(--paper-inv);
+    transform: translateY(-2px);
+  }
+
+  .cue {
+    position: absolute;
+    left: 50%;
+    bottom: 22px;
+    translate: -50% 0;
+    z-index: 2;
+    color: var(--text-on-dark-muted);
+    animation: bob 2.6s var(--ease-in-out) infinite;
+  }
+
+  @keyframes bob {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(7px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cue {
+      animation: none;
+    }
+  }
+</style>

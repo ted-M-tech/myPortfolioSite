@@ -1,0 +1,61 @@
+---
+import { stats } from "../data/profile";
+---
+
+<section class="section section--dark">
+  <div class="wrap">
+    <ul class="grid stagger">
+      {
+        stats.map((s) => (
+          <li class="stat reveal">
+            <span class="n">
+              <span data-count={s.value}>0</span>
+              {s.suffix}
+            </span>
+            <span class="l">
+              <span class="ja">{s.label.ja}</span>
+              <span class="en">{s.label.en}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .n {
+    display: block;
+    font-size: clamp(40px, 6vw, 76px);
+    font-weight: 600;
+    letter-spacing: var(--tracking-display);
+    line-height: 1;
+    /* 数字はアクセント。面はブランドの ink のまま保つ */
+    color: var(--paper-inv);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .l {
+    display: block;
+    margin-top: 12px;
+    font-size: 13.5px;
+    color: var(--text-on-dark-muted);
+  }
+
+  @media (max-width: 720px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 36px 16px;
+    }
+  }
+</style>

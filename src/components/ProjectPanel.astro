@@ -1,0 +1,124 @@
+---
+/**
+ * 案件カードの図版。
+ *
+ * 写真は使わない。実際の成果物（工場の制御画面や社内 SaaS）は出せないものが多く、
+ * 代わりに汎用のストック画像を置くと、見た目が嘘になるうえブランドとも合わない。
+ * ここではロゴの構造 — 歩幅の軌跡と、その先にあるまだ踏んでいない一歩 — を
+ * そのまま図にして、案件ごとに歩幅を変えている。
+ */
+interface Props {
+  /** 0 始まり。歩幅とドット密度がこれで変わる */
+  index: number;
+}
+
+const { index } = Astro.props;
+
+// 案件ごとに山谷の形を変える。値は見た目で決めた固定値で、意味は持たせていない
+const shapes = [
+  { path: "M0,74 L16,30 L28,62 L44,20 L58,56 L72,52 L100,52", dots: 7 },
+  { path: "M0,66 L14,44 L26,68 L40,26 L54,60 L70,40 L100,40", dots: 9 },
+  { path: "M0,80 L18,34 L30,58 L42,38 L56,66 L74,46 L100,46", dots: 5 },
+];
+const s = shapes[index % shapes.length]!;
+
+// 尾の終点の少し先に置く正方形。ロゴ規定どおり、離しすぎず近づけすぎない
+const squareX = 100;
+const squareY = index % 2 === 0 ? 52 : index % 3 === 1 ? 40 : 46;
+---
+
+<div class="panel" aria-hidden="true">
+  <svg viewBox="0 0 120 100" preserveAspectRatio="xMidYMid meet" role="presentation">
+    <!-- 背景の点描。奥行きの気配だけ出す -->
+    <g class="dots">
+      {
+        Array.from({ length: s.dots * 6 }, (_, i) => {
+          const col = i % s.dots;
+          const row = Math.floor(i / s.dots);
+          return <circle cx={8 + col * (104 / s.dots)} cy={12 + row * 15} r="0.9" />;
+        })
+      }
+    </g>
+
+    <!-- 歩幅の軌跡 -->
+    <path class="stride" d={s.path} fill="none" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- 次の一歩 -->
+    <rect class="next" x={squareX + 6} y={squareY - 3.5} width="7" height="7" />
+  </svg>
+</div>
+
+<style>
+  .panel {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(120% 100% at 20% 15%, #1f1c19 0%, #17150f 55%, var(--ink-inv) 100%);
+    overflow: hidden;
+  }
+
+  svg {
+    width: 78%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .dots circle {
+    fill: rgba(243, 240, 235, 0.13);
+  }
+
+  .stride {
+    stroke: rgba(243, 240, 235, 0.85);
+    stroke-width: 2.4;
+    /* 線を引く長さ。実測より大きめに取っておけば全体が隠れる */
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+  }
+
+  .next {
+    fill: var(--accent-on-dark);
+    opacity: 0;
+  }
+
+  /*
+   * カードが画面に入ったら線が引かれ、最後に次の一歩が現れる。
+   * .is-in は reveal.ts か CSS scroll-driven がカード側に付ける。
+   */
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.reveal.is-in) .stride {
+      animation: draw 1.5s var(--ease-out) forwards;
+    }
+    :global(.reveal.is-in) .next {
+      animation: appear 0.5s var(--ease-out) 1.25s forwards;
+    }
+  }
+
+  /* 動きを止める設定では、引き終わった状態をそのまま見せる */
+  @media (prefers-reduced-motion: reduce) {
+    .stride {
+      stroke-dashoffset: 0;
+    }
+    .next {
+      opacity: 1;
+    }
+  }
+
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes appear {
+    from {
+      opacity: 0;
+      transform: translateX(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

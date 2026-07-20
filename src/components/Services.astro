@@ -1,0 +1,245 @@
+---
+import { services, servicesNote, person } from "../data/profile";
+import Icon from "./Icon.astro";
+
+/** 問い合わせは mailto に寄せる。予約基盤を挟まない分、壊れる箇所が減る */
+const mailto = (title: string) =>
+  `mailto:${person.email}?subject=${encodeURIComponent(`[${title}] のご相談`)}`;
+---
+
+<section class="section section--sunken" id="services">
+  <div class="wrap">
+    <header class="reveal">
+      <p class="eyebrow">Work with me</p>
+      <h2 class="section-title">
+        <span class="ja">ご依頼について。</span>
+        <span class="en">How we can work together.</span>
+      </h2>
+      <p class="section-lede">
+        <span class="ja">
+          60分の相談から、継続的な技術顧問、開発の受託まで。
+          まずは内容をうかがってから、合う形をご提案します。
+        </span>
+        <span class="en">
+          From a single 60-minute consult to ongoing advisory or a full build.
+          Tell me what you're facing and I'll suggest the shape that fits.
+        </span>
+      </p>
+    </header>
+
+    <ul class="grid stagger">
+      {
+        services.map((s) => (
+          <li class:list={["plan", "reveal", s.featured && "plan--featured"]}>
+            <p class="badge">
+              <span class="ja">{s.badge.ja}</span>
+              <span class="en">{s.badge.en}</span>
+            </p>
+
+            <h3>
+              <span class="ja">{s.title.ja}</span>
+              <span class="en">{s.title.en}</span>
+            </h3>
+            <p class="sub">
+              <span class="ja">{s.subtitle.ja}</span>
+              <span class="en">{s.subtitle.en}</span>
+            </p>
+
+            <p class="price">
+              <span class="ja">
+                {s.price.ja}
+                <small>{s.unit.ja}</small>
+              </span>
+              <span class="en">
+                {s.price.en}
+                <small>{s.unit.en}</small>
+              </span>
+            </p>
+
+            <ul class="points">
+              {s.points.map((p) => (
+                <li>
+                  <Icon name="check" size={17} />
+                  <span class="ja">{p.ja}</span>
+                  <span class="en">{p.en}</span>
+                </li>
+              ))}
+            </ul>
+
+            <a class="cta" href={mailto(s.title.ja)}>
+              <span class="ja">{s.cta.ja}</span>
+              <span class="en">{s.cta.en}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="note reveal">
+      <span class="ja">{servicesNote.ja}</span>
+      <span class="en">{servicesNote.en}</span>
+    </p>
+  </div>
+</section>
+
+<style>
+  .grid {
+    margin-top: 52px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .plan {
+    display: flex;
+    flex-direction: column;
+    padding: 28px 24px;
+    background: var(--surface-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    transition:
+      transform var(--dur) var(--ease-out),
+      box-shadow var(--dur) var(--ease-out);
+  }
+
+  .plan:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* 推したいものだけ反転させる。色数を増やさずに序列をつける */
+  .plan--featured {
+    background: var(--surface-dark);
+    color: var(--text-on-dark);
+    border-color: transparent;
+  }
+
+  .badge {
+    align-self: flex-start;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    padding: 5px 11px;
+    border-radius: var(--radius-pill);
+    background: var(--surface-sunken);
+    color: var(--text-muted);
+  }
+
+  .plan--featured .badge {
+    background: var(--accent);
+    color: var(--paper);
+  }
+
+  h3 {
+    margin-top: 18px;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .sub {
+    margin-top: 4px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .plan--featured .sub {
+    color: var(--text-on-dark-muted);
+  }
+
+  .price {
+    margin-top: 20px;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: var(--tracking-display);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .price small {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--text-faint);
+  }
+
+  .plan--featured .price small {
+    color: var(--text-on-dark-muted);
+  }
+
+  .points {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0 26px;
+  }
+
+  .points li {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: var(--text-muted);
+  }
+
+  .plan--featured .points li {
+    color: var(--text-on-dark-muted);
+  }
+
+  .points :global(svg) {
+    flex: none;
+    margin-top: 1px;
+    color: var(--accent);
+  }
+
+  .plan--featured .points :global(svg) {
+    color: var(--accent-on-dark);
+  }
+
+  .cta {
+    margin-top: auto;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 16px;
+    border-radius: var(--radius-pill);
+    background: var(--ink);
+    color: var(--paper);
+    transition:
+      transform var(--dur-fast) var(--ease-out),
+      box-shadow var(--dur);
+  }
+
+  .plan--featured .cta {
+    background: var(--paper-inv);
+    color: var(--ink);
+  }
+
+  .cta:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+  }
+
+  .note {
+    margin-top: 30px;
+    font-size: 13.5px;
+    color: var(--text-faint);
+    text-align: center;
+    text-wrap: pretty;
+  }
+
+  @media (max-width: 1040px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

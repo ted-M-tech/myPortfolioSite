@@ -1,0 +1,153 @@
+---
+import { contact, person, socials, site } from "../data/profile";
+import Icon from "./Icon.astro";
+
+const year = new Date().getFullYear();
+---
+
+<section class="contact on-dark" id="contact">
+  <div class="wrap reveal">
+    <p class="eyebrow">Contact</p>
+
+    <h2>
+      <span class="ja" set:html={contact.heading.ja} />
+      <span class="en" set:html={contact.heading.en} />
+    </h2>
+
+    <a class="mail" href={`mailto:${person.email}`}>{person.email}</a>
+
+    <p class="note">
+      <span class="ja">{contact.note.ja}</span>
+      <span class="en">{contact.note.en}</span>
+    </p>
+
+    <ul class="socials">
+      {
+        socials.map((s) => (
+          <li>
+            <a href={s.href} aria-label={s.label} target="_blank" rel="noopener noreferrer">
+              <Icon name={s.icon} size={18} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <footer class="foot">
+    <span class="brandline">
+      <img src="/brand/maepace-icon.svg" alt="" width="20" height="22" />
+      <span>© {year} {site.brand}</span>
+    </span>
+    <span class="tag-line">
+      <span class="ja">前へ、自分のペースで。</span>
+      <span class="en">Forward, at my own pace.</span>
+    </span>
+  </footer>
+</section>
+
+<style>
+  .contact {
+    background: var(--surface-dark);
+    color: var(--text-on-dark);
+    text-align: center;
+    padding-block: clamp(96px, 14vw, 168px) 32px;
+  }
+
+  h2 {
+    margin-top: 14px;
+    font-size: clamp(34px, 7vw, 88px);
+    font-weight: 600;
+    letter-spacing: var(--tracking-display);
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+
+  h2 :global(em) {
+    font-style: normal;
+    color: var(--accent-on-dark);
+  }
+
+  .mail {
+    display: inline-block;
+    margin-top: 34px;
+    font-size: clamp(17px, 2.4vw, 27px);
+    font-weight: 500;
+    border-bottom: 1px solid var(--line-on-dark);
+    padding-bottom: 4px;
+    transition: border-color var(--dur-fast);
+    word-break: break-all;
+  }
+
+  .mail:hover {
+    border-bottom-color: var(--paper-inv);
+  }
+
+  .note {
+    margin: 22px auto 0;
+    max-width: 46ch;
+    font-size: 14px;
+    color: var(--text-on-dark-muted);
+    text-wrap: pretty;
+  }
+
+  .socials {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 38px;
+  }
+
+  .socials a {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--line-on-dark);
+    color: var(--text-on-dark-muted);
+    transition:
+      color var(--dur-fast),
+      border-color var(--dur-fast),
+      transform var(--dur-fast) var(--ease-out);
+  }
+
+  .socials a:hover {
+    color: var(--text-on-dark);
+    border-color: var(--paper-inv);
+    transform: translateY(-3px);
+  }
+
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    max-width: var(--wrap);
+    margin: clamp(64px, 10vw, 104px) auto 0;
+    padding: 22px var(--pad-x) 0;
+    border-top: 1px solid var(--line-on-dark);
+    font-size: 13px;
+    color: var(--text-on-dark-muted);
+  }
+
+  .brandline {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+  }
+
+  /* アイコンは M 単体。ロゴ規定どおり単色で置く */
+  .brandline img {
+    height: 18px;
+    width: auto;
+    opacity: 0.75;
+  }
+
+  @media (max-width: 560px) {
+    .foot {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>

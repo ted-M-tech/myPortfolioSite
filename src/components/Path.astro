@@ -1,0 +1,143 @@
+---
+import { timeline, hobbies } from "../data/profile";
+import Icon from "./Icon.astro";
+---
+
+<section class="section section--dark" id="path">
+  <div class="wrap">
+    <header class="reveal">
+      <p class="eyebrow">The path</p>
+      <h2 class="section-title">
+        <span class="ja">これまでと、そのそと。</span>
+        <span class="en">Where I've been — and what's beside it.</span>
+      </h2>
+    </header>
+
+    <ol class="timeline">
+      {
+        timeline.map((t) => (
+          <li class="job reveal">
+            <div>
+              <p class="org">{t.org}</p>
+              <p class="role">
+                <span class="ja">{t.role.ja}</span>
+                <span class="en">{t.role.en}</span>
+              </p>
+            </div>
+            <p class="period">{t.period}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <ul class="hobbies stagger">
+      {
+        hobbies.map((h) => (
+          <li class="hobby reveal">
+            <span class="ic">
+              <Icon name={h.icon} size={18} />
+            </span>
+            <p class="name">
+              <span class="ja">{h.name.ja}</span>
+              <span class="en">{h.name.en}</span>
+            </p>
+            <p class="note">
+              <span class="ja">{h.note.ja}</span>
+              <span class="en">{h.note.en}</span>
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .timeline {
+    margin-top: 52px;
+    border-top: 1px solid var(--line-on-dark);
+  }
+
+  .job {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    padding-block: 22px;
+    border-bottom: 1px solid var(--line-on-dark);
+  }
+
+  .org {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: var(--tracking-tight);
+    text-wrap: balance;
+  }
+
+  .role {
+    margin-top: 3px;
+    font-size: 14px;
+    color: var(--text-on-dark-muted);
+    text-wrap: pretty;
+  }
+
+  .period {
+    flex: none;
+    font-size: 13.5px;
+    color: var(--text-on-dark-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .hobbies {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .hobby {
+    padding: 22px;
+    border: 1px solid var(--line-on-dark);
+    border-radius: var(--radius);
+  }
+
+  .ic {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(243, 240, 235, 0.08);
+    color: var(--accent-on-dark);
+  }
+
+  .name {
+    margin-top: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .note {
+    margin-top: 5px;
+    font-size: 13px;
+    color: var(--text-on-dark-muted);
+    text-wrap: pretty;
+  }
+
+  @media (max-width: 900px) {
+    .hobbies {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .job {
+      flex-direction: column;
+      gap: 6px;
+    }
+    .hobbies {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

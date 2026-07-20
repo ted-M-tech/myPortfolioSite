@@ -1,35 +1,21 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
-/node_modules
+node_modules/
 
-# next.js
-/.next/
-/out/
+# astro
+dist/
+.astro/
 
-# production
-/build
+# cloudflare
+.wrangler/
+
+# env
+.env
+.env.production
+.dev.vars
 
 # debug
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# env files
-.env*
-
-# vercel
-.vercel
-
-# cloudflare
-.open-next/
-.wrangler/
-cloudflare-env.d.ts
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+pnpm-debug.log*
 
 # macOS
 # public/ 配下に紛れ込むと静的アセットとして公開され、ファイル名一覧が漏れる
