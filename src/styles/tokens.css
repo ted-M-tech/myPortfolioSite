@@ -36,9 +36,9 @@
    * アクセント。ロゴの「前方の正方形＝まだ踏んでいない次の一歩」に対応する色。
    * 素材感のある土色寄りの橙で、paper/ink のどちらの上でもコントラストが取れる。
    */
-  --accent: #c2410c;
+  --accent: #de4513;
   --accent-soft: #f0d5c4;
-  --accent-on-dark: #f0834f;
+  --accent-on-dark: #ff7540;
 
   /*
    * 原典（Cupertino Design System）のパステル。
@@ -79,8 +79,8 @@
   --pad-x: clamp(20px, 4vw, 56px);
   --section-y: clamp(88px, 12vw, 152px);
   --radius: 14px;
-  --radius-lg: 22px;
-  --radius-xl: 20px;
+  --radius-lg: 18px;
+  --radius-xl: 18px;
   --radius-pill: 999px;
 
   /* --- 影。ロゴには使わないが、面の浮きには使う --- */

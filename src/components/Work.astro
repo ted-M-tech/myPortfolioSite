@@ -7,12 +7,24 @@ import WorkStrip from "./WorkStrip.astro";
 
 <section class="section" id="work">
   <div class="wrap">
-    <header class="reveal">
-      <p class="eyebrow">Selected work</p>
-      <h2 class="section-title">
-        <span class="ja">つくってきたもの。</span>
-        <span class="en">What I've built.</span>
-      </h2>
+    <header class="reveal head">
+      <div>
+        <p class="eyebrow">Selected work / 01</p>
+        <h2 class="section-title">
+          <span class="ja">実装までが、<br />デザイン。</span>
+          <span class="en">Design ends<br />when it works.</span>
+        </h2>
+      </div>
+      <p class="section-lede">
+        <span class="ja">
+          AI、モバイル、リアルタイムデータ、制御システム。
+          異なる領域を、触って理解できる一つの体験にまとめてきました。
+        </span>
+        <span class="en">
+          AI, mobile, real-time data and control systems — different disciplines
+          shaped into experiences people can understand by using.
+        </span>
+      </p>
     </header>
   </div>
 
@@ -62,8 +74,17 @@ import WorkStrip from "./WorkStrip.astro";
 </section>
 
 <style>
+  .head {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 48px;
+    align-items: end;
+  }
+
+  .head .section-lede { margin: 0; }
+
   .list {
-    margin-top: 66px;
+    margin-top: 76px;
     display: flex;
     flex-direction: column;
     gap: 26px;
@@ -71,8 +92,9 @@ import WorkStrip from "./WorkStrip.astro";
 
   .project a {
     display: grid;
-    grid-template-columns: 1.15fr 1fr;
-    background: var(--surface-raised);
+    grid-template-columns: 1.26fr .74fr;
+    min-height: 520px;
+    background: color-mix(in srgb, var(--surface-raised) 76%, transparent);
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     overflow: hidden;
@@ -93,7 +115,7 @@ import WorkStrip from "./WorkStrip.astro";
 
   /* 交互に左右を入れ替えて単調さを避ける */
   .project:nth-child(even) a {
-    grid-template-columns: 1fr 1.15fr;
+    grid-template-columns: .74fr 1.26fr;
   }
   .project:nth-child(even) .media {
     order: 2;
@@ -106,7 +128,7 @@ import WorkStrip from "./WorkStrip.astro";
    */
   .media {
     position: relative;
-    min-height: 340px;
+    min-height: 400px;
     background: var(--surface-dark);
     overflow: hidden;
   }
@@ -116,14 +138,16 @@ import WorkStrip from "./WorkStrip.astro";
     top: 16px;
     left: 18px;
     z-index: 2;
-    font-size: 13px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .12em;
     font-weight: 600;
     font-variant-numeric: tabular-nums;
     color: var(--text-on-dark-muted);
   }
 
   .body {
-    padding: clamp(26px, 3.4vw, 44px);
+    padding: clamp(28px, 3.8vw, 58px);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -139,8 +163,8 @@ import WorkStrip from "./WorkStrip.astro";
 
   h3 {
     margin-top: 10px;
-    font-size: clamp(26px, 3vw, 38px);
-    font-weight: 600;
+    font-size: clamp(28px, 3.4vw, 48px);
+    font-weight: 550;
     letter-spacing: var(--tracking-display);
     line-height: 1.14;
     text-wrap: balance;
@@ -181,9 +205,12 @@ import WorkStrip from "./WorkStrip.astro";
   }
 
   @media (max-width: 860px) {
+    .head { grid-template-columns: 1fr; gap: 22px; }
+    .head .section-lede { margin-top: 0; }
     .project a,
     .project:nth-child(even) a {
       grid-template-columns: 1fr;
+      min-height: 0;
     }
     .project:nth-child(even) .media {
       order: 0;

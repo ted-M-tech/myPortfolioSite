@@ -10,19 +10,20 @@ const mailto = (title: string) =>
 <section class="section section--sunken" id="services">
   <div class="wrap">
     <header class="reveal">
-      <p class="eyebrow">Work with me</p>
+      <p class="eyebrow">Work with me / 08</p>
       <h2 class="section-title">
-        <span class="ja">ご依頼について。</span>
-        <span class="en">How we can work together.</span>
+        <span class="ja">「こんなの無理かも」から。</span>
+        <span class="en">Start with the impossible idea.</span>
       </h2>
       <p class="section-lede">
         <span class="ja">
-          60分の相談から、継続的な技術顧問、開発の受託まで。
-          まずは内容をうかがってから、合う形をご提案します。
+          企画が固まっていなくても大丈夫です。短い相談、AIの検証、没入型サイト、
+          プロダクト共同開発から、いちばん速く価値を確かめられる形をご提案します。
         </span>
         <span class="en">
-          From a single 60-minute consult to ongoing advisory or a full build.
-          Tell me what you're facing and I'll suggest the shape that fits.
+          Come with a rough thought, not a finished brief. From a focused consult
+          to an AI prototype, immersive site or product partnership, we'll choose
+          the fastest way to prove the value.
         </span>
       </p>
     </header>
@@ -112,7 +113,10 @@ const mailto = (title: string) =>
   /* 推したいものだけ反転させる。色数を増やさずに序列をつける */
   .plan--featured {
     position: relative;
-    background: var(--surface-dark);
+    background:
+      radial-gradient(110% 80% at 85% 0%, rgba(255, 92, 35, .32), transparent 48%),
+      radial-gradient(80% 70% at 0% 100%, rgba(70, 37, 255, .25), transparent 58%),
+      var(--surface-dark);
     color: var(--text-on-dark);
     border-color: transparent;
     overflow: hidden;

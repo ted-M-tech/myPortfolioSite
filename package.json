@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:sites": "pnpm build && node scripts/prepare-sites.mjs",
     "preview": "astro build && wrangler dev",
     "check": "astro check",
     "deploy": "astro build && wrangler deploy"

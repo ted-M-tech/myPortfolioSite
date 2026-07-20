@@ -5,11 +5,15 @@ import { skills, certifications } from "../data/profile";
 <section class="section" id="skills">
   <div class="wrap">
     <header class="reveal">
-      <p class="eyebrow">Capabilities</p>
+      <p class="eyebrow">Capabilities / 05</p>
       <h2 class="section-title">
-        <span class="ja">できること。</span>
-        <span class="en">What I work with.</span>
+        <span class="ja">構想からコードまで。</span>
+        <span class="en">From concept to code.</span>
       </h2>
+      <p class="section-lede">
+        <span class="ja">デザイナーと開発者の間で翻訳しない。両方の視点で、最初から最後までつくります。</span>
+        <span class="en">No handoff gap between design and development — one point of view from first sketch to final build.</span>
+      </p>
     </header>
 
     <div class="cols">
@@ -79,8 +83,23 @@ import { skills, certifications } from "../data/profile";
   .tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 7px;
     margin-top: 14px;
+  }
+
+  .tags :global(.tag) {
+    background: transparent;
+    border-color: var(--line-strong);
+    transition:
+      background var(--dur-fast),
+      color var(--dur-fast),
+      border-color var(--dur-fast);
+  }
+
+  .tags :global(.tag):hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
   }
 
   .certs ul {

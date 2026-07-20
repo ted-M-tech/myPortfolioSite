@@ -2,16 +2,16 @@
 import { site } from "../data/profile";
 
 const links = [
-  { href: "#work", ja: "仕事", en: "Work" },
-  { href: "#ethos", ja: "考え方", en: "Ethos" },
-  { href: "#play", ja: "仕事のそと", en: "Play" },
-  { href: "#skills", ja: "できること", en: "Skills" },
-  { href: "#path", ja: "経歴", en: "Path" },
-  { href: "#services", ja: "ご依頼", en: "Services" },
+  { href: "#work", ja: "制作", en: "Work", no: "01" },
+  { href: "#lab", ja: "実験", en: "Lab", no: "02" },
+  { href: "#skills", ja: "領域", en: "Capabilities", no: "03" },
+  { href: "#process", ja: "進め方", en: "Process", no: "04" },
+  { href: "#services", ja: "ご依頼", en: "Services", no: "05" },
 ];
 ---
 
 <header class="nav on-dark" id="nav">
+  <span class="progress" id="scroll-progress" aria-hidden="true"></span>
   <a class="brand" href="#top" aria-label={site.brand}>
     <!-- 横長ロゴ。currentColor なので親の色で単色化される（ブランド規定） -->
     <img src="/brand/maepace-logo.svg" alt="" width="112" height="57" />
@@ -22,6 +22,7 @@ const links = [
     {
       links.map((l) => (
         <a href={l.href}>
+          <small>{l.no}</small>
           <span class="ja">{l.ja}</span>
           <span class="en">{l.en}</span>
         </a>
@@ -55,6 +56,9 @@ const links = [
         return r.top <= probe && r.bottom >= probe;
       });
       nav.classList.toggle("on-dark", onDark);
+      const max = document.documentElement.scrollHeight - innerHeight;
+      const progress = document.getElementById("scroll-progress");
+      if (progress) progress.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
     };
     addEventListener("scroll", update, { passive: true });
     addEventListener("resize", update, { passive: true });
@@ -71,13 +75,26 @@ const links = [
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    padding: 18px var(--pad-x);
+    padding: 17px var(--pad-x);
     color: var(--text);
     transition:
       background var(--dur),
       color var(--dur),
       border-color var(--dur);
     border-bottom: 1px solid transparent;
+  }
+
+  .progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    transform: scaleX(0);
+    transform-origin: left;
+    background: var(--accent-on-dark);
+    box-shadow: 0 0 8px rgba(240, 131, 79, .55);
+    transition: transform 80ms linear;
   }
 
   .nav.on-dark {
@@ -126,13 +143,22 @@ const links = [
 
   .links {
     display: flex;
-    gap: 32px;
-    font-size: 14px;
+    gap: clamp(18px, 2.2vw, 34px);
+    font-size: 12px;
   }
 
   .links a {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
     opacity: 0.62;
     transition: opacity var(--dur-fast);
+  }
+
+  .links small {
+    font-family: var(--font-mono);
+    font-size: 7px;
+    opacity: .6;
   }
 
   .links a:hover {

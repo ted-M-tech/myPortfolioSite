@@ -1,0 +1,145 @@
+---
+const steps = [
+  {
+    no: "01",
+    en: "Frame",
+    ja: "芯を見つける",
+    bodyJa: "誰に、何を感じてほしいか。事業・ブランド・ユーザーの接点を短い言葉にします。",
+    bodyEn: "Define who the experience is for, what they should feel, and the one idea everything serves.",
+    output: "STRATEGY / STORY / DIRECTION",
+  },
+  {
+    no: "02",
+    en: "Prototype",
+    ja: "早く、触れる",
+    bodyJa: "紙の提案ではなく、ブラウザで動く検証版をつくり、驚きと使いやすさを同時に確かめます。",
+    bodyEn: "Test the idea in a working browser prototype — not a static deck — and tune wonder against usability.",
+    output: "MOTION STUDY / 3D TEST / AI POC",
+  },
+  {
+    no: "03",
+    en: "Craft",
+    ja: "細部まで、つくる",
+    bodyJa: "タイポ、音、速度、余白、負荷。体験を左右する細部を、デザインとコードの両側から詰めます。",
+    bodyEn: "Craft type, rhythm, sound, space and performance as one system, across design and production code.",
+    output: "DESIGN SYSTEM / BUILD / CONTENT",
+  },
+  {
+    no: "04",
+    en: "Launch",
+    ja: "公開して、育てる",
+    bodyJa: "速さ・アクセシビリティ・計測を整えて公開。反応を見ながら、次の一歩へ改善します。",
+    bodyEn: "Launch with speed, accessibility and measurement in place, then improve from real behavior.",
+    output: "QA / RELEASE / ITERATION",
+  },
+] as const;
+---
+
+<section class="process section" id="process">
+  <div class="wrap layout">
+    <header class="reveal">
+      <p class="eyebrow">From idea to impact / 06</p>
+      <h2 class="section-title">
+        <span class="ja">驚きを、成果にする。</span>
+        <span class="en">Turn wonder into impact.</span>
+      </h2>
+      <p class="section-lede">
+        <span class="ja">
+          「かっこいい」で終わらせない。ブランドの芯から、動く試作、実装、公開後の改善まで一気通貫で。
+        </span>
+        <span class="en">
+          More than visual spectacle: one continuous process from the brand's core to prototype, production and iteration.
+        </span>
+      </p>
+    </header>
+
+    <ol>
+      {steps.map((step) => (
+        <li class="reveal">
+          <span class="no">{step.no}</span>
+          <div class="title">
+            <p>{step.en}</p>
+            <h3 class="ja">{step.ja}</h3>
+            <h3 class="en">{step.en}</h3>
+          </div>
+          <p class="body">
+            <span class="ja">{step.bodyJa}</span>
+            <span class="en">{step.bodyEn}</span>
+          </p>
+          <span class="output">{step.output}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .process { background: var(--surface); }
+
+  .layout {
+    display: grid;
+    grid-template-columns: .82fr 1.18fr;
+    gap: clamp(56px, 8vw, 132px);
+    align-items: start;
+  }
+
+  header {
+    position: sticky;
+    top: 128px;
+  }
+
+  ol { border-top: 1px solid var(--line-strong); }
+
+  li {
+    display: grid;
+    grid-template-columns: 42px minmax(130px, .75fr) 1.3fr;
+    gap: 22px;
+    padding-block: 30px 34px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  .no, .output, .title > p {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: .12em;
+  }
+
+  .no, .title > p { color: var(--text-faint); }
+
+  .title > p {
+    margin-bottom: 7px;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    font-size: clamp(22px, 2.2vw, 34px);
+    font-weight: 550;
+    line-height: 1.1;
+    letter-spacing: var(--tracking-display);
+  }
+
+  .body {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    text-wrap: pretty;
+  }
+
+  .output {
+    grid-column: 2 / -1;
+    color: var(--accent);
+  }
+
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    header { position: static; }
+  }
+
+  @media (max-width: 620px) {
+    li {
+      grid-template-columns: 32px 1fr;
+      gap: 14px;
+    }
+    .body, .output { grid-column: 2; }
+  }
+</style>
