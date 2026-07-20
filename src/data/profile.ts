@@ -362,32 +362,38 @@ export const timeline = [
   },
 ] as const;
 
-/** LinkedInに公開されている、実際に一緒に働いた方からの推薦。 */
+/**
+ * 実際に一緒に働いた方からの推薦（出典は LinkedIn の公開推薦）。
+ *
+ * 推薦者は伏せる。フルネームではなくイニシャルにし、勤務先も出さない。
+ * 本人の許諾を取らずに他人の氏名と所属を自分の営業面に並べない、という判断。
+ * 引用文からも社名を外してあるが、役割・内容は原文の意味を変えていない。
+ */
 export const recommendations = [
   {
-    name: "Hemant Navarkar",
+    initials: "H.N.",
     title: {
       ja: "技術と事業をつなぐ、グローバルな推進力",
       en: "Technical leadership across global teams",
     },
     context: {
-      ja: "Mitsubishi Electric · SaaS プロジェクト",
-      en: "Mitsubishi Electric · SaaS project",
+      ja: "製造業向け SaaS プロジェクト",
+      en: "Manufacturing SaaS project",
     },
     quote: {
-      ja: "三菱電機のSaaSプロジェクトで、Scrum Master・Product Ownerを含む複数の役割を担い、アーキテクチャと事業目標をつなぎながらMVP・PoCを推進。デプロイの改善、顧客との要件整理、文化や時差を越えたグローバルチームの協働まで、一貫して成果へ導いた点を評価いただきました。",
-      en: "On our SaaS project at Mitsubishi Electric, Maeda-san led the Scrum team across Scrum Master and Product Owner responsibilities. He reviewed architecture, aligned technical design with business goals, streamlined deployment, and guided successful MVP and PoC delivery. He connected customer requirements with implementation and kept global teams working smoothly across cultures and time zones.",
+      ja: "製造業向けSaaSプロジェクトで、Scrum Master・Product Ownerを含む複数の役割を担い、アーキテクチャと事業目標をつなぎながらMVP・PoCを推進。デプロイの改善、顧客との要件整理、文化や時差を越えたグローバルチームの協働まで、一貫して成果へ導いた点を評価いただきました。",
+      en: "On our SaaS project, Maeda-san led the Scrum team across Scrum Master and Product Owner responsibilities. He reviewed architecture, aligned technical design with business goals, streamlined deployment, and guided successful MVP and PoC delivery. He connected customer requirements with implementation and kept global teams working smoothly across cultures and time zones.",
     },
   },
   {
-    name: "Vishwa Ved",
+    initials: "V.V.",
     title: {
       ja: "顧客対話からMVPまでを率いるフルスタック力",
       en: "From customer needs to working MVPs",
     },
     context: {
-      ja: "Mitsubishi Electric · 次世代 SaaS",
-      en: "Mitsubishi Electric · Next-generation SaaS",
+      ja: "次世代 SaaS プラットフォーム",
+      en: "Next-generation SaaS platform",
     },
     quote: {
       ja: "次世代SaaSの開発でScrumチームを率い、顧客対話から要件定義、プロダクト方針の整理までを主導。グローバルチームへAgileを導入し、PoC・MVPを形にしました。事業視点とフルスタックの技術力を両立し、MVPのアーキテクチャと設計を前へ進めた点を評価いただきました。",
