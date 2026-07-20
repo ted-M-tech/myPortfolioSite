@@ -1,0 +1,279 @@
+---
+import { recommendations, socials } from "../data/profile";
+import Icon from "./Icon.astro";
+
+const linkedin = socials.find((social) => social.label === "LinkedIn");
+---
+
+<section class="recommendations section" aria-labelledby="recommendations-title">
+  <div class="wrap">
+    <header class="head reveal">
+      <div>
+        <p class="eyebrow">Peer reviews</p>
+        <h2 id="recommendations-title">
+          <span class="ja">一緒に働いた人の声。</span>
+          <span class="en">Reviewed by collaborators.</span>
+        </h2>
+      </div>
+      <div class="rating" aria-label="Two recommendations on LinkedIn">
+        <strong>5.0</strong>
+        <span class="stars" aria-hidden="true">★★★★★</span>
+        <small>
+          <span class="ja">LinkedIn 推薦 2件</span>
+          <span class="en">2 LinkedIn recommendations</span>
+        </small>
+      </div>
+    </header>
+
+    <div class="reviews stagger">
+      {
+        recommendations.map((item) => (
+          <article class="review reveal">
+            <div class="review-meta">
+              <span class="stars" aria-hidden="true">★★★★★</span>
+              <span class="verified">
+                <i aria-hidden="true">✓</i>
+                <span class="ja">共同プロジェクト</span>
+                <span class="en">Verified collaborator</span>
+              </span>
+            </div>
+
+            <h3>
+              <span class="ja">{item.title.ja}</span>
+              <span class="en">{item.title.en}</span>
+            </h3>
+
+            <details>
+              <summary>
+                <span class="ja">推薦内容を見る</span>
+                <span class="en">Read recommendation</span>
+                <Icon name="chevron-down" size={15} />
+              </summary>
+              <p>
+                <span class="ja">{item.quote.ja}</span>
+                <span class="en">{item.quote.en}</span>
+              </p>
+            </details>
+
+            <footer>
+              <span class="avatar" aria-hidden="true">{item.name.slice(0, 1)}</span>
+              <span class="person">
+                <b>{item.name}</b>
+                <small>
+                  <span class="ja">{item.context.ja}</span>
+                  <span class="en">{item.context.en}</span>
+                </small>
+              </span>
+              {
+                linkedin && (
+                  <a href={linkedin.href} target="_blank" rel="noopener noreferrer" aria-label="View recommendation on LinkedIn">
+                    <Icon name="linkedin" size={16} />
+                    <Icon name="arrow-up-right" size={12} />
+                  </a>
+                )
+              }
+            </footer>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .recommendations {
+    border-top: 1px solid var(--line);
+    background: var(--surface-sunken);
+  }
+
+  .head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 36px;
+  }
+
+  .head h2 {
+    margin-top: 12px;
+    font-size: clamp(30px, 4vw, 54px);
+    font-weight: 580;
+    line-height: 1.08;
+    letter-spacing: -.045em;
+  }
+
+  .rating {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    column-gap: 10px;
+    min-width: 220px;
+  }
+
+  .rating strong {
+    font-size: 26px;
+    line-height: 1;
+  }
+
+  .rating small {
+    grid-column: 1 / -1;
+    margin-top: 5px;
+    font-size: 11px;
+    color: var(--text-faint);
+  }
+
+  .stars {
+    color: #d97757;
+    font-size: 12px;
+    letter-spacing: .08em;
+  }
+
+  .reviews {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: clamp(36px, 5vw, 64px);
+  }
+
+  .review {
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+    padding: clamp(24px, 3vw, 36px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface-raised);
+    box-shadow: 0 14px 34px rgba(29, 25, 20, .035);
+  }
+
+  .review-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    color: var(--text-faint);
+  }
+
+  .verified i {
+    display: grid;
+    place-items: center;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #dbe9df;
+    color: #417054;
+    font-size: 9px;
+    font-style: normal;
+  }
+
+  .review h3 {
+    max-width: 28ch;
+    margin-top: 34px;
+    font-size: clamp(18px, 1.8vw, 25px);
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -.03em;
+  }
+
+  details {
+    margin-top: 18px;
+  }
+
+  summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--line-strong);
+    cursor: pointer;
+    list-style: none;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary :global(svg) {
+    transition: rotate var(--dur-fast) var(--ease-out);
+  }
+
+  details[open] summary :global(svg) {
+    rotate: 180deg;
+  }
+
+  details p {
+    max-width: 56ch;
+    margin-top: 16px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  footer {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 11px;
+    margin-top: auto;
+    padding-top: 32px;
+  }
+
+  .avatar {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 12px;
+    font-weight: 650;
+  }
+
+  .person b,
+  .person small {
+    display: block;
+  }
+
+  .person b {
+    font-size: 12.5px;
+  }
+
+  .person small {
+    margin-top: 1px;
+    font-size: 10px;
+    color: var(--text-faint);
+  }
+
+  footer a {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+  }
+
+  @media (max-width: 720px) {
+    .head {
+      align-items: start;
+      flex-direction: column;
+    }
+
+    .reviews {
+      grid-template-columns: 1fr;
+    }
+
+    .review {
+      min-height: 280px;
+    }
+  }
+</style>

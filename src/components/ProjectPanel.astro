@@ -10,21 +10,54 @@ const { index, animate = true } = Astro.props;
 const project = projects[index];
 ---
 
-<div class:list={["panel", animate && "panel--animate"]}>
-  <picture>
-    <img
-      src={project.image}
-      alt={project.imageAlt.ja}
-      loading="lazy"
-      decoding="async"
-      width="1536"
-      height="1024"
-    />
-  </picture>
+<div class:list={["panel", `panel--${project.id}`, animate && "panel--animate"]}>
+  {
+    project.id === "annoscene" ? (
+      <div class="actual-product">
+        <div class="actual-copy" aria-hidden="true">
+          <span>ACTUAL PRODUCT / iOS</span>
+          <b>Journey<br />playback.</b>
+          <i>VANCOUVER → BANFF</i>
+        </div>
+        <div class="device">
+          <img
+            src={project.image}
+            alt={project.imageAlt.ja}
+            loading="lazy"
+            decoding="async"
+            width="540"
+            height="1094"
+          />
+        </div>
+      </div>
+    ) : (
+      <picture>
+        <img
+          src={project.image}
+          alt={project.imageAlt.ja}
+          loading="lazy"
+          decoding="async"
+          width="1536"
+          height="1024"
+        />
+      </picture>
+    )
+  }
   <span class="veil" aria-hidden="true"></span>
   <span class="label">
-    <span class="ja">画面イメージ</span>
-    <span class="en">Concept visual</span>
+    {
+      project.id === "annoscene" ? (
+        <>
+          <span class="ja">実画面</span>
+          <span class="en">Actual UI</span>
+        </>
+      ) : (
+        <>
+          <span class="ja">画面イメージ</span>
+          <span class="en">Concept visual</span>
+        </>
+      )
+    }
   </span>
 </div>
 
@@ -52,12 +85,91 @@ const project = projects[index];
     transition: transform 900ms var(--ease-out);
   }
 
+  .actual-product {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 72% 36%, rgba(84, 120, 222, .28), transparent 34%),
+      linear-gradient(145deg, #111318, #1d2331);
+    color: #f6f4ef;
+  }
+
+  .actual-product::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: .22;
+    background-image:
+      linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: linear-gradient(90deg, #000, transparent 74%);
+  }
+
+  .actual-copy {
+    position: absolute;
+    z-index: 2;
+    left: 7%;
+    top: 17%;
+  }
+
+  .actual-copy span,
+  .actual-copy i {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: clamp(9px, .72vw, 11px);
+    font-style: normal;
+    letter-spacing: .13em;
+    color: rgba(246,244,239,.52);
+  }
+
+  .actual-copy b {
+    display: block;
+    margin-block: 18px 30px;
+    font-size: clamp(27px, 4.2vw, 62px);
+    font-weight: 530;
+    line-height: .94;
+    letter-spacing: -.055em;
+  }
+
+  .device {
+    position: absolute;
+    z-index: 2;
+    top: 7%;
+    right: 10%;
+    width: min(31%, 280px);
+    aspect-ratio: 540 / 1094;
+    padding: 7px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.24);
+    border-radius: 12% / 6%;
+    background: #060708;
+    box-shadow: 0 34px 70px rgba(0,0,0,.42);
+    rotate: 5deg;
+  }
+
+  .device img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10% / 5%;
+    object-fit: cover;
+  }
+
   .panel--animate img {
     transform: scale(1.01);
   }
 
+  .panel--annoscene.panel--animate .device {
+    transition: transform 900ms var(--ease-out);
+  }
+
   :global(.project a:hover) .panel--animate img {
     transform: scale(1.045);
+  }
+
+  :global(.project a:hover) .panel--annoscene.panel--animate .device {
+    transform: translateY(-8px) rotate(-1deg);
   }
 
   .veil {
@@ -80,7 +192,7 @@ const project = projects[index];
     color: rgba(255, 255, 255, .88);
     backdrop-filter: blur(8px);
     font-family: var(--font-mono);
-    font-size: 8px;
+    font-size: 9px;
     letter-spacing: .11em;
     text-transform: uppercase;
   }

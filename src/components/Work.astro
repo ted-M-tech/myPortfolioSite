@@ -1,8 +1,15 @@
 ---
 import { enablement, projects } from "../data/profile";
+import EnablementPanel from "./EnablementPanel.astro";
 import Icon from "./Icon.astro";
 import ProjectPanel from "./ProjectPanel.astro";
 import WorkStrip from "./WorkStrip.astro";
+
+const enablementIcons = {
+  notion: "/brand/tools/notion.svg",
+  claude: "/brand/tools/claude.svg",
+  git: "/brand/tools/git.svg",
+} as const;
 ---
 
 <section class="section" id="work">
@@ -73,20 +80,29 @@ import WorkStrip from "./WorkStrip.astro";
 
     <section class="enablement reveal" aria-labelledby="enablement-title">
       <header>
-        <p class="eyebrow">Enablement / alongside the build</p>
-        <h3 id="enablement-title">
-          <span class="ja">技術を、組織の力に。</span>
-          <span class="en">Make the technology stick.</span>
-        </h3>
+        <div>
+          <p class="eyebrow">Enablement / alongside the build</p>
+          <h3 id="enablement-title">
+            <span class="ja">技術を、<br />組織の力に。</span>
+            <span class="en">Make technology<br />part of the team.</span>
+          </h3>
+        </div>
+        <p class="enablement-lede">
+          <span class="ja">ツールを入れて終わりにしない。実務で使い続けられる運用まで設計します。</span>
+          <span class="en">Not just setup. I design the operating system that keeps the change useful.</span>
+        </p>
       </header>
-      <ul>
+      <ol class="enablement-cases">
         {
-          enablement.map((item) => (
-            <li>
-              <span class:list={["enablement-mark", `enablement-mark--${item.id}`]} aria-hidden="true">
-                {item.mark}
-              </span>
-              <div>
+          enablement.map((item, index) => (
+            <li class:list={["enablement-case", `enablement-case--${item.id}`]}>
+              <div class="enablement-copy">
+                <div class="enablement-topline">
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <span class:list={["enablement-mark", `enablement-mark--${item.id}`]} aria-hidden="true">
+                    <img src={enablementIcons[item.id]} alt="" width="26" height="26" loading="lazy" />
+                  </span>
+                </div>
                 <h4>
                   <span class="ja">{item.title.ja}</span>
                   <span class="en">{item.title.en}</span>
@@ -95,11 +111,18 @@ import WorkStrip from "./WorkStrip.astro";
                   <span class="ja">{item.description.ja}</span>
                   <span class="en">{item.description.en}</span>
                 </p>
+                <span class="case-caption">
+                  <span class="ja">導入設計 · 定着支援 · 運用改善</span>
+                  <span class="en">Design · Adoption · Operations</span>
+                </span>
+              </div>
+              <div class="enablement-preview" aria-hidden="true">
+                <EnablementPanel id={item.id} />
               </div>
             </li>
           ))
         }
-      </ul>
+      </ol>
     </section>
   </div>
 </section>
@@ -243,68 +266,124 @@ import WorkStrip from "./WorkStrip.astro";
 
   .enablement > header {
     display: grid;
-    grid-template-columns: .75fr 1.25fr;
+    grid-template-columns: minmax(0, 1.22fr) minmax(260px, .78fr);
     align-items: end;
-    gap: 40px;
+    gap: clamp(40px, 8vw, 132px);
   }
 
   .enablement > header h3 {
-    margin: 0;
-    max-width: 12ch;
-    font-size: clamp(34px, 5.2vw, 72px);
+    margin-top: 14px;
+    max-width: none;
+    font-size: clamp(40px, 5.3vw, 74px);
     line-height: .98;
   }
 
-  .enablement > ul {
-    margin-top: clamp(44px, 6vw, 72px);
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
+  .enablement > header h3 > span {
+    width: max-content;
+    max-width: 100%;
   }
 
-  .enablement > ul > li {
-    min-height: 250px;
-    padding: 24px;
+  .enablement-lede {
+    max-width: 35ch;
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text-muted);
+    text-wrap: pretty;
+  }
+
+  .enablement-cases {
+    margin-top: clamp(56px, 8vw, 100px);
+    border-top: 1px solid var(--line);
+  }
+
+  .enablement-case {
+    display: grid;
+    grid-template-columns: minmax(260px, .42fr) minmax(0, .58fr);
+    min-height: 390px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .enablement-case:nth-child(even) {
+    grid-template-columns: minmax(0, .58fr) minmax(260px, .42fr);
+  }
+
+  .enablement-case:nth-child(even) .enablement-copy {
+    order: 2;
+    border-right: 0;
+    border-left: 1px solid var(--line);
+  }
+
+  .enablement-copy {
     display: flex;
     flex-direction: column;
+    padding: clamp(26px, 4vw, 54px);
+    border-right: 1px solid var(--line);
+  }
+
+  .enablement-topline {
+    display: flex;
+    align-items: center;
     justify-content: space-between;
-    gap: 52px;
-    background: var(--surface-raised);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: .14em;
+    color: var(--text-faint);
   }
 
   .enablement-mark {
     display: grid;
     place-items: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 13px;
-    background: #171717;
-    color: #fff;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: -.02em;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--surface-sunken) 80%, white);
+    box-shadow: inset 0 0 0 1px var(--line);
   }
 
-  .enablement-mark--claude { background: #d97757; }
-  .enablement-mark--git { background: #7569d8; }
+  .enablement-mark img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
 
   .enablement h4 {
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: var(--tracking-tight);
+    max-width: 12ch;
+    margin-top: auto;
+    font-size: clamp(28px, 3vw, 44px);
+    font-weight: 560;
+    line-height: 1.08;
+    letter-spacing: -.045em;
   }
 
-  .enablement li p {
-    margin-top: 8px;
-    max-width: 30ch;
-    font-size: 13.5px;
-    line-height: 1.5;
+  .enablement-case p {
+    margin-top: 16px;
+    max-width: 34ch;
+    font-size: 14px;
+    line-height: 1.65;
     color: var(--text-muted);
+  }
+
+  .case-caption {
+    margin-top: 28px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  .enablement-preview {
+    position: relative;
+    min-height: 390px;
+    overflow: hidden;
+    background: var(--surface-sunken);
+  }
+
+  .enablement-preview :global(.enablement-panel) {
+    inset: clamp(20px, 3vw, 42px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
   }
 
   @media (max-width: 860px) {
@@ -321,14 +400,24 @@ import WorkStrip from "./WorkStrip.astro";
     .enablement > header {
       grid-template-columns: 1fr;
       align-items: start;
-      gap: 16px;
+      gap: 24px;
     }
-    .enablement > ul {
+
+    .enablement-case,
+    .enablement-case:nth-child(even) {
       grid-template-columns: 1fr;
     }
-    .enablement > ul > li {
-      min-height: 0;
-      gap: 42px;
+
+    .enablement-case:nth-child(even) .enablement-copy,
+    .enablement-copy {
+      order: 0;
+      min-height: 300px;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .enablement-preview {
+      min-height: 330px;
     }
   }
 </style>

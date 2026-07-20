@@ -42,8 +42,8 @@ export const person = {
    * 「前へ進む速度」と「自分のペース」— 屋号の二重の由来をそのまま言葉にしている。
    */
   headline: {
-    ja: "AIで、構想を<em>プロダクトへ。</em>",
-    en: "Ideas into <em>working products.</em>",
+    ja: "AIで、構想を<br /><em>プロダクトへ。</em>",
+    en: "Ideas into<br /><em>working products.</em>",
   } satisfies Bilingual,
   intro: {
     ja: "AIを開発の中核に。UI、API、データ、クラウドまで、一気通貫で設計・実装します。",
@@ -66,25 +66,25 @@ export const marquee = [
 
 /** AI駆動の設計・開発・運用で日常的に横断するツール。 */
 export const toolchain = [
-  { name: "ChatGPT", mark: "GPT", color: "#5f9f8f", icon: null },
-  { name: "Claude", mark: "CL", color: "#d97757", icon: null },
-  { name: "Notion", mark: "N", color: "#171717", icon: null },
-  { name: "VS Code", mark: "VS", color: "#1689ca", icon: null },
-  { name: "Cursor", mark: "CU", color: "#252525", icon: "/brand/tools/cursor.svg" },
-  { name: "Miro", mark: "MI", color: "#e1b900", icon: null },
-  { name: "Slack", mark: "SL", color: "#7c3564", icon: null },
-  { name: "Docker", mark: "DO", color: "#2496ed", icon: null },
-  { name: "Codex", mark: "CX", color: "#1c1c1c", icon: null },
-  { name: "Xcode", mark: "XC", color: "#147efb", icon: null },
-  { name: "Figma", mark: "FI", color: "#a259ff", icon: "/brand/tools/figma.svg" },
-  { name: "Teams", mark: "TM", color: "#6264a7", icon: null },
-  { name: "Gemini", mark: "GE", color: "#7268d9", icon: null },
-  { name: "Higgsfield", mark: "HF", color: "#cb78a5", icon: null },
-  { name: "Sakana AI", mark: "SAI", color: "#398c8b", icon: null },
+  { name: "ChatGPT", color: "#5f9f8f", icon: "/brand/tools/chatgpt.svg", genericIcon: null },
+  { name: "Claude", color: "#d97757", icon: "/brand/tools/claude.svg", genericIcon: null },
+  { name: "Notion", color: "#171717", icon: "/brand/tools/notion.svg", genericIcon: null },
+  { name: "VS Code", color: "#1689ca", icon: "/brand/tools/vscode.svg", genericIcon: null },
+  { name: "Cursor", color: "#252525", icon: "/brand/tools/cursor.svg", genericIcon: null },
+  { name: "Miro", color: "#e1b900", icon: "/brand/tools/miro.svg", genericIcon: null },
+  { name: "Slack", color: "#7c3564", icon: "/brand/tools/slack.svg", genericIcon: null },
+  { name: "Docker", color: "#2496ed", icon: "/brand/tools/docker.svg", genericIcon: null },
+  { name: "Codex", color: "#1c1c1c", icon: null, genericIcon: "code" },
+  { name: "Xcode", color: "#147efb", icon: "/brand/tools/xcode.svg", genericIcon: null },
+  { name: "Figma", color: "#a259ff", icon: "/brand/tools/figma.svg", genericIcon: null },
+  { name: "Teams", color: "#6264a7", icon: null, genericIcon: "users" },
+  { name: "Gemini", color: "#7268d9", icon: "/brand/tools/gemini.svg", genericIcon: null },
+  { name: "Higgsfield", color: "#cb78a5", icon: null, genericIcon: "camera" },
+  { name: "Sakana AI", color: "#398c8b", icon: null, genericIcon: "brain" },
 ] as const;
 
 export const stats = [
-  { value: 5, suffix: "+", label: { ja: "年のプロダクト開発", en: "Years shipping products" } },
+  { value: 6, suffix: "+", label: { ja: "年のプロダクト開発", en: "Years shipping products" } },
   { value: 4, suffix: "×", label: { ja: "リリース頻度を向上", en: "Faster release cadence" } },
   { value: 25, suffix: "%", label: { ja: "運用効率を改善", en: "Operational efficiency gained" } },
   { value: 6, suffix: "", label: { ja: "領域横断のプロダクト", en: "Cross-domain products" } },
@@ -131,10 +131,10 @@ export const projects: readonly Project[] = [
     },
     tech: ["Swift", "SwiftUI", "MapKit", "PhotosUI", "AVFoundation"],
     href: "https://annoscene.maepace.com",
-    image: "/work/annoscene-case.webp",
+    image: "/work/annoscene-screen.webp",
     imageAlt: {
-      ja: "AnnoSceneの地図と旅程を表示したiPhone画面のコンセプト",
-      en: "Concept iPhone view of AnnoScene's route and travel timeline",
+      ja: "AnnoSceneで旅を再生する実際のiPhone画面",
+      en: "Actual iPhone screen for replaying a journey in AnnoScene",
     },
   },
   {
@@ -147,7 +147,7 @@ export const projects: readonly Project[] = [
     },
     tech: ["Swift", "SwiftUI", "AVFoundation", "SRS"],
     href: "https://helpkansai.maepace.com",
-    image: "/work/help-kansai-case.webp",
+    image: "/work/help-kansai-case-v2.webp",
     imageAlt: {
       ja: "Help Kansaiの音声学習画面を表示したiPhoneのコンセプト",
       en: "Concept iPhone view of Help Kansai's voice lesson",
@@ -158,15 +158,15 @@ export const projects: readonly Project[] = [
     role: { ja: "iOS開発 · HealthKit", en: "iOS Engineering · HealthKit" },
     title: { ja: "Wellness Pet", en: "Wellness Pet" },
     description: {
-      ja: "歩数・睡眠・気分が、一匹のピクセルの犬の様子に変わる iOS アプリ。評価せず、そっと寄り添う設計。",
-      en: "An iOS companion where steps, sleep and mood become small changes in a pixel dog—supportive, never judgmental.",
+      ja: "Apple Watchと連携し、活動・睡眠・気分を一匹のピクセル犬へ反映する iOS アプリ。評価せず、そっと寄り添う設計。",
+      en: "An iOS and Apple Watch companion where activity, sleep and mood shape a pixel dog—supportive, never judgmental.",
     },
-    tech: ["Swift", "SwiftUI", "HealthKit", "WidgetKit"],
+    tech: ["Swift", "SwiftUI", "HealthKit", "watchOS", "WidgetKit"],
     href: "https://wellnesspet.maepace.com",
-    image: "/work/wellness-pet-case.webp",
+    image: "/work/wellness-pet-case-v2.webp",
     imageAlt: {
-      ja: "Wellness Petの健康記録とピクセル犬を表示したiPhone画面のコンセプト",
-      en: "Concept iPhone view of Wellness Pet's daily check-in and pixel companion",
+      ja: "Apple Watchから活動・睡眠・気分を同期するWellness Petの画面イメージ",
+      en: "Wellness Pet concept syncing activity, sleep and mood from Apple Watch",
     },
   },
   {
@@ -182,10 +182,10 @@ export const projects: readonly Project[] = [
     },
     tech: ["C#", "SQL Server", "Azure", "SCADA", "PLC"],
     href: "https://www.mitsubishielectric.co.jp/fa/products/software/visualisation/genesis64/index.html",
-    image: "/work/industrial-ops-case.webp",
+    image: "/work/scada-edge-case.webp",
     imageAlt: {
-      ja: "設備状況と遠隔操作をまとめた運用画面のコンセプト",
-      en: "Concept view of equipment status and remote control",
+      ja: "PLCとセンサーのデータをPCとiPadで可視化・遠隔制御する画面イメージ",
+      en: "Concept showing PLC and sensor data visualized and controlled from desktop and tablet",
     },
   },
   {
@@ -196,15 +196,15 @@ export const projects: readonly Project[] = [
       en: "Manufacturing SaaS Platform",
     },
     description: {
-      ja: "クラウド SaaS 開発で Scrum Master を務め、月次リリースを週次へ。デリバリー頻度を4倍に改善。",
-      en: "Led Agile delivery for a cloud SaaS product, moving releases from monthly to weekly and increasing delivery frequency 4x.",
+      ja: "SIM経由の現場データをクラウドSaaSへ。Scrum Masterとして月次リリースを週次へ改善。",
+      en: "Brought field data into a cloud SaaS over cellular connectivity and led Agile delivery from monthly to weekly releases.",
     },
     tech: ["React", "Next.js", "TypeScript", "Azure", "Snowflake", "Scrum"],
     href: "https://www.mitsubishielectric.co.jp/fa/about-us/fa-digitalsolution/index.html",
-    image: "/work/manufacturing-saas-case.webp",
+    image: "/work/manufacturing-saas-case-v2.webp",
     imageAlt: {
-      ja: "製造業向けSaaSの資産管理とリリース画面のコンセプト",
-      en: "Concept view of asset management and releases in a manufacturing SaaS",
+      ja: "SIM経由の設備データとScrum開発をつなぐ製造業向けSaaSの画面イメージ",
+      en: "Concept connecting cellular equipment data with Scrum delivery in a manufacturing SaaS",
     },
   },
   {
@@ -324,7 +324,41 @@ export const timeline = [
       ja: "SCADA・可視化基盤の開発 / Scrum Master",
       en: "SCADA & visualization platforms / Scrum Master",
     },
-    period: "2019 — 2024",
+    period: "2020 — 2024",
+  },
+] as const;
+
+/** LinkedInに公開されている、実際に一緒に働いた方からの推薦。 */
+export const recommendations = [
+  {
+    name: "Hemant Navarkar",
+    title: {
+      ja: "技術と事業をつなぐ、グローバルな推進力",
+      en: "Technical leadership across global teams",
+    },
+    context: {
+      ja: "Mitsubishi Electric · SaaS プロジェクト",
+      en: "Mitsubishi Electric · SaaS project",
+    },
+    quote: {
+      ja: "三菱電機のSaaSプロジェクトで、Scrum Master・Product Ownerを含む複数の役割を担い、アーキテクチャと事業目標をつなぎながらMVP・PoCを推進。デプロイの改善、顧客との要件整理、文化や時差を越えたグローバルチームの協働まで、一貫して成果へ導いた点を評価いただきました。",
+      en: "On our SaaS project at Mitsubishi Electric, Maeda-san led the Scrum team across Scrum Master and Product Owner responsibilities. He reviewed architecture, aligned technical design with business goals, streamlined deployment, and guided successful MVP and PoC delivery. He connected customer requirements with implementation and kept global teams working smoothly across cultures and time zones.",
+    },
+  },
+  {
+    name: "Vishwa Ved",
+    title: {
+      ja: "顧客対話からMVPまでを率いるフルスタック力",
+      en: "From customer needs to working MVPs",
+    },
+    context: {
+      ja: "Mitsubishi Electric · 次世代 SaaS",
+      en: "Mitsubishi Electric · Next-generation SaaS",
+    },
+    quote: {
+      ja: "次世代SaaSの開発でScrumチームを率い、顧客対話から要件定義、プロダクト方針の整理までを主導。グローバルチームへAgileを導入し、PoC・MVPを形にしました。事業視点とフルスタックの技術力を両立し、MVPのアーキテクチャと設計を前へ進めた点を評価いただきました。",
+      en: "For the next-generation SaaS platform, Mr. Maeda led the Scrum team from customer conversations and requirements definition through product direction. He introduced Agile ways of working across a globally diverse team and helped turn PoCs and MVPs into reality. His business perspective and full-stack expertise were central to the architecture and design of the MVPs.",
+    },
   },
 ] as const;
 
@@ -343,7 +377,7 @@ export const play = [
     icon: "mountain",
     name: { ja: "山を歩く", en: "Hiking" },
     note: { ja: "考えが詰まったら、とりあえず登る", en: "When thinking stalls, go up a mountain" },
-    image: null as string | null,
+    image: "/play/hiking.webp",
   },
   {
     id: "photo",
@@ -351,7 +385,7 @@ export const play = [
     icon: "camera",
     name: { ja: "写真", en: "Photography" },
     note: { ja: "風景と街。技術と表現が交わるところ", en: "Landscapes and cities" },
-    image: null as string | null,
+    image: "/play/photography.webp",
   },
   {
     id: "coffee",
@@ -359,7 +393,7 @@ export const play = [
     icon: "coffee",
     name: { ja: "珈琲", en: "Coffee" },
     note: { ja: "ハンドドリップ", en: "Hand-drip" },
-    image: null as string | null,
+    image: "/play/coffee.webp",
   },
   {
     id: "reading",
@@ -367,7 +401,7 @@ export const play = [
     icon: "book-open",
     name: { ja: "読書", en: "Reading" },
     note: { ja: "技術書からSFまで", en: "Technical books to sci-fi" },
-    image: null as string | null,
+    image: "/play/reading.webp",
   },
   {
     id: "vancouver",
@@ -375,7 +409,7 @@ export const play = [
     icon: "mountain",
     name: { ja: "バンクーバー", en: "Vancouver" },
     note: { ja: "海と山が近い街に住んでいます", en: "Living where the sea meets the mountains" },
-    image: null as string | null,
+    image: "/play/vancouver.webp",
   },
 ] as const;
 
@@ -384,7 +418,7 @@ export const play = [
  *
  * tone はバッジの色。原典はカードごとに色を変えて種類を示していた。
  *
- * 価格の考え方: バンクーバー在住・Azure 系 Expert 資格3つ・実務5年以上という
+ * 価格の考え方: バンクーバー在住・Azure 系 Expert 資格3つ・2020年からの実務経験という
  * 前提での相場に寄せている。単発の相談は「試しやすさ」を優先して低く、
  * 継続と受託は実際に時間を使う分だけ取る。安く見せるための嘘の割引はしない。
  */

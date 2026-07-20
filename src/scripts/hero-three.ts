@@ -28,6 +28,11 @@ type GeometryView = {
   nodes: ArchitectureNode[];
   connections: Connection[];
   halo: THREE.Mesh<THREE.TorusGeometry, THREE.MeshBasicMaterial> | null;
+  generative: {
+    form: THREE.Mesh<THREE.TorusKnotGeometry, THREE.MeshPhysicalMaterial>;
+    rings: THREE.Mesh<THREE.TorusGeometry, THREE.MeshBasicMaterial>[];
+    particles: THREE.Mesh<THREE.SphereGeometry, THREE.MeshBasicMaterial>[];
+  } | null;
   width: number;
   height: number;
 };
@@ -39,11 +44,11 @@ type ModuleDefinition = {
 
 const moduleSets: readonly (readonly ModuleDefinition[])[] = [
   [
-    { title: "SIGNAL", meta: "INPUT" },
-    { title: "AI CORE", meta: "ORCHESTRATE" },
-    { title: "TOOLS", meta: "CONTEXT" },
-    { title: "UI", meta: "EXPERIENCE" },
-    { title: "MEMORY", meta: "STATE" },
+    { title: "AGENT 01", meta: "ANALYZE" },
+    { title: "ROUTER", meta: "ORCHESTRATE" },
+    { title: "AGENT 02", meta: "CHALLENGE" },
+    { title: "AGENT 03", meta: "VERIFY" },
+    { title: "SYNTHESIS", meta: "DECIDE" },
   ],
   [
     { title: "AUTH", meta: "GUARD" },
@@ -226,7 +231,7 @@ function createView(canvas: HTMLCanvasElement, viewIndex: number, compact: boole
   const group = new THREE.Group();
   scene.add(group);
 
-  const definitions = moduleSets[viewIndex] ?? moduleSets[0];
+  const definitions = viewIndex === 2 ? [] : (moduleSets[viewIndex] ?? moduleSets[0]);
   const viewColors = colors[viewIndex] ?? colors[0];
   const nodes = definitions.map((definition, index) => {
     const node = createModule(definition, viewColors[index], index, viewIndex);
@@ -234,7 +239,8 @@ function createView(canvas: HTMLCanvasElement, viewIndex: number, compact: boole
     return node;
   });
 
-  const connections = connectionPairs.map(([fromIndex, toIndex], index) => {
+  const pairs = viewIndex === 2 ? [] : connectionPairs;
+  const connections = pairs.map(([fromIndex, toIndex], index) => {
     const from = nodes[fromIndex];
     const to = nodes[toIndex];
     const geometry = new THREE.BufferGeometry().setFromPoints([from.target, to.target]);
@@ -291,6 +297,55 @@ function createView(canvas: HTMLCanvasElement, viewIndex: number, compact: boole
     group.add(halo);
   }
 
+  let generative: GeometryView["generative"] = null;
+  if (viewIndex === 2) {
+    const form = new THREE.Mesh(
+      new THREE.TorusKnotGeometry(1.08, 0.22, 180, 22, 2, 3),
+      new THREE.MeshPhysicalMaterial({
+        color: 0xe7dce6,
+        roughness: 0.18,
+        metalness: 0.08,
+        clearcoat: 1,
+        clearcoatRoughness: 0.12,
+        transmission: 0.12,
+        envMapIntensity: 1.2,
+      }),
+    );
+    form.rotation.set(0.62, 0.15, -0.28);
+    group.add(form);
+
+    const rings = [1.62, 2.04, 2.42].map((radius, index) => {
+      const ring = new THREE.Mesh(
+        new THREE.TorusGeometry(radius, 0.012, 8, 120),
+        new THREE.MeshBasicMaterial({
+          color: index === 1 ? 0xf28b5b : 0x9eb3e9,
+          transparent: true,
+          opacity: index === 1 ? 0.48 : 0.26,
+          toneMapped: false,
+        }),
+      );
+      ring.rotation.set(1.12 + index * 0.19, index * 0.42, index * 0.31);
+      group.add(ring);
+      return ring;
+    });
+
+    const particles = Array.from({ length: 28 }, (_, index) => {
+      const particle = new THREE.Mesh(
+        new THREE.SphereGeometry(index % 7 === 0 ? 0.065 : 0.035, 14, 10),
+        new THREE.MeshBasicMaterial({
+          color: index % 5 === 0 ? 0xff8a54 : 0xdce6ff,
+          transparent: true,
+          opacity: index % 3 === 0 ? 0.92 : 0.52,
+          toneMapped: false,
+        }),
+      );
+      group.add(particle);
+      return particle;
+    });
+
+    generative = { form, rings, particles };
+  }
+
   return {
     canvas,
     renderer,
@@ -300,6 +355,7 @@ function createView(canvas: HTMLCanvasElement, viewIndex: number, compact: boole
     nodes,
     connections,
     halo,
+    generative,
     width: 0,
     height: 0,
   };
@@ -391,6 +447,33 @@ export function initHeroGeometry(canvases: HTMLCanvasElement[]) {
         view.halo.rotation.z = elapsed * 0.08;
         const haloPulse = 1 + Math.sin(elapsed * 1.7) * 0.035;
         view.halo.scale.setScalar(haloPulse);
+      }
+
+      if (view.generative) {
+        const { form, rings, particles } = view.generative;
+        form.rotation.x = 0.62 + Math.sin(elapsed * 0.31) * 0.12;
+        form.rotation.y = elapsed * 0.22;
+        form.rotation.z = -0.28 + Math.cos(elapsed * 0.27) * 0.1;
+        const formPulse = 0.94 + Math.sin(elapsed * 0.72) * 0.05;
+        form.scale.setScalar(formPulse);
+
+        rings.forEach((ring, index) => {
+          ring.rotation.z += (0.0008 + index * 0.00035) * (index % 2 ? -1 : 1);
+          ring.rotation.y += 0.00045 * (index + 1);
+        });
+
+        particles.forEach((particle, index) => {
+          const lane = index % 3;
+          const angle = elapsed * (0.18 + lane * 0.035) + index * 0.82;
+          const radius = 1.46 + lane * 0.48 + Math.sin(index * 2.1) * 0.12;
+          particle.position.set(
+            Math.cos(angle) * radius,
+            Math.sin(angle * (1.2 + lane * 0.08)) * (0.82 + lane * 0.2),
+            Math.sin(angle) * 0.62,
+          );
+          const pulse = 0.72 + Math.sin(elapsed * 2.2 + index) * 0.25;
+          particle.scale.setScalar(pulse);
+        });
       }
 
       view.group.rotation.y = pointer.x * 0.025;

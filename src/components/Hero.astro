@@ -1,6 +1,11 @@
 ---
 import { person } from "../data/profile";
 import Icon from "./Icon.astro";
+
+const headline = {
+  ja: person.headline.ja.split(/<br\s*\/?\s*>/i),
+  en: person.headline.en.split(/<br\s*\/?\s*>/i),
+};
 ---
 
 <section class="hero" id="geometry" aria-labelledby="geometry-title">
@@ -8,8 +13,12 @@ import Icon from "./Icon.astro";
     <div class="hero-title">
       <p class="kicker">{person.role.en}</p>
       <h2 id="geometry-title">
-        <span class="ja" set:html={person.headline.ja} />
-        <span class="en" set:html={person.headline.en} />
+        <span class="ja headline-lines">
+          {headline.ja.map((line) => <span set:html={line} />)}
+        </span>
+        <span class="en headline-lines">
+          {headline.en.map((line) => <span set:html={line} />)}
+        </span>
       </h2>
     </div>
 
@@ -34,18 +43,18 @@ import Icon from "./Icon.astro";
 
   <div class="visual" aria-label="AI-driven software architecture assembling in three dimensions">
     <div class="puzzle-pane puzzle-pane--one">
-      <span class="pane-label">01 / AI ORCHESTRATION</span>
-      <span class="pane-state">ASSEMBLING → LIVE</span>
+      <span class="pane-label">01 / AI AGENT COUNCIL</span>
+      <span class="pane-state">DEBATE → CONSENSUS</span>
       <canvas data-hero-geometry aria-hidden="true"></canvas>
     </div>
     <div class="puzzle-pane puzzle-pane--two">
-      <span class="pane-label">02 / PRODUCT SYSTEM</span>
+      <span class="pane-label">02 / SYSTEM ARCHITECTURE</span>
       <span class="pane-state">MODULES → CONNECTED</span>
       <canvas data-hero-geometry aria-hidden="true"></canvas>
     </div>
     <div class="puzzle-pane puzzle-pane--three">
-      <span class="pane-label">03 / PRODUCTION FLOW</span>
-      <span class="pane-state">VERIFIED → SHIPPED</span>
+      <span class="pane-label">03 / GENERATIVE SEARCH</span>
+      <span class="pane-state">EXPLORE → SYNTHESIZE</span>
       <canvas data-hero-geometry aria-hidden="true"></canvas>
     </div>
   </div>
@@ -94,7 +103,7 @@ import Icon from "./Icon.astro";
 
   .kicker {
     font-family: var(--font-mono);
-    font-size: 9px;
+    font-size: 11px;
     font-weight: 500;
     letter-spacing: 0.17em;
     color: var(--text-faint);
@@ -103,12 +112,21 @@ import Icon from "./Icon.astro";
 
   h2 {
     margin-top: 14px;
-    max-width: 15ch;
-    font-size: clamp(40px, 4.8vw, 72px);
-    font-weight: 520;
-    letter-spacing: -0.055em;
-    line-height: 0.98;
-    text-wrap: balance;
+    max-width: none;
+    font-size: clamp(46px, 5.15vw, 84px);
+    font-weight: 600;
+    letter-spacing: -0.06em;
+    line-height: 1.02;
+  }
+
+  .headline-lines > span {
+    display: block;
+  }
+
+  .headline-lines > span {
+    width: max-content;
+    max-width: 100%;
+    white-space: nowrap;
   }
 
   h2 :global(em) {
@@ -185,7 +203,7 @@ import Icon from "./Icon.astro";
     position: absolute;
     z-index: 2;
     font-family: var(--font-mono);
-    font-size: clamp(6px, 0.48vw, 8px);
+    font-size: clamp(9px, 0.58vw, 11px);
     letter-spacing: 0.13em;
     color: rgba(245, 242, 237, 0.5);
     pointer-events: none;
@@ -253,7 +271,7 @@ import Icon from "./Icon.astro";
     max-width: 1680px;
     margin: 18px auto 0;
     font-family: var(--font-mono);
-    font-size: 8px;
+    font-size: 10px;
     letter-spacing: 0.13em;
     color: var(--text-faint);
   }
@@ -303,7 +321,7 @@ import Icon from "./Icon.astro";
     }
 
     h2 {
-      font-size: clamp(38px, 11vw, 58px);
+      font-size: clamp(39px, 9.6vw, 62px);
     }
 
     .intro {
@@ -341,12 +359,12 @@ import Icon from "./Icon.astro";
     }
 
     .kicker {
-      font-size: 8px;
+      font-size: 10px;
     }
 
-    h1 {
-      max-width: 12ch;
-      font-size: clamp(38px, 12.6vw, 54px);
+    h2 {
+      font-size: clamp(36px, 10.4vw, 48px);
+      letter-spacing: -0.065em;
     }
 
     .intro {
@@ -363,7 +381,7 @@ import Icon from "./Icon.astro";
 
     .hero-foot {
       margin-top: 14px;
-      font-size: 7px;
+      font-size: 9px;
     }
   }
 

@@ -1,0 +1,395 @@
+---
+interface Props {
+  id: "notion" | "claude" | "git";
+}
+
+const { id } = Astro.props;
+
+const visuals = {
+  notion: {
+    icon: "/brand/tools/notion.svg",
+    eyebrow: "OPERATING SYSTEM",
+    status: "ONE SOURCE",
+    tone: "ink",
+  },
+  claude: {
+    icon: "/brand/tools/claude.svg",
+    eyebrow: "AI ENABLEMENT",
+    status: "IN PRACTICE",
+    tone: "coral",
+  },
+  git: {
+    icon: "/brand/tools/git.svg",
+    eyebrow: "DELIVERY SYSTEM",
+    status: "REVIEW READY",
+    tone: "blue",
+  },
+} as const;
+
+const visual = visuals[id];
+---
+
+<div class:list={["enablement-panel", `enablement-panel--${visual.tone}`]}>
+  <div class="topline">
+    <span>{visual.eyebrow}</span>
+    <span class="status"><i></i>{visual.status}</span>
+  </div>
+
+  <div class="workspace">
+    <div class="rail">
+      <img src={visual.icon} alt="" width="28" height="28" loading="lazy" />
+      <span></span><span></span><span></span>
+    </div>
+
+    {
+      id === "notion" && (
+        <div class="notion-view" aria-hidden="true">
+          <div class="workspace-title">Company workspace</div>
+          <div class="database-head">
+            <span>Projects</span><span>Owner</span><span>Status</span>
+          </div>
+          <div class="database-row"><b></b><span></span><em>Active</em></div>
+          <div class="database-row"><b></b><span></span><em>Review</em></div>
+          <div class="database-row"><b></b><span></span><em>Ready</em></div>
+        </div>
+      )
+    }
+
+    {
+      id === "claude" && (
+        <div class="claude-view" aria-hidden="true">
+          <div class="workspace-title">AI playbook</div>
+          <div class="prompt">
+            <span></span><span></span>
+          </div>
+          <div class="answer">
+            <i></i>
+            <div><span></span><span></span><span></span></div>
+          </div>
+          <div class="guardrails"><b>01</b><b>02</b><b>03</b></div>
+        </div>
+      )
+    }
+
+    {
+      id === "git" && (
+        <div class="git-view" aria-hidden="true">
+          <div class="workspace-title">Release workflow</div>
+          <div class="branch">
+            <i></i><span></span><i></i><span></span><i></i>
+          </div>
+          <div class="review">
+            <b>Pull request</b>
+            <span></span><span></span>
+            <em>Approved</em>
+          </div>
+          <div class="commit-row"><i></i><span></span><small>main</small></div>
+        </div>
+      )
+    }
+  </div>
+</div>
+
+<style>
+  .enablement-panel {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    padding: 16px;
+    background: #f2f0ec;
+    color: #161513;
+  }
+
+  .enablement-panel::after {
+    content: "";
+    position: absolute;
+    inset: auto -18% -58% 32%;
+    height: 92%;
+    border-radius: 50%;
+    background: var(--wash);
+    filter: blur(18px);
+    opacity: .8;
+    pointer-events: none;
+  }
+
+  .enablement-panel--ink {
+    --accent: #161513;
+    --wash: rgba(41, 40, 37, .13);
+  }
+
+  .enablement-panel--coral {
+    --accent: #d97757;
+    --wash: rgba(217, 119, 87, .23);
+  }
+
+  .enablement-panel--blue {
+    --accent: #6765c7;
+    --wash: rgba(103, 101, 199, .2);
+  }
+
+  .topline {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: .14em;
+    color: rgba(22, 21, 19, .5);
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .status i {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 62%, transparent);
+  }
+
+  .workspace {
+    position: absolute;
+    z-index: 1;
+    inset: 42px 16px 15px;
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    overflow: hidden;
+    border: 1px solid rgba(20, 19, 17, .1);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .76);
+    box-shadow: 0 12px 35px rgba(37, 32, 24, .07);
+  }
+
+  .rail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    padding-block: 9px;
+    border-right: 1px solid rgba(20, 19, 17, .08);
+    background: rgba(247, 246, 243, .88);
+  }
+
+  .rail img {
+    width: 17px;
+    height: 17px;
+    object-fit: contain;
+  }
+
+  .rail span {
+    width: 11px;
+    height: 3px;
+    border-radius: 3px;
+    background: rgba(20, 19, 17, .11);
+  }
+
+  .notion-view,
+  .claude-view,
+  .git-view {
+    padding: 11px 12px;
+  }
+
+  .workspace-title {
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 650;
+    letter-spacing: -.025em;
+  }
+
+  .database-head,
+  .database-row {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr .7fr;
+    align-items: center;
+    gap: 7px;
+    min-height: 18px;
+    border-bottom: 1px solid rgba(20, 19, 17, .075);
+  }
+
+  .database-head {
+    font-family: var(--font-mono);
+    font-size: 7px;
+    letter-spacing: .1em;
+    color: rgba(20, 19, 17, .42);
+    text-transform: uppercase;
+  }
+
+  .database-row b,
+  .database-row span,
+  .prompt span,
+  .answer span,
+  .review span,
+  .commit-row > span {
+    display: block;
+    height: 4px;
+    border-radius: 9px;
+    background: rgba(20, 19, 17, .13);
+  }
+
+  .database-row b {
+    width: 78%;
+  }
+
+  .database-row span {
+    width: 52%;
+  }
+
+  .database-row em {
+    justify-self: start;
+    padding: 2px 5px;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--accent) 10%, white);
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 7px;
+    font-style: normal;
+  }
+
+  .prompt {
+    display: grid;
+    gap: 5px;
+    margin-bottom: 7px;
+    padding: 8px;
+    border-radius: 6px;
+    background: color-mix(in srgb, var(--accent) 7%, white);
+  }
+
+  .prompt span:first-child {
+    width: 74%;
+  }
+
+  .prompt span:last-child {
+    width: 46%;
+  }
+
+  .answer {
+    display: grid;
+    grid-template-columns: 14px 1fr;
+    gap: 7px;
+    padding: 5px 2px 8px;
+  }
+
+  .answer i {
+    width: 13px;
+    height: 13px;
+    border-radius: 4px;
+    background: var(--accent);
+    opacity: .84;
+  }
+
+  .answer div {
+    display: grid;
+    gap: 4px;
+  }
+
+  .answer span:nth-child(2) {
+    width: 88%;
+  }
+
+  .answer span:nth-child(3) {
+    width: 61%;
+  }
+
+  .guardrails {
+    display: flex;
+    gap: 5px;
+  }
+
+  .guardrails b {
+    padding: 4px 7px;
+    border: 1px solid rgba(20, 19, 17, .09);
+    border-radius: 99px;
+    font-family: var(--font-mono);
+    font-size: 7px;
+    font-weight: 500;
+    color: rgba(20, 19, 17, .48);
+  }
+
+  .branch {
+    display: flex;
+    align-items: center;
+    width: 78%;
+    margin: 17px 0 14px 4px;
+  }
+
+  .branch i {
+    flex: none;
+    width: 9px;
+    height: 9px;
+    border: 2px solid var(--accent);
+    border-radius: 50%;
+    background: white;
+  }
+
+  .branch i:last-child {
+    background: var(--accent);
+  }
+
+  .branch span {
+    height: 1px;
+    flex: 1;
+    background: color-mix(in srgb, var(--accent) 58%, transparent);
+  }
+
+  .review {
+    position: relative;
+    display: grid;
+    gap: 5px;
+    padding: 8px;
+    border: 1px solid rgba(20, 19, 17, .08);
+    border-radius: 6px;
+    background: white;
+  }
+
+  .review b {
+    font-size: 9px;
+  }
+
+  .review span {
+    width: 66%;
+  }
+
+  .review span:nth-of-type(2) {
+    width: 42%;
+  }
+
+  .review em {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    padding: 3px 5px;
+    border-radius: 7px;
+    background: color-mix(in srgb, var(--accent) 10%, white);
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 7px;
+    font-style: normal;
+  }
+
+  .commit-row {
+    display: grid;
+    grid-template-columns: 6px 1fr auto;
+    align-items: center;
+    gap: 5px;
+    margin-top: 8px;
+  }
+
+  .commit-row i {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .commit-row small {
+    font-family: var(--font-mono);
+    font-size: 7px;
+    color: rgba(20, 19, 17, .46);
+  }
+</style>

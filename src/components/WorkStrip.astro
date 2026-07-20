@@ -1,5 +1,6 @@
 ---
-import { projects } from "../data/profile";
+import { enablement, projects } from "../data/profile";
+import EnablementPanel from "./EnablementPanel.astro";
 import ProjectPanel from "./ProjectPanel.astro";
 
 /**
@@ -18,8 +19,35 @@ import ProjectPanel from "./ProjectPanel.astro";
  * ホバーで止めない。個々の案件を読ませる場所ではなく、量を伝える場所で、
  * 詳細は下の縦積みカードが受け持つ。だから aria-hidden で読み上げからも外す。
  */
-const rowA = projects.map((p, i) => ({ p, i }));
-const rowB = [...rowA].reverse();
+const projectCards = projects.map((p, i) => ({
+  kind: "project" as const,
+  item: p,
+  projectIndex: i,
+}));
+const enablementCards = enablement.map((item) => ({
+  kind: "enablement" as const,
+  item,
+  projectIndex: -1,
+}));
+const enablementId = (id: string) => id as (typeof enablement)[number]["id"];
+
+/*
+ * 上下で同じ案件を見せない。
+ * 上段はAI・モバイル・個人プロダクト、下段は業務システム・クラウド・組織導入。
+ * 同一段を2回描画するのは、継ぎ目のないループを作るためだけ。
+ */
+const rowA = [
+  projectCards[1],
+  projectCards[2],
+  projectCards[3],
+  projectCards[0],
+  projectCards[6],
+];
+const rowB = [
+  projectCards[4],
+  projectCards[5],
+  ...enablementCards,
+];
 ---
 
 <div class="strip" aria-hidden="true">
@@ -28,18 +56,33 @@ const rowB = [...rowA].reverse();
       {
         [0, 1].map(() => (
           <div class="run">
-            {rowA.map(({ p, i }) => (
+            {rowA.map(({ kind, item, projectIndex }) => (
               <article class="card">
                 <div class="thumb">
-                  <ProjectPanel index={i} animate={false} />
+                  {
+                    kind === "project"
+                      ? <ProjectPanel index={projectIndex} animate={false} />
+                      : <EnablementPanel id={enablementId(item.id)} />
+                  }
                 </div>
                 <p class="title">
-                  <span class="ja">{p.title.ja}</span>
-                  <span class="en">{p.title.en}</span>
+                  <span class="ja">{item.title.ja}</span>
+                  <span class="en">{item.title.en}</span>
                 </p>
                 <p class="role">
-                  <span class="ja">{p.role.ja}</span>
-                  <span class="en">{p.role.en}</span>
+                  {
+                    kind === "project" ? (
+                      <>
+                        <span class="ja">{item.role.ja}</span>
+                        <span class="en">{item.role.en}</span>
+                      </>
+                    ) : (
+                      <>
+                        <span class="ja">AI・組織支援</span>
+                        <span class="en">AI &amp; Team Enablement</span>
+                      </>
+                    )
+                  }
                 </p>
               </article>
             ))}
@@ -54,18 +97,33 @@ const rowB = [...rowA].reverse();
       {
         [0, 1].map(() => (
           <div class="run">
-            {rowB.map(({ p, i }) => (
+            {rowB.map(({ kind, item, projectIndex }) => (
               <article class="card">
                 <div class="thumb">
-                  <ProjectPanel index={i} animate={false} />
+                  {
+                    kind === "project"
+                      ? <ProjectPanel index={projectIndex} animate={false} />
+                      : <EnablementPanel id={enablementId(item.id)} />
+                  }
                 </div>
                 <p class="title">
-                  <span class="ja">{p.title.ja}</span>
-                  <span class="en">{p.title.en}</span>
+                  <span class="ja">{item.title.ja}</span>
+                  <span class="en">{item.title.en}</span>
                 </p>
                 <p class="role">
-                  <span class="ja">{p.role.ja}</span>
-                  <span class="en">{p.role.en}</span>
+                  {
+                    kind === "project" ? (
+                      <>
+                        <span class="ja">{item.role.ja}</span>
+                        <span class="en">{item.role.en}</span>
+                      </>
+                    ) : (
+                      <>
+                        <span class="ja">AI・組織支援</span>
+                        <span class="en">AI &amp; Team Enablement</span>
+                      </>
+                    )
+                  }
                 </p>
               </article>
             ))}
