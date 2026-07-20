@@ -1,136 +1,295 @@
 /**
- * Ethos の星座。
+ * Obsidian-like knowledge graph.
  *
- * スクロール量に応じて、外周のノード → コアへのスポーク → ノード同士を結ぶ環、
- * の順に描かれていく。組み上がると、外周から中心へ光が流れ始める。
- *
- * 「ぜんぶが繋がって、前へ進む速度になる」を、そのまま図にしている。
+ * 180 small data nodes form six fuzzy knowledge clusters. Those clusters feed
+ * the MaePace concept node, and the resolved signal travels into one output.
+ * Pointer proximity reveals local relationships; scroll progress reveals the
+ * overall idea from fragments to point of view to masterpiece.
  */
 
-type Node = { el: HTMLElement };
+type GraphNode = {
+  x: number;
+  y: number;
+  r: number;
+  cluster: number;
+  phase: number;
+  strength: number;
+};
+
+type Edge = {
+  a: number;
+  b: number;
+  strength: number;
+};
+
+const COLORS = [
+  [111, 131, 255],
+  [255, 117, 64],
+  [216, 155, 255],
+  [99, 214, 184],
+  [255, 183, 91],
+  [116, 161, 255],
+] as const;
 
 export function initEthosConstellation(
   stage: HTMLElement,
   canvas: HTMLCanvasElement,
-  outer: HTMLElement[],
+  hubs: HTMLElement[],
   center: HTMLElement,
+  output: HTMLElement,
 ) {
-  const ctx = canvas.getContext("2d", { alpha: true });
-  if (!ctx) return;
+  const context = canvas.getContext("2d", { alpha: true });
+  if (!context) return;
+  const ctx = context;
 
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const dpr = Math.min(2, devicePixelRatio || 1);
-  const nodes: Node[] = outer.map((el) => ({ el }));
 
   let w = 0;
   let h = 0;
+  let nodes: GraphNode[] = [];
+  let edges: Edge[] = [];
+  let hubPoints: { x: number; y: number }[] = [];
+  let corePoint = { x: 0, y: 0 };
+  let outputPoint = { x: 0, y: 0 };
   let raf = 0;
   let looping = false;
-
-  /** 実際の進捗と、そこへ追いつく表示上の進捗。追従を緩めて滑らかにする */
   let target = 0;
   let progress = 0;
+  let pointerX = -9999;
+  let pointerY = -9999;
+  let pointerActive = false;
 
-  const glints = outer.map(() => Math.random());
+  const random = mulberry32(91427);
 
-  const resize = () => {
-    const r = stage.getBoundingClientRect();
-    w = Math.round(r.width);
-    h = Math.round(r.height);
-    if (w === 0 || h === 0) return;
-    canvas.width = Math.round(w * dpr);
-    canvas.height = Math.round(h * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  };
+  function layout() {
+    const mobile = w < 660;
+    const clusterLayout = mobile
+      ? [
+          [.16, .18], [.48, .12], [.15, .58],
+          [.43, .78], [.48, .34], [.78, .22],
+        ]
+      : [
+          [.13, .24], [.31, .14], [.18, .70],
+          [.43, .79], [.43, .36], [.70, .20],
+        ];
 
-  const easeOut = (x: number) => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
-  /** 全体進捗 p のうち、a〜b の区間だけを 0..1 に切り出す */
-  const segment = (p: number, a: number, b: number) => easeOut((p - a) / (b - a));
+    hubPoints = clusterLayout.map(([x, y]) => ({ x: x! * w, y: y! * h }));
+    corePoint = mobile ? { x: w * .37, y: h * .50 } : { x: w * .60, y: h * .53 };
+    outputPoint = mobile ? { x: w * .73, y: h * .68 } : { x: w * .84, y: h * .54 };
 
-  const measure = () => {
-    const r = stage.getBoundingClientRect();
-    // ステージが下から上がってくる間を 0→1 に写す
-    target = Math.min(1, Math.max(0, (innerHeight * 0.88 - r.top) / (innerHeight * 0.75)));
-  };
-
-  const draw = (t: number) => {
-    if (!looping) return;
-
-    progress += (target - progress) * 0.07;
-    const p = progress;
-
-    ctx.clearRect(0, 0, w, h);
-
-    const cx = w / 2;
-    const cy = h / 2;
-    /*
-     * 半径はノードの実寸から決める。固定値にすると、文字数や画面幅次第で
-     * ノードがステージからはみ出し、ページに横スクロールが出る。
-     */
-    const half = nodes.reduce((m, n) => Math.max(m, n.el.offsetWidth), 0) / 2;
-    const rx = Math.max(60, Math.min(w * 0.4, 420, w / 2 - half - 8));
-    const ry = Math.min(h * 0.4, 210);
-
-    // 外周ノードの座標。わずかに揺らして生きている感じを出す
-    const pts = nodes.map((_, i) => {
-      const a = -Math.PI / 2 + i * ((Math.PI * 2) / nodes.length);
-      return {
-        x: cx + Math.cos(a) * rx + Math.sin(t * 0.0006 + i * 1.7) * 7,
-        y: cy + Math.sin(a) * ry + Math.cos(t * 0.0007 + i * 2.3) * 6,
-      };
-    });
-
-    /** 始点から終点へ q(0..1) の割合だけ線を引く */
-    const line = (x1: number, y1: number, x2: number, y2: number, q: number, alpha: number) => {
-      if (q <= 0) return;
-      const g = ctx.createLinearGradient(x1, y1, x2, y2);
-      g.addColorStop(0, `rgba(194,65,12,${alpha})`);
-      g.addColorStop(1, `rgba(107,99,92,${alpha})`);
-      ctx.strokeStyle = g;
-      ctx.lineWidth = 1.2;
-      ctx.beginPath();
-      ctx.moveTo(x1, y1);
-      ctx.lineTo(x1 + (x2 - x1) * q, y1 + (y2 - y1) * q);
-      ctx.stroke();
-    };
-
-    // 中心から外へスポーク
-    pts.forEach((pt, i) => line(cx, cy, pt.x, pt.y, segment(p, 0.3 + i * 0.05, 0.55 + i * 0.05), 0.4));
-    // 外周をつなぐ環
-    pts.forEach((pt, i) => {
-      const next = pts[(i + 1) % pts.length]!;
-      line(pt.x, pt.y, next.x, next.y, segment(p, 0.55 + i * 0.05, 0.78 + i * 0.05), 0.22);
-    });
-
-    // 組み上がったら中心へ光が流れる
-    if (p > 0.9) {
-      glints.forEach((f, i) => {
-        f -= 0.005;
-        glints[i] = f <= 0 ? 1 : f;
-        const pt = pts[i]!;
-        ctx.fillStyle = `rgba(194,65,12,${(0.5 * f * (p - 0.9) * 10).toFixed(3)})`;
-        ctx.beginPath();
-        ctx.arc(pt.x + (cx - pt.x) * (1 - f), pt.y + (cy - pt.y) * (1 - f), 1.8, 0, Math.PI * 2);
-        ctx.fill();
+    nodes = [];
+    const count = mobile ? 118 : 180;
+    for (let i = 0; i < count; i++) {
+      const cluster = i % hubPoints.length;
+      const hub = hubPoints[cluster]!;
+      const angle = random() * Math.PI * 2;
+      const distance = Math.pow(random(), .64) * (mobile ? 112 : 158);
+      const spreadX = mobile ? .74 : 1.12;
+      const spreadY = mobile ? 1.05 : .68;
+      nodes.push({
+        x: clamp(hub.x + Math.cos(angle) * distance * spreadX, 16, w - 16),
+        y: clamp(hub.y + Math.sin(angle) * distance * spreadY, 36, h - 34),
+        r: i < hubPoints.length ? 3.2 : .65 + random() * 1.65,
+        cluster,
+        phase: random() * Math.PI * 2,
+        strength: .24 + random() * .76,
       });
     }
 
-    // ノードを配置
-    pts.forEach((pt, i) => {
-      const q = segment(p, 0.04 + i * 0.06, 0.26 + i * 0.06);
-      const el = nodes[i]!.el;
-      el.style.opacity = q.toFixed(3);
-      el.style.transform =
-        `translate(-50%,-50%) translate(${pt.x}px,${pt.y}px) ` +
-        `scale(${(0.82 + q * 0.18).toFixed(3)}) translateY(${((1 - q) * 18).toFixed(1)}px)`;
+    // Place one canvas anchor under every visible knowledge label.
+    hubPoints.forEach((point, index) => {
+      const anchor = nodes[index];
+      if (!anchor) return;
+      anchor.x = point.x;
+      anchor.y = point.y;
+      anchor.r = 4;
+      anchor.cluster = index;
+      anchor.strength = 1;
     });
 
-    // 中心。組み上がるにつれ現れ、わずかに脈打つ
-    const cq = segment(p, 0.72, 0.95);
-    const pulse = 1 + Math.sin(t * 0.0018) * 0.02 * cq;
-    center.style.opacity = cq.toFixed(3);
+    edges = [];
+    for (let i = 0; i < nodes.length; i++) {
+      const near: { index: number; distance: number }[] = [];
+      for (let j = 0; j < nodes.length; j++) {
+        if (i === j) continue;
+        const a = nodes[i]!;
+        const b = nodes[j]!;
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const distance = Math.hypot(dx, dy);
+        const limit = a.cluster === b.cluster ? 104 : 62;
+        if (distance < limit) near.push({ index: j, distance });
+      }
+      near.sort((a, b) => a.distance - b.distance);
+      const links = 1 + (i % 4 === 0 ? 1 : 0);
+      near.slice(0, links).forEach(({ index, distance }) => {
+        if (index > i) edges.push({
+          a: i,
+          b: index,
+          strength: 1 - distance / 112,
+        });
+      });
+    }
+  }
+
+  function resize() {
+    const rect = stage.getBoundingClientRect();
+    w = Math.max(1, Math.round(rect.width));
+    h = Math.max(1, Math.round(rect.height));
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    layout();
+  }
+
+  const measure = () => {
+    const rect = stage.getBoundingClientRect();
+    target = clamp((innerHeight * .9 - rect.top) / (innerHeight * .72), 0, 1);
+  };
+
+  const draw = (time: number) => {
+    if (!looping) return;
+    progress += (target - progress) * (reduced ? 1 : .065);
+    const fragmentIn = ease((progress - .02) / .30);
+    const relationsIn = ease((progress - .18) / .34);
+    const conceptIn = ease((progress - .48) / .25);
+    const outputIn = ease((progress - .70) / .24);
+
+    ctx.clearRect(0, 0, w, h);
+
+    const offsets = nodes.map((node, index) => {
+      const idle = reduced ? 0 : Math.sin(time * .00022 + node.phase) * (1.2 + node.strength * 1.6);
+      let x = node.x + Math.cos(node.phase) * idle;
+      let y = node.y + Math.sin(node.phase) * idle;
+
+      if (pointerActive) {
+        const dx = x - pointerX;
+        const dy = y - pointerY;
+        const distance = Math.hypot(dx, dy);
+        if (distance < 124 && distance > .1) {
+          const force = (1 - distance / 124) * 13;
+          x += dx / distance * force;
+          y += dy / distance * force;
+        }
+      }
+      return { x, y, index };
+    });
+
+    // Fine Obsidian-like relationships.
+    for (const edge of edges) {
+      const a = offsets[edge.a]!;
+      const b = offsets[edge.b]!;
+      const closeToPointer = pointerActive &&
+        (Math.hypot(a.x - pointerX, a.y - pointerY) < 118 ||
+         Math.hypot(b.x - pointerX, b.y - pointerY) < 118);
+      const alpha = (.028 + Math.max(0, edge.strength) * .11 + (closeToPointer ? .18 : 0)) * relationsIn;
+      ctx.strokeStyle = `rgba(202,207,221,${alpha.toFixed(3)})`;
+      ctx.lineWidth = closeToPointer ? .9 : .55;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+    }
+
+    // Six knowledge domains converge into the point of view.
+    hubPoints.forEach((hub, index) => {
+      const bendX = (hub.x + corePoint.x) / 2 + Math.sin(index * 2.1) * 24;
+      const bendY = (hub.y + corePoint.y) / 2 + Math.cos(index * 1.8) * 28;
+      const gradient = ctx.createLinearGradient(hub.x, hub.y, corePoint.x, corePoint.y);
+      const color = COLORS[index % COLORS.length]!;
+      gradient.addColorStop(0, `rgba(${color[0]},${color[1]},${color[2]},${(.14 * conceptIn).toFixed(3)})`);
+      gradient.addColorStop(1, `rgba(255,117,64,${(.52 * conceptIn).toFixed(3)})`);
+      ctx.strokeStyle = gradient;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(hub.x, hub.y);
+      ctx.quadraticCurveTo(bendX, bendY, corePoint.x, corePoint.y);
+      ctx.stroke();
+
+      if (conceptIn > .35 && !reduced) {
+        const travel = (time * .00011 + index * .147) % 1;
+        const point = quadraticPoint(hub, { x: bendX, y: bendY }, corePoint, travel);
+        ctx.fillStyle = `rgba(255,154,105,${(.3 + travel * .65).toFixed(3)})`;
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 1.2 + travel * 1.4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    });
+
+    // The resolved idea is rendered into one output through several parallel
+    // signal lanes — a small visual "compiler", not a decorative connector.
+    for (let lane = -2; lane <= 2; lane++) {
+      const offset = lane * 4.5;
+      const alpha = (.12 + (2 - Math.abs(lane)) * .045) * outputIn;
+      ctx.strokeStyle = `rgba(255,135,80,${alpha.toFixed(3)})`;
+      ctx.lineWidth = lane === 0 ? 1.3 : .7;
+      ctx.beginPath();
+      ctx.moveTo(corePoint.x, corePoint.y + offset);
+      ctx.bezierCurveTo(
+        corePoint.x + (outputPoint.x - corePoint.x) * .34,
+        corePoint.y + offset * 2,
+        corePoint.x + (outputPoint.x - corePoint.x) * .72,
+        outputPoint.y - offset,
+        outputPoint.x,
+        outputPoint.y + offset * .35,
+      );
+      ctx.stroke();
+    }
+
+    if (outputIn > .25 && !reduced) {
+      for (let i = 0; i < 5; i++) {
+        const travel = (time * .00016 + i * .19) % 1;
+        const point = cubicPoint(
+          corePoint,
+          { x: corePoint.x + (outputPoint.x - corePoint.x) * .34, y: corePoint.y },
+          { x: corePoint.x + (outputPoint.x - corePoint.x) * .72, y: outputPoint.y },
+          outputPoint,
+          travel,
+        );
+        ctx.fillStyle = `rgba(255,191,154,${(.28 + travel * .72).toFixed(3)})`;
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 1.3 + travel * 1.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    // Data nodes sit above edges as in Obsidian's graph view.
+    offsets.forEach((point) => {
+      const node = nodes[point.index]!;
+      const color = COLORS[node.cluster % COLORS.length]!;
+      const nearPointer = pointerActive && Math.hypot(point.x - pointerX, point.y - pointerY) < 94;
+      const alpha = (.16 + node.strength * .54 + (nearPointer ? .28 : 0)) * fragmentIn;
+      const radius = node.r * (.72 + fragmentIn * .28) + (nearPointer ? 1.1 : 0);
+      if (node.r > 2.8 || nearPointer) {
+        ctx.fillStyle = `rgba(${color[0]},${color[1]},${color[2]},${(.09 * fragmentIn).toFixed(3)})`;
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, radius * 4.4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.fillStyle = `rgba(${color[0]},${color[1]},${color[2]},${alpha.toFixed(3)})`;
+      ctx.beginPath();
+      ctx.arc(point.x, point.y, radius, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    hubs.forEach((hub, index) => {
+      const point = hubPoints[index]!;
+      const appear = ease((progress - (.10 + index * .035)) / .22);
+      hub.style.opacity = appear.toFixed(3);
+      hub.style.transform =
+        `translate(-50%,-50%) translate(${point.x}px,${point.y}px) scale(${(.88 + appear * .12).toFixed(3)})`;
+    });
+
+    const pulse = reduced ? 1 : 1 + Math.sin(time * .0018) * .018;
+    center.style.opacity = conceptIn.toFixed(3);
     center.style.transform =
-      `translate(-50%,-50%) translate(${cx}px,${cy}px) scale(${((0.8 + cq * 0.2) * pulse).toFixed(3)})`;
+      `translate(-50%,-50%) translate(${corePoint.x}px,${corePoint.y}px) scale(${((.84 + conceptIn * .16) * pulse).toFixed(3)})`;
+
+    const outputPulse = reduced ? 1 : 1 + Math.sin(time * .0015 + 1.2) * .012;
+    output.style.opacity = outputIn.toFixed(3);
+    output.style.transform =
+      `translate(-50%,-50%) translate(${outputPoint.x}px,${outputPoint.y}px) scale(${((.82 + outputIn * .18) * outputPulse).toFixed(3)})`;
 
     raf = requestAnimationFrame(draw);
   };
@@ -140,38 +299,82 @@ export function initEthosConstellation(
     looping = true;
     raf = requestAnimationFrame(draw);
   };
+
   const stop = () => {
-    if (!looping) return;
     looping = false;
     cancelAnimationFrame(raf);
   };
 
+  stage.addEventListener("pointermove", (event) => {
+    const rect = stage.getBoundingClientRect();
+    pointerX = event.clientX - rect.left;
+    pointerY = event.clientY - rect.top;
+    pointerActive = true;
+  }, { passive: true });
+  stage.addEventListener("pointerleave", () => { pointerActive = false; }, { passive: true });
+
   resize();
+  addEventListener("resize", resize, { passive: true });
+  addEventListener("scroll", measure, { passive: true });
+  measure();
 
   if (reduced) {
-    // 動かさない設定では、組み上がった状態を一度だけ描く
     target = 1;
     progress = 1;
     looping = true;
     draw(0);
     looping = false;
     cancelAnimationFrame(raf);
-    addEventListener("resize", () => {
-      resize();
-      progress = 1;
-      looping = true;
-      draw(0);
-      looping = false;
-      cancelAnimationFrame(raf);
-    });
     return;
   }
 
-  addEventListener("resize", resize, { passive: true });
-  addEventListener("scroll", measure, { passive: true });
-  measure();
-
-  new IntersectionObserver(([e]) => (e?.isIntersecting ? start() : stop())).observe(stage);
-  document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
+  new IntersectionObserver(([entry]) => entry?.isIntersecting ? start() : stop()).observe(stage);
+  document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
   start();
+}
+
+function mulberry32(seed: number) {
+  return () => {
+    seed |= 0;
+    seed = seed + 0x6D2B79F5 | 0;
+    let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function ease(value: number) {
+  const x = clamp(value, 0, 1);
+  return 1 - Math.pow(1 - x, 3);
+}
+
+function quadraticPoint(
+  a: { x: number; y: number },
+  b: { x: number; y: number },
+  c: { x: number; y: number },
+  t: number,
+) {
+  const mt = 1 - t;
+  return {
+    x: mt * mt * a.x + 2 * mt * t * b.x + t * t * c.x,
+    y: mt * mt * a.y + 2 * mt * t * b.y + t * t * c.y,
+  };
+}
+
+function cubicPoint(
+  a: { x: number; y: number },
+  b: { x: number; y: number },
+  c: { x: number; y: number },
+  d: { x: number; y: number },
+  t: number,
+) {
+  const mt = 1 - t;
+  return {
+    x: mt ** 3 * a.x + 3 * mt * mt * t * b.x + 3 * mt * t * t * c.x + t ** 3 * d.x,
+    y: mt ** 3 * a.y + 3 * mt * mt * t * b.y + 3 * mt * t * t * c.y + t ** 3 * d.y,
+  };
 }

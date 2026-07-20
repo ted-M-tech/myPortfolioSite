@@ -160,7 +160,7 @@ export const projects: readonly Project[] = [
 
 /** 屋号の由来そのものを言葉にしたセクション。 */
 export const ethos = {
-  heading: { ja: "前へ、自分のペースで。", en: "Forward, at my own pace." },
+  heading: { ja: "すべてを繋ぎ、まだない傑作へ。", en: "Connect everything. Make what doesn't exist." },
   values: [
     { ja: "現場から", en: "Grounded" },
     { ja: "速く出す", en: "Ship fast" },
@@ -170,8 +170,8 @@ export const ethos = {
     { ja: "次の一歩", en: "Next step" },
   ],
   caption: {
-    ja: "ぜんぶが繋がって、<em>前へ進む速度</em>になる。",
-    en: "It all connects — and becomes <em>momentum</em>.",
+    ja: "大量の経験とデータを、<em>自分のコンセプト</em>で編み直し、まだ見ぬ最高傑作へ。",
+    en: "Reweave experience and data through <em>a distinct point of view</em> — into the next masterpiece.",
   },
 } as const;
 

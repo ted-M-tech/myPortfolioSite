@@ -2,65 +2,91 @@
 import { ethos, site, person } from "../data/profile";
 ---
 
-<section class="section section--sunken section--textured" id="ethos">
+<section class="ethos section section--dark" id="ethos">
   <div class="wrap">
     <header class="reveal">
-      <p class="eyebrow">Ethos</p>
-      <h2 class="section-title">
-        <span class="ja">{ethos.heading.ja}</span>
-        <span class="en">{ethos.heading.en}</span>
-      </h2>
+      <div>
+        <p class="eyebrow">Knowledge graph / 04</p>
+        <h2 class="section-title">
+          <span class="ja">{ethos.heading.ja}</span>
+          <span class="en">{ethos.heading.en}</span>
+        </h2>
+      </div>
       <p class="section-lede">
         <span class="ja">
-          屋号の {site.brand} は「前へ進む速度」と「自分のペース」の二重の意味を持たせています。
-          速く動くことと、無理なく続けること。どちらも欠けると現場では続きません。
+          知識、失敗、現場、技術、観察、対話。大量の断片を集めるだけでは、まだ作品にはならない。
+          {site.brand} のコンセプトで関係を見つけ、ひとつの強い体験へ収束させます。
         </span>
         <span class="en">
-          {site.brand} carries two meanings at once — forward momentum, and going at your own pace.
-          Move fast, but at a pace you can sustain; drop either and it stops working in the field.
+          Knowledge, failures, field work, technology, observation and dialogue.
+          Collecting fragments is not the work; finding their relationships through a
+          distinct point of view is what turns them into one strong experience.
         </span>
       </p>
     </header>
 
-    <!--
-      スクロールで組み上がる星座。外周のノードが現れ、中心へスポークが伸び、
-      環が閉じ、最後に光が中心へ流れ込む。
-    -->
     <div class="stage" id="ethos-stage">
       <canvas id="ethos-canvas" aria-hidden="true"></canvas>
 
+      <div class="graph-meta graph-meta--top" aria-hidden="true">
+        <span>LIVE KNOWLEDGE FIELD</span>
+        <span><i></i> 180 DATA NODES</span>
+      </div>
+
       {
-        ethos.values.map((v) => (
-          <div class="enode" data-ethos-node>
-            <b>
-              <span class="ja">{v.ja}</span>
-              <span class="en">{v.en}</span>
-            </b>
-            <span class="sub">
-              <span class="ja">{v.en}</span>
-              <span class="en">{v.ja}</span>
+        ethos.values.map((value, index) => (
+          <div class="gnode gnode--hub" data-ethos-node data-index={index}>
+            <i aria-hidden="true"></i>
+            <span>
+              <b>
+                <span class="ja">{value.ja}</span>
+                <span class="en">{value.en}</span>
+              </b>
+              <small>
+                <span class="ja">{value.en}</span>
+                <span class="en">{value.ja}</span>
+              </small>
             </span>
           </div>
         ))
       }
 
-      <div class="enode enode--center" id="ethos-center">
-        <b>
-          <span class="ja">前へ</span>
-          <span class="en">Forward</span>
-        </b>
-        <span class="sub">
-          <span class="ja">MaePace</span>
-          <span class="en">マエペース</span>
-        </span>
+      <div class="gnode gnode--core" id="ethos-center">
+        <span class="node-index">CONCEPT / 01</span>
+        <b>{site.brand}</b>
+        <small>
+          <span class="ja">自分だけの視点</span>
+          <span class="en">DISTINCT POINT OF VIEW</span>
+        </small>
       </div>
+
+      <div class="gnode gnode--output" id="ethos-output">
+        <span class="node-index">OUTPUT / NEXT</span>
+        <span class="output-mark" aria-hidden="true"></span>
+        <b>
+          <span class="ja">まだ見ぬ<br />最高傑作</span>
+          <span class="en">THE NEXT<br />MASTERPIECE</span>
+        </b>
+      </div>
+
+      <div class="graph-meta graph-meta--bottom" aria-hidden="true">
+        <span>OBSERVATION · EXPERIENCE · DATA · CRAFT · FAILURE · CURIOSITY</span>
+        <span>GRAPH / ACTIVE</span>
+      </div>
+    </div>
+
+    <div class="equation reveal" aria-label="Many inputs become one concept, then one masterpiece">
+      <p><b>∞</b><span>INPUTS</span></p>
+      <i>→</i>
+      <p><b>1</b><span>CONCEPT</span></p>
+      <i>→</i>
+      <p><b>1</b><span>MASTERPIECE</span></p>
     </div>
 
     <p class="cap reveal">
       <span class="ja" set:html={ethos.caption.ja} />
       <span class="en" set:html={ethos.caption.en} />
     </p>
-
     <p class="sign reveal">— {person.name}</p>
   </div>
 </section>
@@ -71,19 +97,45 @@ import { ethos, site, person } from "../data/profile";
   const stage = document.getElementById("ethos-stage");
   const canvas = document.getElementById("ethos-canvas");
   const center = document.getElementById("ethos-center");
-  if (stage && canvas instanceof HTMLCanvasElement && center) {
-    const outer = [...stage.querySelectorAll<HTMLElement>("[data-ethos-node]")];
-    initEthosConstellation(stage, canvas, outer, center);
+  const output = document.getElementById("ethos-output");
+  if (stage && canvas instanceof HTMLCanvasElement && center && output) {
+    const hubs = [...stage.querySelectorAll<HTMLElement>("[data-ethos-node]")];
+    initEthosConstellation(stage, canvas, hubs, center, output);
   }
 </script>
 
 <style>
+  .ethos {
+    overflow: hidden;
+    background:
+      radial-gradient(90% 70% at 72% 48%, rgba(66, 45, 255, .12), transparent 66%),
+      radial-gradient(70% 60% at 35% 55%, rgba(255, 91, 36, .08), transparent 64%),
+      #0a0908;
+  }
+
+  header {
+    display: grid;
+    grid-template-columns: 1.04fr .96fr;
+    align-items: end;
+    gap: clamp(36px, 7vw, 104px);
+  }
+
+  header .section-lede { margin: 0; }
+
   .stage {
     position: relative;
-    margin: 48px auto 0;
-    max-width: 1000px;
-    height: min(62vh, 520px);
-    min-height: 420px;
+    margin-top: clamp(54px, 8vw, 96px);
+    height: min(76vh, 720px);
+    min-height: 600px;
+    overflow: hidden;
+    border: 1px solid rgba(243, 240, 235, .11);
+    border-radius: var(--radius-lg);
+    background:
+      linear-gradient(rgba(243,240,235,.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(243,240,235,.025) 1px, transparent 1px),
+      rgba(255, 255, 255, .012);
+    background-size: 52px 52px;
+    box-shadow: inset 0 0 120px rgba(0,0,0,.42);
   }
 
   #ethos-canvas {
@@ -93,95 +145,246 @@ import { ethos, site, person } from "../data/profile";
     height: 100%;
   }
 
-  .enode {
+  .graph-meta {
+    position: absolute;
+    z-index: 6;
+    left: 18px;
+    right: 18px;
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: .14em;
+    color: rgba(243,240,235,.34);
+    pointer-events: none;
+  }
+
+  .graph-meta--top { top: 16px; }
+  .graph-meta--bottom { bottom: 15px; }
+
+  .graph-meta i {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #72ff9a;
+    box-shadow: 0 0 9px #72ff9a;
+  }
+
+  .gnode {
     position: absolute;
     left: 0;
     top: 0;
-    /*
-     * 内容幅で止める。absolute + flex だけだと shrink-to-fit が効かず
-     * ステージ幅いっぱいまで伸び、狭い画面で横スクロールを生む。
-     */
-    width: max-content;
-    max-width: 46vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1px;
-    padding: 13px 22px;
-    background: var(--surface-raised);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-pill);
-    box-shadow: var(--shadow);
-    white-space: nowrap;
     opacity: 0;
     will-change: transform, opacity;
   }
 
-  .enode b {
-    font-size: 16.5px;
-    font-weight: 600;
-    letter-spacing: var(--tracking-tight);
+  .gnode--hub {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: max-content;
+    max-width: 34vw;
+    padding: 8px 11px 8px 8px;
+    border: 1px solid rgba(243,240,235,.13);
+    border-radius: 10px;
+    background: rgba(12, 11, 10, .62);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 30px rgba(0,0,0,.24);
   }
 
-  .enode .sub {
-    font-size: 10px;
-    letter-spacing: var(--tracking-wide);
-    text-transform: uppercase;
-    color: var(--text-faint);
+  .gnode--hub > i {
+    width: 7px;
+    height: 7px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--node-color, var(--accent-on-dark));
+    box-shadow: 0 0 13px var(--node-color, var(--accent-on-dark));
   }
 
-  /* 中心だけ反転させて重心を作る */
-  .enode--center {
-    background: var(--surface-dark);
-    color: var(--text-on-dark);
-    padding: 20px 30px;
-    border-color: transparent;
-    box-shadow: 0 18px 50px rgba(20, 17, 15, 0.26);
-    z-index: 5;
+  .gnode--hub:nth-of-type(3n + 1) { --node-color: #6178ff; }
+  .gnode--hub:nth-of-type(3n + 2) { --node-color: #ff7540; }
+  .gnode--hub:nth-of-type(3n) { --node-color: #d99cff; }
+
+  .gnode--hub b, .gnode--hub small { display: block; }
+  .gnode--hub b {
+    font-size: 12px;
+    font-weight: 560;
+    line-height: 1.2;
+  }
+  .gnode--hub small {
+    margin-top: 2px;
+    font-family: var(--font-mono);
+    font-size: 7px;
+    letter-spacing: .1em;
+    color: rgba(243,240,235,.38);
   }
 
-  .enode--center b {
-    font-size: 20px;
+  .gnode--core {
+    z-index: 8;
+    display: grid;
+    place-items: center;
+    width: clamp(132px, 12vw, 176px);
+    aspect-ratio: 1;
+    padding: 20px;
+    border: 1px solid rgba(255, 131, 75, .7);
+    border-radius: 50%;
+    text-align: center;
+    background:
+      radial-gradient(circle, rgba(255, 94, 37, .23), rgba(12,11,10,.94) 66%);
+    box-shadow:
+      0 0 0 16px rgba(255, 117, 64, .025),
+      0 0 70px rgba(255, 75, 25, .22);
   }
 
-  .enode--center .sub {
+  .gnode--core::before,
+  .gnode--core::after {
+    content: "";
+    position: absolute;
+    inset: -10px;
+    border: 1px solid rgba(255,117,64,.16);
+    border-radius: 50%;
+  }
+  .gnode--core::after { inset: -24px; opacity: .45; }
+
+  .node-index {
+    position: absolute;
+    top: 17px;
+    font-family: var(--font-mono);
+    font-size: 7px;
+    letter-spacing: .13em;
+    color: rgba(243,240,235,.38);
+  }
+
+  .gnode--core b {
+    margin-top: 8px;
+    font-size: clamp(20px, 2.2vw, 31px);
+    font-weight: 560;
+    letter-spacing: -.045em;
+  }
+  .gnode--core small {
+    position: absolute;
+    bottom: 18px;
+    font-family: var(--font-mono);
+    font-size: 7px;
+    letter-spacing: .09em;
+    color: rgba(243,240,235,.46);
+  }
+
+  .gnode--output {
+    z-index: 9;
+    display: grid;
+    place-items: center;
+    width: clamp(150px, 15vw, 220px);
+    aspect-ratio: 1;
+    padding: 26px;
+    border: 1px solid rgba(255, 190, 155, .78);
+    border-radius: 6px;
+    text-align: center;
+    background:
+      linear-gradient(135deg, rgba(255,117,64,.22), rgba(19,15,12,.96) 58%),
+      #15110e;
+    box-shadow:
+      0 0 0 10px rgba(255,117,64,.025),
+      0 0 0 22px rgba(255,117,64,.012),
+      0 0 90px rgba(255,83,24,.28);
+  }
+
+  .gnode--output .node-index { top: 18px; color: rgba(255,206,180,.54); }
+  .gnode--output b {
+    position: relative;
+    z-index: 2;
+    font-size: clamp(18px, 2vw, 29px);
+    font-weight: 540;
+    line-height: 1.02;
+    letter-spacing: -.035em;
+  }
+
+  .output-mark {
+    position: absolute;
+    inset: 16%;
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 3px;
+  }
+
+  .equation {
+    margin: 42px auto 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(20px, 4vw, 56px);
+  }
+
+  .equation p {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .equation b {
+    font-size: clamp(28px, 4vw, 56px);
+    font-weight: 520;
+    line-height: 1;
+  }
+  .equation span {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: .14em;
     color: var(--text-on-dark-muted);
+  }
+  .equation > i {
+    font-style: normal;
+    color: var(--accent-on-dark);
   }
 
   .cap {
-    margin-top: 40px;
+    margin: 34px auto 0;
+    max-width: 34ch;
     text-align: center;
-    font-size: clamp(17px, 2.2vw, 25px);
+    font-size: clamp(20px, 2.7vw, 36px);
     font-weight: 500;
+    line-height: 1.25;
     letter-spacing: var(--tracking-tight);
-    color: var(--text-muted);
+    color: rgba(243,240,235,.68);
     text-wrap: balance;
-  }
-
-  /* 原典の署名行。図の下に置いて、これが誰の言葉かを示す */
-  .sign {
-    margin-top: 14px;
-    text-align: center;
-    font-size: 15px;
-    letter-spacing: 0.06em;
-    color: var(--text-faint);
   }
 
   .cap :global(em) {
     font-style: normal;
-    font-weight: 600;
-    color: var(--accent);
+    color: var(--accent-on-dark);
   }
 
-  @media (max-width: 720px) {
-    .enode {
-      padding: 9px 15px;
+  .sign {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 13px;
+    letter-spacing: .08em;
+    color: rgba(243,240,235,.32);
+  }
+
+  @media (max-width: 860px) {
+    header { grid-template-columns: 1fr; gap: 22px; }
+    header .section-lede { margin-top: 0; }
+    .stage { min-height: 620px; }
+  }
+
+  @media (max-width: 620px) {
+    .stage {
+      width: calc(100% + 16px);
+      margin-left: -8px;
+      min-height: 640px;
     }
-    .enode b {
-      font-size: 13.5px;
+    .graph-meta--bottom span:first-child { display: none; }
+    .gnode--hub {
+      padding: 6px 8px 6px 6px;
+      max-width: 42vw;
     }
-    .enode .sub {
-      display: none;
-    }
+    .gnode--hub b { font-size: 10px; }
+    .gnode--hub small { display: none; }
+    .gnode--core { width: 118px; }
+    .gnode--output { width: 132px; padding: 18px; }
+    .gnode--output b { font-size: 16px; }
+    .equation { gap: 13px; }
+    .equation span { font-size: 6.5px; }
   }
 </style>
