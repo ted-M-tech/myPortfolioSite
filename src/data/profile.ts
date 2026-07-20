@@ -66,19 +66,21 @@ export const marquee = [
 
 /** AI駆動の設計・開発・運用で日常的に横断するツール。 */
 export const toolchain = [
-  { name: "ChatGPT", mark: "GPT", color: "#5f9f8f" },
-  { name: "Claude", mark: "CL", color: "#d97757" },
-  { name: "Notion", mark: "N", color: "#171717" },
-  { name: "VS Code", mark: "VS", color: "#1689ca" },
-  { name: "Cursor", mark: "CU", color: "#252525" },
-  { name: "Miro", mark: "MI", color: "#e1b900" },
-  { name: "Slack", mark: "SL", color: "#7c3564" },
-  { name: "Docker", mark: "DO", color: "#2496ed" },
-  { name: "Codex", mark: "CX", color: "#1c1c1c" },
-  { name: "Xcode", mark: "XC", color: "#147efb" },
-  { name: "Figma", mark: "FI", color: "#a259ff" },
-  { name: "Teams", mark: "TM", color: "#6264a7" },
-  { name: "Gemini", mark: "GE", color: "#7268d9" },
+  { name: "ChatGPT", mark: "GPT", color: "#5f9f8f", icon: null },
+  { name: "Claude", mark: "CL", color: "#d97757", icon: null },
+  { name: "Notion", mark: "N", color: "#171717", icon: null },
+  { name: "VS Code", mark: "VS", color: "#1689ca", icon: null },
+  { name: "Cursor", mark: "CU", color: "#252525", icon: "/brand/tools/cursor.svg" },
+  { name: "Miro", mark: "MI", color: "#e1b900", icon: null },
+  { name: "Slack", mark: "SL", color: "#7c3564", icon: null },
+  { name: "Docker", mark: "DO", color: "#2496ed", icon: null },
+  { name: "Codex", mark: "CX", color: "#1c1c1c", icon: null },
+  { name: "Xcode", mark: "XC", color: "#147efb", icon: null },
+  { name: "Figma", mark: "FI", color: "#a259ff", icon: "/brand/tools/figma.svg" },
+  { name: "Teams", mark: "TM", color: "#6264a7", icon: null },
+  { name: "Gemini", mark: "GE", color: "#7268d9", icon: null },
+  { name: "Higgsfield", mark: "HF", color: "#cb78a5", icon: null },
+  { name: "Sakana AI", mark: "SAI", color: "#398c8b", icon: null },
 ] as const;
 
 export const stats = [

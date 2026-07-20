@@ -3,14 +3,14 @@ import { person } from "../data/profile";
 import Icon from "./Icon.astro";
 ---
 
-<section class="hero" id="top">
+<section class="hero" id="geometry" aria-labelledby="geometry-title">
   <div class="hero-head">
     <div class="hero-title">
       <p class="kicker">{person.role.en}</p>
-      <h1>
+      <h2 id="geometry-title">
         <span class="ja" set:html={person.headline.ja} />
         <span class="en" set:html={person.headline.en} />
-      </h1>
+      </h2>
     </div>
 
     <div class="hero-aside">
@@ -95,7 +95,7 @@ import Icon from "./Icon.astro";
     text-transform: uppercase;
   }
 
-  h1 {
+  h2 {
     margin-top: 14px;
     max-width: 15ch;
     font-size: clamp(40px, 4.8vw, 72px);
@@ -105,7 +105,7 @@ import Icon from "./Icon.astro";
     text-wrap: balance;
   }
 
-  h1 :global(em) {
+  h2 :global(em) {
     font-style: normal;
     font-weight: 620;
     color: var(--ink);
@@ -274,7 +274,7 @@ import Icon from "./Icon.astro";
       gap: 24px;
     }
 
-    h1 {
+    h2 {
       font-size: clamp(38px, 11vw, 58px);
     }
 

@@ -3,25 +3,30 @@ import { toolchain } from "../data/profile";
 import Icon from "./Icon.astro";
 ---
 
-<section class="tools-universe" id="tools">
+<section class="tools-universe" id="top" aria-labelledby="tool-hero-title">
   <div class="tools-copy">
     <p class="eyebrow">
-      <span class="ja">AI DRIVEN WORKSPACE</span>
-      <span class="en">AI DRIVEN WORKSPACE</span>
+      AI DRIVEN FULL STACK DEVELOPER
     </p>
-    <h2>
-      <span class="ja">道具をつなぎ、<br />開発を加速する。</span>
-      <span class="en">Every tool,<br />working as one.</span>
-    </h2>
+    <h1 id="tool-hero-title">
+      <span class="ja">好奇心を、<br />前へ進む力に。</span>
+      <span class="en">Curiosity,<br />put in motion.</span>
+    </h1>
     <p class="lede">
-      <span class="ja">AI、設計、実装、運用まで。目的に合わせて最適な道具を組み合わせます。</span>
-      <span class="en">From AI and design to engineering and operations — the right tools for the job.</span>
+      <span class="ja">最先端を追い、試し、使いこなす。AI駆動の高速開発で、構想をプロダクトへ。</span>
+      <span class="en">Tracking, testing and applying emerging technology — turning ideas into products through fast, AI-driven development.</span>
     </p>
-    <a href="#skills">
-      <span class="ja">対応領域を見る</span>
-      <span class="en">Explore capabilities</span>
-      <Icon name="arrow-right" size={15} />
-    </a>
+    <div class="actions">
+      <a href="#work">
+        <span class="ja">制作を見る</span>
+        <span class="en">Selected work</span>
+        <Icon name="arrow-right" size={15} />
+      </a>
+      <a href="#contact">
+        <span class="ja">相談する</span>
+        <span class="en">Get in touch</span>
+      </a>
+    </div>
   </div>
 
   <div class="tool-stage" data-tool-stage>
@@ -33,18 +38,32 @@ import Icon from "./Icon.astro";
           data-index={index}
           style={`--tool-color:${tool.color}`}
         >
-          <span class="tool-mark">{tool.mark}</span>
+          <span class:list={["tool-mark", { "tool-mark--official": tool.icon }]}>
+            {
+              tool.icon
+                ? <img src={tool.icon} alt="" width="42" height="42" />
+                : tool.mark
+            }
+          </span>
           <span class="tool-name">{tool.name}</span>
         </div>
       ))
     }
   </div>
 
-  <p class="tools-note" aria-hidden="true">
-    <span>THINK</span>
-    <span>DESIGN</span>
-    <span>BUILD</span>
-    <span>SHIP</span>
+  <div class="hero-meta">
+    <p><i aria-hidden="true"></i><span class="ja">2026年 秋以降のプロジェクト受付中</span><span class="en">Available from Fall 2026</span></p>
+    <p class="tools-note" aria-hidden="true">
+      <span>THINK</span>
+      <span>DESIGN</span>
+      <span>BUILD</span>
+      <span>SHIP</span>
+    </p>
+    <p>VANCOUVER / JAPAN</p>
+  </div>
+
+  <p class="marks-note">
+    Product names and marks belong to their respective owners. No affiliation or endorsement implied.
   </p>
 </section>
 
@@ -58,7 +77,7 @@ import Icon from "./Icon.astro";
 <style>
   .tools-universe {
     position: relative;
-    min-height: min(820px, 92svh);
+    min-height: 100svh;
     overflow: hidden;
     border-top: 1px solid var(--line);
     background: #f1f3ef;
@@ -69,10 +88,10 @@ import Icon from "./Icon.astro";
     position: absolute;
     z-index: 3;
     left: 50%;
-    top: 50%;
+    top: 43%;
     width: min(620px, calc(100% - 48px));
     text-align: center;
-    transform: translate(-50%, -53%);
+    transform: translate(-50%, -50%);
     pointer-events: none;
   }
 
@@ -83,7 +102,7 @@ import Icon from "./Icon.astro";
     color: var(--text-faint);
   }
 
-  h2 {
+  h1 {
     margin-top: 18px;
     font-size: clamp(40px, 4.6vw, 62px);
     font-weight: 520;
@@ -101,16 +120,22 @@ import Icon from "./Icon.astro";
     text-wrap: pretty;
   }
 
-  .tools-copy a {
+  .actions {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    margin-top: 24px;
+    pointer-events: auto;
+  }
+
+  .actions a {
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    margin-top: 24px;
     padding-bottom: 3px;
     border-bottom: 1px solid var(--line-strong);
     font-size: 11px;
     font-weight: 600;
-    pointer-events: auto;
   }
 
   .tool-stage {
@@ -158,6 +183,17 @@ import Icon from "./Icon.astro";
     letter-spacing: -0.04em;
   }
 
+  .tool-mark--official {
+    background: rgba(255, 255, 255, 0.84);
+    box-shadow: inset 0 0 0 1px rgba(20, 17, 15, 0.08);
+  }
+
+  .tool-mark img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
   .tool-name {
     overflow: hidden;
     font-size: clamp(8px, 0.78vw, 11px);
@@ -167,18 +203,53 @@ import Icon from "./Icon.astro";
     white-space: nowrap;
   }
 
-  .tools-note {
+  .hero-meta {
     position: absolute;
-    z-index: 2;
+    z-index: 5;
     left: var(--pad-x);
     right: var(--pad-x);
-    bottom: 22px;
-    display: flex;
-    justify-content: space-between;
+    bottom: 18px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
     font-family: var(--font-mono);
     font-size: 7px;
     letter-spacing: 0.16em;
     color: var(--text-faint);
+    pointer-events: none;
+  }
+
+  .hero-meta > p:first-child {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hero-meta > p:last-child {
+    text-align: right;
+  }
+
+  .hero-meta i {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #72ab89;
+  }
+
+  .tools-note {
+    display: flex;
+    gap: clamp(28px, 5vw, 72px);
+  }
+
+  .marks-note {
+    position: absolute;
+    z-index: 5;
+    right: var(--pad-x);
+    bottom: 4px;
+    font-family: var(--font-mono);
+    font-size: 5px;
+    letter-spacing: 0.06em;
+    color: rgba(20, 17, 15, 0.32);
   }
 
   @media (max-width: 720px) {
@@ -190,7 +261,7 @@ import Icon from "./Icon.astro";
       width: min(460px, calc(100% - 40px));
     }
 
-    h2 {
+    h1 {
       font-size: clamp(38px, 11vw, 54px);
     }
 
@@ -212,6 +283,19 @@ import Icon from "./Icon.astro";
 
     .tool-name {
       font-size: 8px;
+    }
+
+    .hero-meta {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .tools-note {
+      display: none;
+    }
+
+    .marks-note {
+      max-width: 58ch;
+      text-align: right;
     }
   }
 

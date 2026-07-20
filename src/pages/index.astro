@@ -1,8 +1,9 @@
 ---
 import Base from "../layouts/Base.astro";
 import Nav from "../components/Nav.astro";
-import Hero from "../components/Hero.astro";
 import ToolUniverse from "../components/ToolUniverse.astro";
+import Hero from "../components/Hero.astro";
+import Marquee from "../components/Marquee.astro";
 import Stats from "../components/Stats.astro";
 import Work from "../components/Work.astro";
 import Ethos from "../components/Ethos.astro";
@@ -18,8 +19,9 @@ import { site } from "../data/profile";
 <Base title={site.title} description={site.description.ja}>
   <Nav />
   <main id="main">
-    <Hero />
     <ToolUniverse />
+    <Hero />
+    <Marquee />
     <Stats />
     <Work />
     <Lab />
