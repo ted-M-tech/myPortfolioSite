@@ -9,33 +9,33 @@ type Orb = {
   speed: number;
 };
 
-const palette = [
-  0xc9d2ea,
-  0xe7d8de,
-  0xd3e2df,
-  0xefe4cf,
-] as const;
+type GeometryView = {
+  canvas: HTMLCanvasElement;
+  renderer: THREE.WebGLRenderer;
+  scene: THREE.Scene;
+  camera: THREE.PerspectiveCamera;
+  group: THREE.Group;
+  orbs: Orb[];
+  ring: THREE.Mesh | null;
+  width: number;
+  height: number;
+};
 
-function createOrbMaterial(index: number) {
-  const isDark = index % 5 === 0;
+const palette = [0xc9d2ea, 0xe7d8de, 0xd3e2df, 0xefe4cf] as const;
+
+function createMaterial(viewIndex: number, orbIndex: number) {
+  const isDark = (viewIndex + orbIndex) % 4 === 0;
   return new THREE.MeshPhysicalMaterial({
-    color: isDark ? 0x111110 : palette[index % palette.length],
-    roughness: isDark ? 0.08 : 0.22,
-    metalness: isDark ? 0.48 : 0.04,
+    color: isDark ? 0x111110 : palette[(viewIndex + orbIndex) % palette.length],
+    roughness: isDark ? 0.07 : 0.2,
+    metalness: isDark ? 0.5 : 0.03,
     clearcoat: 1,
-    clearcoatRoughness: isDark ? 0.08 : 0.18,
-    envMapIntensity: isDark ? 1.25 : 0.85,
+    clearcoatRoughness: isDark ? 0.06 : 0.16,
+    envMapIntensity: isDark ? 1.3 : 0.9,
   });
 }
 
-/**
- * A restrained geometric hero inspired by editorial WebGL work:
- * glossy spheres, the MaePace pastel palette, and slow cinematic movement.
- */
-export function initHeroGeometry(canvas: HTMLCanvasElement) {
-  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const mobileAtStart = innerWidth < 720;
-
+function createView(canvas: HTMLCanvasElement, viewIndex: number, compact: boolean): GeometryView {
   const renderer = new THREE.WebGLRenderer({
     canvas,
     antialias: true,
@@ -45,14 +45,14 @@ export function initHeroGeometry(canvas: HTMLCanvasElement) {
   renderer.setClearColor(0x171716, 1);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.04;
+  renderer.toneMappingExposure = 1.06;
 
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x171716);
-  scene.fog = new THREE.FogExp2(0x171716, 0.035);
+  scene.fog = new THREE.FogExp2(0x171716, 0.048);
 
-  const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 60);
-  camera.position.set(0, 0, 11);
+  const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 40);
+  camera.position.set(0, 0, compact ? 9.7 : 8.7);
 
   const environment = new RoomEnvironment();
   const pmrem = new THREE.PMREMGenerator(renderer);
@@ -60,31 +60,31 @@ export function initHeroGeometry(canvas: HTMLCanvasElement) {
   environment.dispose();
   pmrem.dispose();
 
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x252321, 2.2));
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x242321, 2.35));
 
-  const warm = new THREE.PointLight(0xf0d5c4, 32, 20, 1.5);
-  warm.position.set(-4, 3, 5);
+  const warm = new THREE.PointLight(0xf0d5c4, 30, 16, 1.55);
+  warm.position.set(-3, 3, 4);
   scene.add(warm);
 
-  const cool = new THREE.PointLight(0xc9d2ea, 28, 18, 1.6);
-  cool.position.set(5, -1, 4);
+  const cool = new THREE.PointLight(0xc9d2ea, 26, 15, 1.6);
+  cool.position.set(3, -1, 4);
   scene.add(cool);
 
   const group = new THREE.Group();
   scene.add(group);
 
-  const count = mobileAtStart ? 11 : 17;
+  const sphereGeometry = new THREE.SphereGeometry(1, compact ? 30 : 44, compact ? 20 : 30);
   const orbs: Orb[] = [];
-  const sphereGeometry = new THREE.SphereGeometry(1, mobileAtStart ? 36 : 52, mobileAtStart ? 24 : 36);
+  const count = compact ? 5 : 7;
 
-  for (let index = 0; index < count; index += 1) {
-    const mesh = new THREE.Mesh(sphereGeometry, createOrbMaterial(index));
-    const column = index % 6;
-    const row = Math.floor(index / 6);
-    const x = -6.2 + column * 2.45 + (row % 2) * 0.8;
-    const y = 2.3 - row * 2.5 + Math.sin(index * 1.7) * 0.65;
-    const z = Math.cos(index * 1.31) * 1.7 - 0.4;
-    const scale = 0.52 + (index * 0.37 % 1) * 0.78;
+  for (let orbIndex = 0; orbIndex < count; orbIndex += 1) {
+    const mesh = new THREE.Mesh(sphereGeometry, createMaterial(viewIndex, orbIndex));
+    const angle = orbIndex * 1.82 + viewIndex * 0.9;
+    const radius = 1.25 + (orbIndex % 3) * 0.72;
+    const x = Math.cos(angle) * radius;
+    const y = Math.sin(angle) * radius * 1.28;
+    const z = Math.cos(angle * 1.4) * 1.15;
+    const scale = 0.55 + ((orbIndex * 0.37 + viewIndex * 0.16) % 1) * 0.72;
 
     mesh.position.set(x, y, z);
     mesh.scale.setScalar(scale);
@@ -92,45 +92,76 @@ export function initHeroGeometry(canvas: HTMLCanvasElement) {
     orbs.push({
       mesh,
       origin: new THREE.Vector3(x, y, z),
-      phase: index * 0.74,
-      amplitude: 0.12 + (index % 4) * 0.045,
-      speed: 0.14 + (index % 5) * 0.018,
+      phase: orbIndex * 0.78 + viewIndex,
+      amplitude: 0.1 + (orbIndex % 3) * 0.045,
+      speed: 0.13 + (orbIndex % 4) * 0.02,
     });
   }
 
-  const ringMaterial = new THREE.MeshPhysicalMaterial({
-    color: 0xe7d8de,
-    roughness: 0.18,
-    metalness: 0.08,
-    clearcoat: 1,
-    clearcoatRoughness: 0.14,
-    envMapIntensity: 0.9,
-  });
-  const ring = new THREE.Mesh(new THREE.TorusGeometry(1.25, 0.22, 24, 96), ringMaterial);
-  ring.position.set(3.25, 1.1, -0.6);
-  ring.rotation.set(0.72, 0.18, 0.3);
-  group.add(ring);
+  let ring: THREE.Mesh | null = null;
+  if (viewIndex === 1) {
+    ring = new THREE.Mesh(
+      new THREE.TorusGeometry(1.15, 0.19, 20, 80),
+      new THREE.MeshPhysicalMaterial({
+        color: 0xe7d8de,
+        roughness: 0.18,
+        metalness: 0.04,
+        clearcoat: 1,
+        clearcoatRoughness: 0.14,
+        envMapIntensity: 0.9,
+      }),
+    );
+    ring.position.set(0.7, 0.3, -0.35);
+    ring.rotation.set(0.72, 0.18, 0.3);
+    group.add(ring);
+  }
 
+  return {
+    canvas,
+    renderer,
+    scene,
+    camera,
+    group,
+    orbs,
+    ring,
+    width: 0,
+    height: 0,
+  };
+}
+
+/**
+ * Three independent viewports move as coordinated puzzle pieces.
+ * Keeping each pane structurally whole prevents the thin-line mask artifacts
+ * that occurred when paper-colored overlays covered a single WebGL canvas.
+ */
+export function initHeroGeometry(canvases: HTMLCanvasElement[]) {
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const compact = innerWidth < 720;
+  const views = canvases.map((canvas, index) => createView(canvas, index, compact));
   const pointer = new THREE.Vector2();
   const pointerTarget = new THREE.Vector2();
-  let width = 1;
-  let height = 1;
   let raf = 0;
   let running = false;
   let startedAt = performance.now();
   let elapsedBeforePause = 0;
 
-  const layout = () => {
-    const rect = canvas.getBoundingClientRect();
-    width = Math.max(1, Math.round(rect.width));
-    height = Math.max(1, Math.round(rect.height));
-    const dpr = Math.min(devicePixelRatio || 1, width < 720 ? 1.2 : 1.55);
-    renderer.setPixelRatio(dpr);
-    renderer.setSize(width, height, false);
-    camera.aspect = width / height;
-    camera.position.z = width < 620 ? 13.8 : width < 960 ? 12.3 : 11;
-    camera.updateProjectionMatrix();
+  const layoutView = (view: GeometryView) => {
+    const rect = view.canvas.getBoundingClientRect();
+    const width = Math.max(1, Math.round(rect.width));
+    const height = Math.max(1, Math.round(rect.height));
+    if (view.width === width && view.height === height) return;
+
+    view.width = width;
+    view.height = height;
+    const dpr = Math.min(devicePixelRatio || 1, width < 360 ? 1.15 : 1.45);
+    view.renderer.setPixelRatio(dpr);
+    view.renderer.setSize(width, height, false);
+    view.camera.aspect = width / height;
+    view.camera.position.z = width < 300 ? 10.2 : 8.7;
+    view.camera.updateProjectionMatrix();
   };
+
+  const layout = () => views.forEach(layoutView);
 
   const render = () => {
     if (!running && !reduced) return;
@@ -139,21 +170,27 @@ export function initHeroGeometry(canvas: HTMLCanvasElement) {
       : elapsedBeforePause + (performance.now() - startedAt) / 1000;
 
     pointer.lerp(pointerTarget, 0.035);
-    camera.position.x = pointer.x * 0.32;
-    camera.position.y = -pointer.y * 0.2;
-    camera.lookAt(pointer.x * 0.12, pointer.y * -0.08, 0);
+    views.forEach((view, viewIndex) => {
+      view.camera.position.x = pointer.x * 0.18;
+      view.camera.position.y = -pointer.y * 0.12;
+      view.camera.lookAt(pointer.x * 0.07, pointer.y * -0.05, 0);
 
-    orbs.forEach((orb, index) => {
-      orb.mesh.position.x = orb.origin.x + Math.sin(elapsed * orb.speed + orb.phase) * orb.amplitude;
-      orb.mesh.position.y = orb.origin.y + Math.cos(elapsed * (orb.speed * 1.2) + orb.phase) * orb.amplitude;
-      orb.mesh.rotation.y = elapsed * (0.025 + index * 0.0008);
+      view.orbs.forEach((orb, orbIndex) => {
+        orb.mesh.position.x = orb.origin.x
+          + Math.sin(elapsed * orb.speed + orb.phase) * orb.amplitude;
+        orb.mesh.position.y = orb.origin.y
+          + Math.cos(elapsed * orb.speed * 1.18 + orb.phase) * orb.amplitude;
+        orb.mesh.rotation.y = elapsed * (0.02 + orbIndex * 0.001);
+      });
+
+      view.group.position.x = Math.sin(elapsed * 0.055 + viewIndex) * 0.16;
+      view.group.position.y = Math.cos(elapsed * 0.07 + viewIndex) * 0.1;
+      if (view.ring) {
+        view.ring.rotation.x = 0.72 + Math.sin(elapsed * 0.1) * 0.14;
+        view.ring.rotation.y = 0.18 + elapsed * 0.035;
+      }
+      view.renderer.render(view.scene, view.camera);
     });
-
-    group.position.x = Math.sin(elapsed * 0.055) * 0.32;
-    group.position.y = Math.cos(elapsed * 0.07) * 0.12;
-    ring.rotation.x = 0.72 + Math.sin(elapsed * 0.1) * 0.16;
-    ring.rotation.y = 0.18 + elapsed * 0.04;
-    renderer.render(scene, camera);
 
     if (!reduced) raf = requestAnimationFrame(render);
   };
@@ -188,7 +225,7 @@ export function initHeroGeometry(canvas: HTMLCanvasElement) {
   new IntersectionObserver(([entry]) => {
     if (entry?.isIntersecting) play();
     else pause();
-  }).observe(canvas);
+  }).observe(canvases[0]);
 
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) pause();
