@@ -1,0 +1,234 @@
+---
+import { toolchain } from "../data/profile";
+import Icon from "./Icon.astro";
+---
+
+<section class="tools-universe" id="tools">
+  <div class="tools-copy">
+    <p class="eyebrow">
+      <span class="ja">AI DRIVEN WORKSPACE</span>
+      <span class="en">AI DRIVEN WORKSPACE</span>
+    </p>
+    <h2>
+      <span class="ja">道具をつなぎ、<br />開発を加速する。</span>
+      <span class="en">Every tool,<br />working as one.</span>
+    </h2>
+    <p class="lede">
+      <span class="ja">AI、設計、実装、運用まで。目的に合わせて最適な道具を組み合わせます。</span>
+      <span class="en">From AI and design to engineering and operations — the right tools for the job.</span>
+    </p>
+    <a href="#skills">
+      <span class="ja">対応領域を見る</span>
+      <span class="en">Explore capabilities</span>
+      <Icon name="arrow-right" size={15} />
+    </a>
+  </div>
+
+  <div class="tool-stage" data-tool-stage>
+    {
+      toolchain.map((tool, index) => (
+        <div
+          class="tool-token"
+          data-tool-token
+          data-index={index}
+          style={`--tool-color:${tool.color}`}
+        >
+          <span class="tool-mark">{tool.mark}</span>
+          <span class="tool-name">{tool.name}</span>
+        </div>
+      ))
+    }
+  </div>
+
+  <p class="tools-note" aria-hidden="true">
+    <span>THINK</span>
+    <span>DESIGN</span>
+    <span>BUILD</span>
+    <span>SHIP</span>
+  </p>
+</section>
+
+<script>
+  import { initToolGravity } from "../scripts/tool-gravity";
+
+  const stage = document.querySelector<HTMLElement>("[data-tool-stage]");
+  if (stage) initToolGravity(stage);
+</script>
+
+<style>
+  .tools-universe {
+    position: relative;
+    min-height: min(820px, 92svh);
+    overflow: hidden;
+    border-top: 1px solid var(--line);
+    background: #f1f3ef;
+    color: var(--ink);
+  }
+
+  .tools-copy {
+    position: absolute;
+    z-index: 3;
+    left: 50%;
+    top: 50%;
+    width: min(620px, calc(100% - 48px));
+    text-align: center;
+    transform: translate(-50%, -53%);
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    color: var(--text-faint);
+  }
+
+  h2 {
+    margin-top: 18px;
+    font-size: clamp(40px, 4.6vw, 62px);
+    font-weight: 520;
+    letter-spacing: -0.055em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+
+  .lede {
+    max-width: 44ch;
+    margin: 24px auto 0;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    text-wrap: pretty;
+  }
+
+  .tools-copy a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 24px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--line-strong);
+    font-size: 11px;
+    font-weight: 600;
+    pointer-events: auto;
+  }
+
+  .tool-stage {
+    position: absolute;
+    z-index: 4;
+    inset: 0;
+    overflow: hidden;
+    touch-action: pan-y;
+    pointer-events: none;
+  }
+
+  .tool-token {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 9px;
+    width: clamp(76px, 7.4vw, 112px);
+    aspect-ratio: 1.25;
+    padding: 9px;
+    border: 1px solid rgba(20, 17, 15, 0.12);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--tool-color) 16%, #ffffff);
+    box-shadow:
+      0 1px 1px rgba(20, 17, 15, 0.05),
+      0 14px 30px rgba(20, 17, 15, 0.1);
+    transform: translate3d(0, -140px, 0);
+    transform-origin: center;
+    will-change: transform;
+    user-select: none;
+  }
+
+  .tool-mark {
+    display: grid;
+    place-items: center;
+    width: clamp(28px, 2.5vw, 38px);
+    aspect-ratio: 1;
+    border-radius: 9px;
+    background: var(--tool-color);
+    color: #fff;
+    font-size: clamp(11px, 1vw, 15px);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+  }
+
+  .tool-name {
+    overflow: hidden;
+    font-size: clamp(8px, 0.78vw, 11px);
+    font-weight: 620;
+    letter-spacing: -0.02em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .tools-note {
+    position: absolute;
+    z-index: 2;
+    left: var(--pad-x);
+    right: var(--pad-x);
+    bottom: 22px;
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 7px;
+    letter-spacing: 0.16em;
+    color: var(--text-faint);
+  }
+
+  @media (max-width: 720px) {
+    .tools-universe {
+      min-height: 720px;
+    }
+
+    .tools-copy {
+      width: min(460px, calc(100% - 40px));
+    }
+
+    h2 {
+      font-size: clamp(38px, 11vw, 54px);
+    }
+
+    .lede {
+      max-width: 34ch;
+      font-size: 12.5px;
+    }
+
+    .tool-token {
+      width: clamp(70px, 22vw, 92px);
+      padding: 7px;
+      border-radius: 10px;
+    }
+
+    .tool-mark {
+      width: 27px;
+      border-radius: 7px;
+    }
+
+    .tool-name {
+      font-size: 8px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tool-stage {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(62px, 92px));
+      align-content: space-between;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 30px var(--pad-x) 48px;
+    }
+
+    .tool-token {
+      position: static;
+      width: 100%;
+      transform: none !important;
+    }
+  }
+</style>

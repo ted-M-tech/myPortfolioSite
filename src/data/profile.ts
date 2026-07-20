@@ -64,6 +64,23 @@ export const marquee = [
   "Cloud Architecture", "Rapid Prototyping", "DevOps",
 ] as const;
 
+/** AI駆動の設計・開発・運用で日常的に横断するツール。 */
+export const toolchain = [
+  { name: "ChatGPT", mark: "GPT", color: "#5f9f8f" },
+  { name: "Claude", mark: "CL", color: "#d97757" },
+  { name: "Notion", mark: "N", color: "#171717" },
+  { name: "VS Code", mark: "VS", color: "#1689ca" },
+  { name: "Cursor", mark: "CU", color: "#252525" },
+  { name: "Miro", mark: "MI", color: "#e1b900" },
+  { name: "Slack", mark: "SL", color: "#7c3564" },
+  { name: "Docker", mark: "DO", color: "#2496ed" },
+  { name: "Codex", mark: "CX", color: "#1c1c1c" },
+  { name: "Xcode", mark: "XC", color: "#147efb" },
+  { name: "Figma", mark: "FI", color: "#a259ff" },
+  { name: "Teams", mark: "TM", color: "#6264a7" },
+  { name: "Gemini", mark: "GE", color: "#7268d9" },
+] as const;
+
 export const stats = [
   { value: 5, suffix: "+", label: { ja: "年のプロダクト開発", en: "Years shipping products" } },
   { value: 4, suffix: "×", label: { ja: "リリース頻度を向上", en: "Faster release cadence" } },
