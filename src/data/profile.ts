@@ -71,6 +71,11 @@ export const marquee = [
  * 「再配布できる公式マークが実在するもの」だけを載せる。
  *
  * アイコンは配布されたまま置き、こちらで色を付けない。
+ * appIcon: true は、そのベンダーが「アプリアイコン」として配布している
+ * タイル状のアセット（地色つき）。Claude と Cursor だけが公式に配布している。
+ * 残り10社は素のロゴマークしか配布しておらず、複数社はタイル化自体を禁じている
+ * （VS Code は角丸squareを「誤った例」として図示、Microsoft は "should not be
+ * contained within a box, circle, or other shapes"）。だから形式は揃わない。
  * Simple Icons 由来（Claude/Cursor/Gemini/Miro/n8n）は仕様として全部単色、
  * Devicon 由来（Docker/Figma/Notion/Slack/VS Code/Xcode）はフルカラー。
  * 見た目は揃わないが、揃えようとすると存在しない配色を作ることになる。
@@ -83,18 +88,18 @@ export const marquee = [
  * ブランドポリシーを理由に収録対象外としているため、代替を自作しない。
  */
 export const toolchain = [
-  { name: "ChatGPT", icon: "/brand/tools/chatgpt.svg" },
-  { name: "Claude", icon: "/brand/tools/claude.svg" },
-  { name: "Cursor", icon: "/brand/tools/cursor.svg" },
-  { name: "Gemini", icon: "/brand/tools/gemini.svg" },
-  { name: "VS Code", icon: "/brand/tools/vscode.svg" },
-  { name: "Xcode", icon: "/brand/tools/xcode.svg" },
-  { name: "Figma", icon: "/brand/tools/figma.svg" },
-  { name: "Notion", icon: "/brand/tools/notion.svg" },
-  { name: "Miro", icon: "/brand/tools/miro.svg" },
-  { name: "n8n", icon: "/brand/tools/n8n.svg" },
-  { name: "Slack", icon: "/brand/tools/slack.svg" },
-  { name: "Docker", icon: "/brand/tools/docker.svg" },
+  { name: "ChatGPT", icon: "/brand/tools/chatgpt.svg", appIcon: false },
+  { name: "Claude", icon: "/brand/tools/claude.svg", appIcon: true },
+  { name: "Cursor", icon: "/brand/tools/cursor-app-icon.png", appIcon: true },
+  { name: "Gemini", icon: "/brand/tools/gemini.svg", appIcon: false },
+  { name: "VS Code", icon: "/brand/tools/vscode.svg", appIcon: false },
+  { name: "Xcode", icon: "/brand/tools/xcode.svg", appIcon: false },
+  { name: "Figma", icon: "/brand/tools/figma.svg", appIcon: false },
+  { name: "Notion", icon: "/brand/tools/notion.svg", appIcon: false },
+  { name: "Miro", icon: "/brand/tools/miro.svg", appIcon: false },
+  { name: "n8n", icon: "/brand/tools/n8n.svg", appIcon: false },
+  { name: "Slack", icon: "/brand/tools/slack.svg", appIcon: false },
+  { name: "Docker", icon: "/brand/tools/docker.svg", appIcon: false },
 ] as const;
 
 export const stats = [
@@ -308,11 +313,11 @@ export const skills = [
 ] as const;
 
 export const certifications = [
-  { name: "Microsoft Certified: DevOps Engineer Expert", issuer: "Microsoft", year: "2025" },
-  { name: "Microsoft Certified: Azure Solutions Architect Expert", issuer: "Microsoft", year: "2025" },
-  { name: "Microsoft Certified: Azure AI Engineer Associate", issuer: "Microsoft", year: "2025" },
-  { name: "Registered Product Owner", issuer: "Agile Education by Scrum Inc", year: "2024" },
-  { name: "Registered Scrum Master", issuer: "Agile Education by Scrum Inc", year: "2024" },
+  { name: "Microsoft Certified: DevOps Engineer Expert", issuer: "Microsoft", year: "2025", appIcon: false },
+  { name: "Microsoft Certified: Azure Solutions Architect Expert", issuer: "Microsoft", year: "2025", appIcon: false },
+  { name: "Microsoft Certified: Azure AI Engineer Associate", issuer: "Microsoft", year: "2025", appIcon: false },
+  { name: "Registered Product Owner", issuer: "Agile Education by Scrum Inc", year: "2024", appIcon: false },
+  { name: "Registered Scrum Master", issuer: "Agile Education by Scrum Inc", year: "2024", appIcon: false },
 ] as const;
 
 export const timeline = [

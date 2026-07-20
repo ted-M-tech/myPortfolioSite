@@ -41,7 +41,13 @@ import Icon from "./Icon.astro";
           data-tool-token
           data-index={index}
         >
-          <img src={tool.icon} alt={tool.name} width="72" height="72" />
+          <img
+            class:list={{ "is-app-icon": tool.appIcon }}
+            src={tool.icon}
+            alt={tool.name}
+            width="72"
+            height="72"
+          />
         </div>
       ))
     }
@@ -171,6 +177,16 @@ import Icon from "./Icon.astro";
   /* 全部同寸だと整列した部品表に見える。3段の大小で疎密をつくる */
   .tool-token:nth-child(3n + 1) { --tool-size: clamp(54px, 4.9vw, 76px); }
   .tool-token:nth-child(4n + 3) { --tool-size: clamp(38px, 3.3vw, 50px); }
+
+  /*
+   * Cursor が配布しているアプリアイコンは角が立った正方形で、丸めるのは
+   * OS 側の役目になっている（macOS が Dock で丸めているのと同じ）。
+   * Claude の ClaudeIcon-Rounded.svg は最初から丸い形で配布されているので、
+   * ここでの角丸は二重にはかからない。
+   */
+  .is-app-icon {
+    border-radius: 22.4%;
+  }
 
   .tool-token img {
     width: 100%;
