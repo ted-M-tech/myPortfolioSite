@@ -52,8 +52,8 @@ export const person = {
   /** ヒーロー直下の自己紹介。人が一度も出てこないサイトにしないための一枚 */
   photo: "/profile-photo.webp",
   bio: {
-    ja: "バンクーバーを拠点に、工場自動化の現場から AI プロダクトまでを一人で一気通貫に。2020年から製造業の制御と可視化に携わり、いまは AI を開発の中核に据えています。",
-    en: "Based in Vancouver, building end to end — from factory-floor automation to AI products. I have worked on industrial control and visualization since 2020, and now put AI at the centre of how I build.",
+    ja: "2020年からソフトウェアをつくっています。いまは AI を開発の中核に置き、UI からクラウドまで一人で通して形にします。新しいものが出たら、まず試す。それが続けかたです。",
+    en: "I have been building software since 2020. AI now sits at the centre of how I work, and I take things end to end — UI through to cloud. When something new shows up, I try it first. That is the habit.",
   } satisfies Bilingual,
 } as const;
 

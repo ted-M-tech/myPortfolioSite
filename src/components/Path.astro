@@ -1,15 +1,40 @@
 ---
-import { timeline } from "../data/profile";
+import { timeline, person } from "../data/profile";
 ---
 
 <section class="section section--dark section--textured" id="path">
   <div class="wrap">
-    <header class="reveal">
-      <p class="eyebrow">The path</p>
-      <h2 class="section-title">
-        <span class="ja">これまで。</span>
-        <span class="en">Where I've been.</span>
-      </h2>
+    {/*
+      経歴だけの節だったところに自己紹介を同居させている。
+      見出しの右が大きく空いていたので、そこへ顔写真を置いて左右で釣り合わせる。
+    */}
+    <header class="head reveal">
+      <div class="lead">
+        <p class="eyebrow">About</p>
+        <h2 class="section-title">
+          <span class="ja">わたしのこと。</span>
+          <span class="en">About me.</span>
+        </h2>
+        <p class="bio">
+          <span class="ja">{person.bio.ja}</span>
+          <span class="en">{person.bio.en}</span>
+        </p>
+      </div>
+
+      <figure class="portrait">
+        <img
+          src={person.photo}
+          alt={person.name}
+          width="583"
+          height="583"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>
+          <b>{person.name}</b>
+          <span>{person.role.en}</span>
+        </figcaption>
+      </figure>
     </header>
 
     <ol class="timeline">
@@ -34,8 +59,62 @@ import { timeline } from "../data/profile";
 </section>
 
 <style>
+  .head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) auto;
+    align-items: center;
+    gap: clamp(32px, 6vw, 88px);
+  }
+
+  .bio {
+    margin-top: 22px;
+    max-width: 46ch;
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--text-on-dark-muted);
+    text-wrap: pretty;
+  }
+
+  /* 道具のマークが全部四角い面の中で、人だけは丸くしておく */
+  .portrait {
+    display: grid;
+    justify-items: center;
+    gap: 16px;
+    margin: 0;
+  }
+
+  .portrait img {
+    width: clamp(132px, 15vw, 208px);
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid var(--line-on-dark);
+  }
+
+  .portrait figcaption {
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+    text-align: center;
+  }
+
+  .portrait b {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .portrait span {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-on-dark-muted);
+  }
+
   .timeline {
-    margin-top: 52px;
+    margin-top: clamp(52px, 7vw, 84px);
     border-top: 1px solid var(--line-on-dark);
   }
 
@@ -80,6 +159,30 @@ import { timeline } from "../data/profile";
     font-size: 13.5px;
     color: var(--text-on-dark-muted);
     font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 720px) {
+    .head {
+      grid-template-columns: 1fr;
+      justify-items: start;
+      gap: 30px;
+    }
+
+    .portrait {
+      grid-auto-flow: column;
+      justify-items: start;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .portrait img {
+      width: 92px;
+    }
+
+    .portrait figcaption {
+      justify-items: start;
+      text-align: left;
+    }
   }
 
   @media (max-width: 560px) {
