@@ -1,5 +1,5 @@
 ---
-import { toolchain, availability } from "../data/profile";
+import { toolchain, availability, person } from "../data/profile";
 import Icon from "./Icon.astro";
 ---
 
@@ -61,7 +61,7 @@ import Icon from "./Icon.astro";
       <span>BUILD</span>
       <span>SHIP</span>
     </p>
-    <p>VANCOUVER / JAPAN</p>
+    <p>{person.location.en.toUpperCase()}</p>
   </div>
 
   {/* 名前の表示をやめたので、読み上げには名前だけを残す */}

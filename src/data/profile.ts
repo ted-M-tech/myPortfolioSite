@@ -32,9 +32,10 @@ export const person = {
     ja: "AI Driven Full Stack Developer",
     en: "AI Driven Full Stack Developer",
   } satisfies Bilingual,
+  /** 都市名は出さない。移動しても古びないし、リモート前提なら都市の情報量は低い */
   location: {
-    ja: "バンクーバー, カナダ",
-    en: "Vancouver, Canada",
+    ja: "カナダ / 日本",
+    en: "Canada / Japan",
   } satisfies Bilingual,
   email: "tetsuya.maeda.mail@gmail.com",
   /**
@@ -223,11 +224,11 @@ export const projects: readonly Project[] = [
       en: "Data Visualization & Remote Control",
     },
     description: {
-      ja: "顧客と設計を詰めながら、工場・ビル自動化向けの可視化と遠隔制御を実装。運用効率を25%改善。",
-      en: "Designed and shipped visualization and remote control for factory and building automation, improving operational efficiency by 25%.",
+      ja: "顧客と設計を詰めながら、可視化と遠隔制御を10以上の拠点へ。Scrum Masterとして月次リリースを週次へ改善し、運用効率を25%改善。",
+      en: "Designed and shipped visualization and remote control across 10+ sites. As Scrum Master, moved releases from monthly to weekly and improved operational efficiency by 25%.",
     },
-    tech: ["C#", "SQL Server", "Azure", "SCADA", "PLC"],
-    href: "https://www.mitsubishielectric.co.jp/fa/products/software/visualisation/genesis64/index.html",
+    tech: ["C#", ".NET", "Azure", "SCADA", "Scrum"],
+    href: "https://www.linkedin.com/in/tetsuya-maeda-629b70294/",
     image: "/work/scada-edge-case.webp",
     imageAlt: {
       ja: "PLCとセンサーのデータをPCとiPadで可視化・遠隔制御する画面イメージ",
@@ -242,11 +243,11 @@ export const projects: readonly Project[] = [
       en: "Manufacturing SaaS Platform",
     },
     description: {
-      ja: "SIM経由の現場データをクラウドSaaSへ。Scrum Masterとして月次リリースを週次へ改善。",
-      en: "Brought field data into a cloud SaaS over cellular connectivity and led Agile delivery from monthly to weekly releases.",
+      ja: "ファウンディングエンジニアとして立ち上げ。100を超えるAPIとダッシュボード、日次17万件の設備データを受けるクラウド基盤まで。",
+      en: "Built from zero as founding engineer — 100+ APIs, a dashboard, and cloud infrastructure ingesting 170,000 device data points a day.",
     },
-    tech: ["React", "Next.js", "TypeScript", "Azure", "Snowflake", "Scrum"],
-    href: "https://www.mitsubishielectric.co.jp/fa/about-us/fa-digitalsolution/index.html",
+    tech: ["Python", "FastAPI", "React", "AWS", "Terraform", "IoT"],
+    href: "https://www.linkedin.com/in/tetsuya-maeda-629b70294/",
     image: "/work/manufacturing-saas-case-v2.webp",
     imageAlt: {
       ja: "SIM経由の設備データとScrum開発をつなぐ製造業向けSaaSの画面イメージ",
@@ -333,8 +334,8 @@ export const skills = [
   {
     group: { ja: "クラウド・データ", en: "Cloud & Data" },
     items: [
-      "Microsoft Azure", "Docker", "PostgreSQL", "SQL Server",
-      "Snowflake", "Power BI", "DevOps", "Git",
+      "AWS", "Microsoft Azure", "Terraform", "Docker",
+      "PostgreSQL", "Snowflake", "Power BI", "DevOps", "Git",
     ],
   },
 ] as const;
@@ -347,30 +348,27 @@ export const certifications = [
   { name: "Registered Scrum Master", issuer: "Agile Education by Scrum Inc", year: "2024", appIcon: false },
 ] as const;
 
+/**
+ * 経歴。会社名は出さず、職名と担当内容だけを並べる。
+ * 推薦者の所属を伏せている以上、自分の勤務先だけ出すのは筋が通らない。
+ * 期間は履歴書（Tetsuya Maeda - AI Engineer Resume）に合わせてある。
+ */
 export const timeline = [
   {
-    org: "AI Driven Full Stack Developer (Contract)",
-    role: {
-      ja: "工場自動化 × リアルタイム分析 × AI",
-      en: "Factory automation · real-time analytics · AI",
+    title: "AI Engineer / Full Stack Developer",
+    focus: {
+      ja: "LLMエージェント、評価基盤、IoT SaaS の立ち上げ",
+      en: "LLM agents, evaluation harnesses, and an IoT SaaS built from zero",
     },
-    period: "2024 — Now",
+    period: "2025 — Now",
   },
   {
-    org: "Cornerstone International Community College",
-    role: {
-      ja: "Data Science ディプロマ（在学中・バンクーバー）",
-      en: "Data Science diploma, in progress — Vancouver",
+    title: "Software Developer",
+    focus: {
+      ja: "SCADA・ビル自動化システムの開発 / Scrum Master",
+      en: "SCADA and building automation systems / Scrum Master",
     },
-    period: "2024 — Now",
-  },
-  {
-    org: "Mitsubishi Electric — FA Systems",
-    role: {
-      ja: "SCADA・可視化基盤の開発 / Scrum Master",
-      en: "SCADA & visualization platforms / Scrum Master",
-    },
-    period: "2020 — 2024",
+    period: "2020 — 2025",
   },
 ] as const;
 
@@ -473,7 +471,7 @@ export const play = [
  *
  * tone はバッジの色。原典はカードごとに色を変えて種類を示していた。
  *
- * 価格の考え方: バンクーバー在住・Azure 系 Expert 資格3つ・2020年からの実務経験という
+ * 価格の考え方: Azure 系 Expert 資格3つ・2020年からの実務経験という
  * 前提での相場に寄せている。単発の相談は「試しやすさ」を優先して低く、
  * 継続と受託は実際に時間を使う分だけ取る。
  *
