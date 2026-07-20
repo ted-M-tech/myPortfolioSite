@@ -1,0 +1,151 @@
+---
+import { projects } from "../data/profile";
+import ProjectPanel from "./ProjectPanel.astro";
+
+/**
+ * 作品の横流し一覧。
+ *
+ * 縦積みのカードに入る前に、全件をサムネで一度に見せる。
+ * 件数が増えたときに「厚み」が伝わるのは、こちらの並べ方のほう。
+ *
+ * 動きはスクロール連動。自動で流れ続ける帯にすると、読んでいる最中も
+ * 動き続けて目障りになる。スクロール量に紐づけると、手を止めれば絵も止まる。
+ */
+const items = [...projects];
+---
+
+<section class="strip" aria-label="Projects overview">
+  <div class="rail" id="work-rail">
+    {
+      items.map((p, i) => (
+        <article class="card">
+          <div class="thumb">
+            <ProjectPanel index={i} animate={false} />
+            <span class="num">{String(i + 1).padStart(2, "0")}</span>
+          </div>
+          <p class="title">
+            <span class="ja">{p.title.ja}</span>
+            <span class="en">{p.title.en}</span>
+          </p>
+          <p class="role">
+            <span class="ja">{p.role.ja}</span>
+            <span class="en">{p.role.en}</span>
+          </p>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  import { scroll } from "motion";
+
+  const rail = document.getElementById("work-rail");
+  const strip = rail?.closest("section");
+
+  if (rail && strip && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    // 画面からはみ出している分だけ動かす。行が短ければ何もしない
+    const overflow = () => Math.max(0, rail.scrollWidth - innerWidth);
+
+    let stop: (() => void) | null = null;
+
+    const wire = () => {
+      stop?.();
+      const distance = overflow();
+      if (distance === 0) {
+        rail.style.transform = "";
+        return;
+      }
+
+      // animate() を挟むとアニメーションエンジン全体が入って gzip 24KB になる。
+      // ここでやりたいのは進捗から transform を1つ決めることだけなので、
+      // 進捗のコールバックだけ受け取って自分で当てる。
+      stop = scroll(
+        (progress: number) => {
+          rail.style.transform = `translateX(${-(distance * progress).toFixed(2)}px)`;
+        },
+        {
+          target: strip,
+          // 帯が下から入り、上へ抜けるまでを 0→1 に写す
+          offset: ["start end", "end start"],
+        },
+      );
+    };
+
+    wire();
+    // 幅が変われば移動量も変わる
+    addEventListener("resize", wire, { passive: true });
+  }
+</script>
+
+<style>
+  .strip {
+    /* wrap に入れない。端から端まで使うことがこの帯の意味 */
+    padding-block: clamp(40px, 6vw, 76px) 0;
+    overflow: hidden;
+  }
+
+  .rail {
+    display: flex;
+    gap: 20px;
+    width: max-content;
+    /* 左端に少し余白を残し、切り落とされた感じにしない */
+    padding-inline: var(--pad-x);
+    will-change: transform;
+  }
+
+  .card {
+    flex: none;
+    width: clamp(240px, 24vw, 340px);
+  }
+
+  .thumb {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    transition: transform var(--dur) var(--ease-out);
+  }
+
+  .card:hover .thumb {
+    transform: translateY(-4px);
+  }
+
+  .num {
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    z-index: 2;
+    font-size: 12px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-on-dark-muted);
+  }
+
+  .title {
+    margin-top: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .role {
+    margin-top: 2px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* 動かさないなら、横スクロールで自分で見られるようにする */
+    .strip {
+      overflow-x: auto;
+    }
+    .card:hover .thumb {
+      transform: none;
+    }
+  }
+</style>

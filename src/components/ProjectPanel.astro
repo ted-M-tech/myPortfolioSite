@@ -14,9 +14,15 @@
 interface Props {
   /** 0 始まり。波形・格子・密度がこれで変わる */
   index: number;
+  /**
+   * 波形を引くアニメーションを使うか。
+   * 横流しの帯のように、祖先に .reveal を持たない場所では false にして
+   * 最初から引かれた状態を出す（そうしないと線が出ないままになる）。
+   */
+  animate?: boolean;
 }
 
-const { index } = Astro.props;
+const { index, animate = true } = Astro.props;
 
 /** 案件ごとの波形。viewBox 0 0 400 260 の座標系で、左端から右端まで貫く */
 const traces = [
@@ -82,7 +88,7 @@ const squareY = [132, 118, 124, 138, 110, 146][index % 6]!;
 const uid = `pp${index}`;
 ---
 
-<div class="panel" aria-hidden="true">
+<div class:list={["panel", !animate && "panel--static"]} aria-hidden="true">
   <svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="presentation">
     <defs>
       <!-- 手前の波形だけ、進むほど濃くする -->
@@ -172,6 +178,14 @@ const uid = `pp${index}`;
     .next {
       opacity: 1;
     }
+  }
+
+  /* 引くアニメーションを使わない置き方 */
+  .panel--static .trace {
+    stroke-dashoffset: 0;
+  }
+  .panel--static .next {
+    opacity: 1;
   }
 
   @keyframes draw {

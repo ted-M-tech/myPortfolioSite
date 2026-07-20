@@ -2,6 +2,7 @@
 import { projects } from "../data/profile";
 import Icon from "./Icon.astro";
 import ProjectPanel from "./ProjectPanel.astro";
+import WorkStrip from "./WorkStrip.astro";
 ---
 
 <section class="section" id="work">
@@ -13,7 +14,11 @@ import ProjectPanel from "./ProjectPanel.astro";
         <span class="en">What I've built.</span>
       </h2>
     </header>
+  </div>
 
+  <WorkStrip />
+
+  <div class="wrap">
     <ul class="list">
       {
         projects.map((p, i) => (
