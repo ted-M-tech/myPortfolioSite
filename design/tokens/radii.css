@@ -1,0 +1,16 @@
+/* Corner radii — Apple favors continuous (squircle-like) curvature.
+   Approximated with generous standard radii. */
+:root {
+  --radius-xs: 5px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
+  --radius-capsule: 999px;
+
+  /* Semantic */
+  --radius-control: 10px;   /* buttons, fields */
+  --radius-card: 14px;      /* cards, sheets */
+  --radius-modal: 20px;     /* dialogs, popovers */
+}

@@ -1,0 +1,17 @@
+/* Shadows — soft, diffuse, low-contrast. Apple avoids heavy drop shadows. */
+:root {
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-xl: 0 24px 68px rgba(0,0,0,0.18), 0 8px 24px rgba(0,0,0,0.10);
+
+  /* Focus ring — accent halo */
+  --ring: 0 0 0 4px color-mix(in srgb, var(--accent) 30%, transparent);
+  --ring-tight: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent);
+
+  /* Backdrop blur amounts for materials */
+  --blur-thin: 20px;
+  --blur-regular: 30px;
+  --blur-thick: 40px;
+}

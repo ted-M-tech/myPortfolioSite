@@ -1,0 +1,5 @@
+/* Webfonts — SF Pro substitute.
+   Apple's San Francisco (SF Pro / SF Mono) is proprietary and cannot be shipped.
+   Geist + Geist Mono are the closest open, neutral, high-legibility match and
+   are loaded from the Google Fonts CDN (not bundled as local binaries). */
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap');
