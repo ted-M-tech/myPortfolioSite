@@ -32,7 +32,7 @@ const mailto = (title: string) =>
         services.map((s) => (
           <li class:list={["plan", "reveal", s.featured && "plan--featured"]}>
             {s.featured && <span class="blob" aria-hidden="true" />}
-            <p class="badge">
+            <p class:list={["badge", `badge--${s.tone}`]}>
               <span class="ja">{s.badge.ja}</span>
               <span class="en">{s.badge.en}</span>
             </p>
@@ -98,14 +98,14 @@ const mailto = (title: string) =>
     padding: 30px 26px;
     background: var(--surface-raised);
     border: 1px solid var(--line);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-xl);
     transition:
       transform var(--dur) var(--ease-out),
       box-shadow var(--dur) var(--ease-out);
   }
 
   .plan:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
     box-shadow: var(--shadow-lg);
   }
 
@@ -144,21 +144,34 @@ const mailto = (title: string) =>
     color: var(--text-muted);
   }
 
-  .plan--featured .badge {
-    background: var(--accent);
-    color: var(--paper);
+  /* カードごとに色を変えて、4つが同じものの並びに見えないようにする */
+  .badge--1 {
+    background: var(--pastel-1);
+    color: var(--on-pastel-1);
+  }
+  .badge--2 {
+    background: var(--pastel-2);
+    color: var(--on-pastel-2);
+  }
+  .badge--3 {
+    background: var(--pastel-3);
+    color: var(--on-pastel-3);
+  }
+  .badge--4 {
+    background: var(--pastel-4);
+    color: var(--on-pastel-4);
   }
 
   h3 {
     margin-top: 18px;
-    font-size: 20px;
+    font-size: 21px;
     font-weight: 600;
     letter-spacing: var(--tracking-tight);
   }
 
   .sub {
     margin-top: 4px;
-    font-size: 13px;
+    font-size: 13.5px;
     color: var(--text-muted);
   }
 
@@ -189,7 +202,7 @@ const mailto = (title: string) =>
   .points {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 11px;
     margin: 20px 0 26px;
   }
 
@@ -210,6 +223,7 @@ const mailto = (title: string) =>
     flex: none;
     margin-top: 1px;
     color: var(--accent);
+    opacity: 0.85;
   }
 
   .plan--featured .points :global(svg) {

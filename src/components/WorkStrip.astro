@@ -12,7 +12,11 @@ import ProjectPanel from "./ProjectPanel.astro";
  * スクロール連動も試したが、上下に間隔さえ取れば流し続けて問題ないので、
  * JS の依存を持たない方を選んだ。
  *
- * 上下で並び順を変えているのは、2列が鏡写しに見えないようにするため。
+ * 上下で並び順を変え、速度も少しずらしているのは、2列が一枚の板のように
+ * 固まって動いて見えないようにするため。
+ *
+ * ホバーで止めない。個々の案件を読ませる場所ではなく、量を伝える場所で、
+ * 詳細は下の縦積みカードが受け持つ。だから aria-hidden で読み上げからも外す。
  */
 const rowA = projects.map((p, i) => ({ p, i }));
 const rowB = [...rowA].reverse();
@@ -105,10 +109,10 @@ const rowB = [...rowA].reverse();
 
   /* 同じ並びを2つ描いて -50% まで動かすと、継ぎ目が出ない */
   .track--left {
-    animation: rail-left 64s linear infinite;
+    animation: rail-left 24s linear infinite;
   }
   .track--right {
-    animation: rail-right 64s linear infinite;
+    animation: rail-right 29s linear infinite;
   }
 
   @keyframes rail-left {
@@ -123,11 +127,6 @@ const rowB = [...rowA].reverse();
     to {
       transform: translateX(0);
     }
-  }
-
-  /* 見たいものが通り過ぎるのを追わせない */
-  .strip:hover .track {
-    animation-play-state: paused;
   }
 
   .card {

@@ -282,6 +282,8 @@ export const play = [
 /**
  * 提供メニュー。
  *
+ * tone はバッジの色。原典はカードごとに色を変えて種類を示していた。
+ *
  * 価格の考え方: バンクーバー在住・Azure 系 Expert 資格3つ・実務5年以上という
  * 前提での相場に寄せている。単発の相談は「試しやすさ」を優先して低く、
  * 継続と受託は実際に時間を使う分だけ取る。安く見せるための嘘の割引はしない。
@@ -289,6 +291,8 @@ export const play = [
 export const services = [
   {
     id: "consult",
+    /** バッジの色。0 は無彩色、1〜4 は --pastel-N */
+    tone: 1,
     featured: true,
     badge: { ja: "まずはここから", en: "Start here" },
     title: { ja: "技術相談", en: "Technical consult" },
@@ -304,6 +308,8 @@ export const services = [
   },
   {
     id: "advisory",
+    /** バッジの色。0 は無彩色、1〜4 は --pastel-N */
+    tone: 3,
     featured: false,
     badge: { ja: "継続", en: "Ongoing" },
     title: { ja: "技術顧問", en: "Technical advisory" },
@@ -319,6 +325,8 @@ export const services = [
   },
   {
     id: "build",
+    /** バッジの色。0 は無彩色、1〜4 は --pastel-N */
+    tone: 0,
     featured: false,
     badge: { ja: "受託開発", en: "Build" },
     title: { ja: "開発のご依頼", en: "Development" },
@@ -334,6 +342,8 @@ export const services = [
   },
   {
     id: "partner",
+    /** バッジの色。0 は無彩色、1〜4 は --pastel-N */
+    tone: 2,
     featured: false,
     badge: { ja: "パートナー", en: "Partner" },
     title: { ja: "共同開発", en: "Partnership" },

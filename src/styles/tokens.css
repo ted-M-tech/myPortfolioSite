@@ -40,6 +40,20 @@
   --accent-soft: #f0d5c4;
   --accent-on-dark: #f0834f;
 
+  /*
+   * 原典（Cupertino Design System）のパステル。
+   * カードごとに色を変えて序列と種類を示すために使う。
+   * ロゴには一切載せない（マークは単色規定）。
+   */
+  --pastel-1: #c9d2ea;
+  --pastel-2: #e7d8de;
+  --pastel-3: #d3e2df;
+  --pastel-4: #efe4cf;
+  --on-pastel-1: #1a2033;
+  --on-pastel-2: #2a1e24;
+  --on-pastel-3: #1c2a26;
+  --on-pastel-4: #2b2416;
+
   /* --- 文字組み --- */
   /*
    * Geist は原典（Cupertino Design System）が指定していた書体。
@@ -66,6 +80,7 @@
   --section-y: clamp(88px, 12vw, 152px);
   --radius: 14px;
   --radius-lg: 22px;
+  --radius-xl: 20px;
   --radius-pill: 999px;
 
   /* --- 影。ロゴには使わないが、面の浮きには使う --- */
