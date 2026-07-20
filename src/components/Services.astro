@@ -298,6 +298,32 @@ const mailto = (title: string) =>
   @media (max-width: 620px) {
     .grid {
       grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    /* 4枚が縦に並ぶので、1枚ぶんの余白と字間を詰める */
+    .plan {
+      padding: 22px 20px;
+    }
+
+    h3 {
+      margin-top: 14px;
+      font-size: 19px;
+    }
+
+    .price {
+      margin-top: 14px;
+      font-size: 30px;
+    }
+
+    .points {
+      gap: 8px;
+      margin: 14px 0 18px;
+    }
+
+    .cta {
+      padding: 11px 16px;
     }
   }
 </style>

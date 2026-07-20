@@ -200,18 +200,46 @@ import { play } from "../data/profile";
     }
   }
 
+  /*
+   * 狭い画面でも2列を保つ。1列に落とすと5枚で画面1.5枚ぶんになり、
+   * 写真も横長のまま縦だけ縮んで中身が読めなくなる。
+   * 先頭だけ全幅にして、残り4枚を2×2に収める。
+   */
   @media (max-width: 540px) {
     .grid {
-      grid-template-columns: 1fr;
-      grid-auto-rows: 220px;
+      grid-auto-rows: 150px;
+      gap: 10px;
     }
 
-    .tile--lg,
+    .tile--lg {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+
     .tile--wide,
     .tile--md,
     .tile--sm {
       grid-column: span 1;
       grid-row: span 1;
+    }
+
+    .caption {
+      left: 14px;
+      right: 14px;
+      bottom: 12px;
+    }
+
+    .caption b {
+      font-size: 15px;
+    }
+
+    .caption .note {
+      font-size: 10.5px;
+    }
+
+    .tile-index {
+      top: 11px;
+      left: 12px;
     }
   }
 

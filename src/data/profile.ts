@@ -282,7 +282,7 @@ export const projects: readonly Project[] = [
       en: "Designed and built an accessible responsive website connecting a Canadian community with information and ways to participate.",
     },
     tech: ["Web Design", "Frontend", "Responsive", "Accessibility"],
-    href: "https://www.linkedin.com/in/tetsuya-maeda-629b70294/",
+    href: "https://misss.ca/",
     image: "/work/canada-community-case.webp",
     imageAlt: {
       ja: "カナダのコミュニティサイトをデスクトップとスマートフォンで表示したコンセプト",

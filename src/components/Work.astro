@@ -420,4 +420,35 @@ const enablementIcons = {
       min-height: 330px;
     }
   }
+
+  /*
+   * 1列に落ちた狭い画面では、制作カード1枚がほぼ1画面を占める。
+   * 画像枠が 400px 固定なのが効いているので、横幅なりの高さまで下げる。
+   */
+  @media (max-width: 720px) {
+    .list {
+      margin-top: 44px;
+      gap: 18px;
+    }
+
+    .media {
+      min-height: 0;
+      aspect-ratio: 16 / 10;
+    }
+
+    .enablement-copy,
+    .enablement-case:nth-child(even) .enablement-copy {
+      min-height: 0;
+      padding-block: 26px;
+    }
+
+    .enablement-preview {
+      min-height: 0;
+      aspect-ratio: 4 / 3;
+    }
+
+    .enablement-cases {
+      margin-top: 40px;
+    }
+  }
 </style>
