@@ -182,11 +182,17 @@ button {
   font-feature-settings: "palt" 1;
 }
 
-@media (min-width: 821px) {
-  :where(.section-title, h1, h2, h3) > .ja {
-    word-break: keep-all;
-    overflow-wrap: normal;
-  }
+/* 見出しは語の途中で折らない。
+   以前は 821px 以上に限っていたが、狭い画面ほど折り位置が悪目立ちする
+   （「Notion 全 / 社一元管理」のように語が割れる）ので全幅で効かせる。
+   h4 が対象から漏れていたのも直す。
+
+   逃がしは anywhere を使う。break-word は「どうしても入らないときだけ折る」が
+   min-content 幅を縮めないので、keep-all と組むと親が語の長さまで押し広げられ、
+   390px で横スクロールが出た。anywhere は min-content にも効くので親が縮む。 */
+:where(.section-title, h1, h2, h3, h4) > .ja {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 
 .section--dark .section-lede {

@@ -450,5 +450,50 @@ const enablementIcons = {
     .enablement-cases {
       margin-top: 40px;
     }
+
+    /*
+     * この節の clamp は下限がデスクトップ寸法のままで、狭い画面でも
+     * 見出し 40px・本文まわり 90px 余白が据え置かれていた。列幅が半分以下
+     * なのに文字だけ原寸なので、2〜3行に折れて余白ばかりが伸びる。
+     */
+    .enablement {
+      margin-top: 52px;
+      padding-block: 30px;
+    }
+
+    .enablement > header {
+      gap: 16px;
+    }
+
+    .enablement > header h3 {
+      margin-top: 10px;
+      font-size: 30px;
+      line-height: 1.12;
+    }
+
+    .enablement > header p {
+      margin-top: 12px;
+      font-size: 13.5px;
+      line-height: 1.7;
+    }
+
+    .enablement-copy {
+      padding-inline: 20px;
+    }
+
+    .enablement-copy h4 {
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .enablement-copy p {
+      margin-top: 12px;
+      font-size: 13.5px;
+      line-height: 1.6;
+    }
+
+    .case-caption {
+      margin-top: 18px;
+    }
   }
 </style>
