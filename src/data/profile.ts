@@ -83,9 +83,14 @@ export const marquee = [
  * あって「ロゴの色」ではない（Miro の #050038 は紺だが、ロゴは黄色）。
  * 一度それでロゴを塗って間違えたので、二度とやらないこと。
  *
- * 載せていないもの: Codex / Microsoft Teams / Higgsfield / Sakana AI。
- * 再配布可能なアイコン集に公式マークが無い。特に Microsoft は Simple Icons が
- * ブランドポリシーを理由に収録対象外としているため、代替を自作しない。
+ * 載せていないもの:
+ * - Codex / Microsoft Teams / Higgsfield / Sakana AI
+ *   再配布可能なアイコン集に公式マークが無い。特に Microsoft は Simple Icons が
+ *   ブランドポリシーを理由に収録対象外としているため、代替を自作しない。
+ * - Xcode
+ *   Apple はウェブサイトでの自社アイコン使用を名指しで禁じており、文字での
+ *   言及しか認めていない。他社と違って例外規定が無いので、正しい表示が存在しない。
+ *   詳細は public/brand/tools/README.md。
  */
 export const toolchain = [
   { name: "ChatGPT", icon: "/brand/tools/chatgpt.svg", appIcon: false },
@@ -93,7 +98,6 @@ export const toolchain = [
   { name: "Cursor", icon: "/brand/tools/cursor-app-icon.png", appIcon: true },
   { name: "Gemini", icon: "/brand/tools/gemini.svg", appIcon: false },
   { name: "VS Code", icon: "/brand/tools/vscode.svg", appIcon: false },
-  { name: "Xcode", icon: "/brand/tools/xcode.svg", appIcon: false },
   { name: "Figma", icon: "/brand/tools/figma.svg", appIcon: false },
   { name: "Notion", icon: "/brand/tools/notion.svg", appIcon: false },
   { name: "Miro", icon: "/brand/tools/miro.svg", appIcon: false },
