@@ -90,6 +90,10 @@ export const marquee = [
  * - Xcode
  *   Apple はウェブサイトでの自社アイコン使用を名指しで禁じており、文字での
  *   言及しか認めていない。他社と違って例外規定が無いので、正しい表示が存在しない。
+ * - Canva
+ *   Canva 自身の PDF が Apple と同一構造で禁じている。「ウェブサイト上での
+ *   ロゴ・アイコン使用は書面ライセンスなしには不可」。許されているのは非営利の
+ *   情報提供サイトでのワードマーク（文字）のみ。
  * - Gemini
  *   実際のマークはグラデーションで、Google は単一の固定色を公開していない。
  *   単色版は Simple Icons による改変で、公式の見た目ではない。正規版の入手には
@@ -105,7 +109,6 @@ export const toolchain = [
   { name: "GitHub", icon: "/brand/tools/github.svg", appIcon: false },
   { name: "Azure", icon: "/brand/tools/azure.svg", appIcon: false },
   { name: "AWS", icon: "/brand/tools/aws.svg", appIcon: false },
-  { name: "Canva", icon: "/brand/tools/canva.svg", appIcon: false },
   { name: "Figma", icon: "/brand/tools/figma.svg", appIcon: false },
   { name: "Notion", icon: "/brand/tools/notion.svg", appIcon: false },
   { name: "Miro", icon: "/brand/tools/miro.svg", appIcon: false },
