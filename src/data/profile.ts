@@ -106,7 +106,6 @@ export const toolchain = [
   { name: "Azure", icon: "/brand/tools/azure.svg", appIcon: false },
   { name: "AWS", icon: "/brand/tools/aws.svg", appIcon: false },
   { name: "Canva", icon: "/brand/tools/canva.svg", appIcon: false },
-  { name: "Vercel", icon: "/brand/tools/vercel.svg", appIcon: false },
   { name: "Figma", icon: "/brand/tools/figma.svg", appIcon: false },
   { name: "Notion", icon: "/brand/tools/notion.svg", appIcon: false },
   { name: "Miro", icon: "/brand/tools/miro.svg", appIcon: false },
