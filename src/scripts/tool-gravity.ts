@@ -75,7 +75,9 @@ export function initToolGravity(stage: HTMLElement) {
     const rect = stage.getBoundingClientRect();
     width = Math.max(1, rect.width);
     height = Math.max(1, rect.height);
-    floor = height - (width < 720 ? 48 : 42);
+    // 狭い画面ではマークが下辺のメタ表示（受付状況 / 拠点）の上に積もるので、
+    // 床をその分だけ持ち上げて重ならないようにする。
+    floor = height - (width < 720 ? 104 : 42);
 
     const copy = stage.parentElement?.querySelector<HTMLElement>("[data-tools-copy]");
     if (copy) {
@@ -92,7 +94,10 @@ export function initToolGravity(stage: HTMLElement) {
       const box = body.element.getBoundingClientRect();
       body.width = box.width;
       body.height = box.height;
-      body.radius = Math.max(box.width, box.height) * 0.43;
+      // カードだった頃は名前の余白が緩衝材になっていて、多少重なっても
+      // 平気だった。マークだけになると重なりがそのまま団子に見えるので、
+      // 当たり判定を実寸へ近づけて離す。
+      body.radius = Math.max(box.width, box.height) * 0.54;
       if (hasStarted) {
         body.x = clamp(body.x, 4, width - body.width - 4);
         body.y = clamp(body.y, 54, floor - body.height);

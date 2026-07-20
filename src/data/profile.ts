@@ -64,23 +64,32 @@ export const marquee = [
   "Cloud Architecture", "Rapid Prototyping", "DevOps",
 ] as const;
 
-/** AI駆動の設計・開発・運用で日常的に横断するツール。 */
+/**
+ * AI駆動の設計・開発・運用で日常的に横断するツール。
+ *
+ * ヒーローはロゴだけを浮かべ、名前を出さない。名前で補えない以上、
+ * 「再配布できる公式マークが実在するもの」だけを載せる。
+ *
+ * color は各社が公表しているブランド色（出典は Simple Icons が併記している
+ * 各社ブランドページ）。マーク自体は改変せず、影の色味にだけ使う。
+ * Cursor と ChatGPT の #000000 は手抜きではなく、公式が単色黒のマーク。
+ *
+ * 載せていないもの: Codex / Microsoft Teams / Higgsfield / Sakana AI。
+ * 再配布可能なアイコン集に公式マークが無い。特に Microsoft は Simple Icons が
+ * ブランドポリシーを理由に収録対象外としているため、代替を自作しない。
+ */
 export const toolchain = [
-  { name: "ChatGPT", color: "#5f9f8f", icon: "/brand/tools/chatgpt.svg", genericIcon: null },
-  { name: "Claude", color: "#d97757", icon: "/brand/tools/claude.svg", genericIcon: null },
-  { name: "Notion", color: "#171717", icon: "/brand/tools/notion.svg", genericIcon: null },
-  { name: "VS Code", color: "#1689ca", icon: "/brand/tools/vscode.svg", genericIcon: null },
-  { name: "Cursor", color: "#252525", icon: "/brand/tools/cursor.svg", genericIcon: null },
-  { name: "Miro", color: "#e1b900", icon: "/brand/tools/miro.svg", genericIcon: null },
-  { name: "Slack", color: "#7c3564", icon: "/brand/tools/slack.svg", genericIcon: null },
-  { name: "Docker", color: "#2496ed", icon: "/brand/tools/docker.svg", genericIcon: null },
-  { name: "Codex", color: "#1c1c1c", icon: null, genericIcon: "code" },
-  { name: "Xcode", color: "#147efb", icon: "/brand/tools/xcode.svg", genericIcon: null },
-  { name: "Figma", color: "#a259ff", icon: "/brand/tools/figma.svg", genericIcon: null },
-  { name: "Teams", color: "#6264a7", icon: null, genericIcon: "users" },
-  { name: "Gemini", color: "#7268d9", icon: "/brand/tools/gemini.svg", genericIcon: null },
-  { name: "Higgsfield", color: "#cb78a5", icon: null, genericIcon: "camera" },
-  { name: "Sakana AI", color: "#398c8b", icon: null, genericIcon: "brain" },
+  { name: "ChatGPT", color: "#000000", icon: "/brand/tools/chatgpt.svg" },
+  { name: "Claude", color: "#d97757", icon: "/brand/tools/claude.svg" },
+  { name: "Cursor", color: "#000000", icon: "/brand/tools/cursor.svg" },
+  { name: "Gemini", color: "#8e75b2", icon: "/brand/tools/gemini.svg" },
+  { name: "VS Code", color: "#007acc", icon: "/brand/tools/vscode.svg" },
+  { name: "Xcode", color: "#147efb", icon: "/brand/tools/xcode.svg" },
+  { name: "Figma", color: "#f24e1e", icon: "/brand/tools/figma.svg" },
+  { name: "Notion", color: "#000000", icon: "/brand/tools/notion.svg" },
+  { name: "Miro", color: "#050038", icon: "/brand/tools/miro.svg" },
+  { name: "Slack", color: "#611f69", icon: "/brand/tools/slack.svg" },
+  { name: "Docker", color: "#2496ed", icon: "/brand/tools/docker.svg" },
 ] as const;
 
 export const stats = [
