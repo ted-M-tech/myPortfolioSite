@@ -723,6 +723,7 @@ export const contact = {} as const;
 
 // Public creative works. Actual artifacts, separate from private client projects.
 export const openWorks = {
+ overviewTypes:'WEB / FILM / DESIGN',
  title:{ja:'作品集',en:'Creative works'},
  heading:{ja:'これを、つくってみたい。',en:'Find your next thing to make.'},
  description:{ja:'LP、映像、そしてスライド。完成した作品から選んで、つくり方まで。',en:'Landing pages, films, and slides to come. Start with the finished work, then explore how it was made.'},
