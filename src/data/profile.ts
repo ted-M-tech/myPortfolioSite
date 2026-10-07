@@ -723,14 +723,22 @@ export const contact = {} as const;
 
 // Public creative works. Actual artifacts, separate from private client projects.
 export const openWorks = {
-  title: {ja:'つくったものと、つくり方。',en:'The work. And how it was made.'},
-  description: {ja:'Web・映像・スライド。完成物から、プロンプトとソースまでひらいています。',en:'Websites, films and slides. Explore the finished work, then its prompts and source.'},
-  action: {ja:'作品と制作ノートを見る',en:'Explore works & making of'},
-  href:'https://videos.maepace.com/',
-  pause:{ja:'動きを止める',en:'Pause motion'}, resume:{ja:'動かす',en:'Resume motion'},
-  items:[
-    {kind:'WEB',title:{ja:'自分の声が、お手本になる。',en:'Your voice becomes the model.'},description:{ja:'Lanclo LP · 体験と制作ノート',en:'Lanclo LP · Demo & making of'},image:'/works/lanclo-web.webp',href:'https://videos.maepace.com/works/lanclo-lp/'},
-    {kind:'FILM',title:{ja:'自分の声で、毎日の英語を。',en:'Your voice. Your daily English.'},description:{ja:'Lanclo · 69秒のプロダクト映像',en:'Lanclo · 69-second product film'},image:'/works/lanclo-film.jpg',href:'https://videos.maepace.com/films/lanclo-daily/'},
-    {kind:'SLIDES',title:{ja:'プロンプトから、伝わる体験へ。',en:'From prompts to a point of view.'},description:{ja:'8枚で読む、LP制作の判断',en:'Eight decisions behind the LP'},image:'/works/lanclo-slides.webp',href:'https://videos.maepace.com/slides/lanclo-making/'}
-  ]
+ title:{ja:'作品集',en:'Creative works'},
+ heading:{ja:'これを、つくってみたい。',en:'Find your next thing to make.'},
+ description:{ja:'LP、映像、そしてスライド。完成した作品から選んで、つくり方まで。',en:'Landing pages, films, and slides to come. Start with the finished work, then explore how it was made.'},
+ action:{ja:'すべての作品を見る',en:'Explore all works'},href:'/works',
+ all:{ja:'すべて',en:'All'},lp:{ja:'LP・Web',en:'LP / Web'},film:{ja:'映像',en:'Film'},slides:{ja:'スライド',en:'Slides'},
+ future:{ja:'スライド作品は、これから。',en:'Slide projects are coming next.'},
+ back:{ja:'作品集に戻る',en:'Back to all works'},
+ view:{ja:'完成作品を見る',en:'View the finished work'},make:{ja:'この作品のつくり方',en:'How to make this'},
+ notes:{ja:'作り方をひらく',en:'Open the making of'},
+ source:{ja:'ソースを開く',en:'Open source'},
+ skills:{ja:'使用スキル',en:'Skills used'},prompts:{ja:'プロンプト',en:'Prompts'},credits:{ja:'素材・出典',en:'Credits'},
+ promptNote:{ja:'制作後に整理した再制作向けの指示です。一度の入力で完成したという意味ではありません。',en:'This recipe was reconstructed after production. It is not a claim that one prompt created the result.'},
+ copy:{ja:'プロンプトをコピー',en:'Copy prompt'},copied:{ja:'コピーしました',en:'Copied'},
+ copyError:{ja:'コピーできませんでした。本文を選択してコピーしてください。',en:'Copy failed. Select and copy the text instead.'},
+ items:[
+  {id:'lanclo-lp',kind:'LP',title:{ja:'Lanclo — 自分の声を、お手本に。',en:'Lanclo — Your voice becomes the model'},description:{ja:'3ステップの図解と、動きで伝える英語学習アプリのLP。',en:'An English-learning landing page with three illustrated steps and purposeful motion.'},image:'/works/lanclo-web.webp',href:'/works/lanclo-lp',tags:['React','Motion','Impeccable'],live:'https://voice.maepace.com/lp',source:'https://github.com/ted-M-tech/tetsuya-creative-motions/tree/open-works-v1/projects/lanclo-lp',skills:['Impeccable','Taste Skill'],summary:{ja:'自分の声を登録し、お手本を聴いて、発音する。仕組みは文章を増やすより、読む順に並べたイラストで伝えました。ニュースは写真、練習はunDrawで役割を分けています。',en:'Record, listen to your own-voice model, then speak. Sequential illustrations explain the mechanism. News uses photography; practice uses unDraw.'},prompt:{ja:'検証済みの機能と承認済みブランドを使い、英語学習アプリのLPを作る。最初に「自分の声がお手本になる」という変化を伝える。録音→自声のお手本→発音を3つのイラストで表現。練習はunDraw、ニュースは実写で統一。補足の重複を削り、320px・390px・1440pxで改行と比較表を確認する。研究の数値は何を測ったかを併記し、製品の効果検証と混同させない。',en:'Build a landing page for an English-learning app using verified capabilities and approved branding. Lead with the change: your voice becomes the model. Show record → own-voice model → speak in three illustrations. Use unDraw for practice and real photos for news. Remove repeated supporting copy. Check wrapping and comparison tables at 320, 390 and 1440px. Scope research figures to what was actually measured, not product efficacy.'},note:{ja:'約1.3倍は外部研究の得点上昇幅の比較で、Lanclo自体の効果検証ではありません。',en:'About 1.3× compares score gains in an external study, not Lanclo efficacy.'}},
+  {id:'lanclo-film',kind:'FILM',title:{ja:'Lanclo — 自分の声で、毎日の英語を。',en:'Lanclo — Your voice. Your daily English.'},description:{ja:'声のお手本から毎日の習慣へ。69秒のプロダクト映像。',en:'From an own-voice model to an everyday habit. A 69-second product film.'},image:'/works/lanclo-film.jpg',href:'/works/lanclo-film',tags:['HTML / SVG','HyperFrames','Gemini TTS'],live:'https://videos.maepace.com/media/lanclo-daily-r26.mp4',source:'https://github.com/ted-M-tech/tetsuya-creative-motions/tree/open-works-v1/films/lanclo',skills:['Creative Motions','HyperFrames'],summary:{ja:'シャドーイングの悩みから、自分の声のお手本、個別レッスン、ニュースへ。図解・声・テンポを組み合わせ、使う場面が浮かぶ映像にしました。HTML / SVGとGSAPで組み、HyperFramesで書き出しています。',en:'From shadowing frustration to an own-voice model, personal lessons and news. Illustration, narration and pacing show the experience. Built with HTML / SVG and GSAP, rendered with HyperFrames.'},prompt:{ja:'英語学習アプリのプロダクト映像をHTML / SVGで制作する。冒頭にシャドーイングの悩みを置き、自分の声がお手本になる驚きへつなぐ。録音→お手本→発音→分析→次の練習を、説明文を増やさず図解と動きで伝える。unDrawで画風を統一。個別練習からニュース教材へ自然につなぎ、台本・音声指示・タイミング・素材の出典をソースと一緒に残す。',en:'Create a code-based product film for an English-learning app. Open with shadowing frustration, then reveal an own-voice model. Show recording, listening, speaking, analysis and the next practice through diagrams and motion. Use one unDraw illustration family. Bridge personal practice into news material. Keep the script, voice directions, timing and asset credits with the source.'},note:{ja:'当時の訴求を記録した映像作品です。問題数やニュース配信の演出は、現在の製品仕様を保証するものではありません。',en:'This film records a creative concept at the time of production. Question counts and news-delivery scenes are not a guarantee of current product capabilities.'}}
+ ]
 };
