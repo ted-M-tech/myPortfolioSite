@@ -719,3 +719,18 @@ export const marksNote = {
 } satisfies Bilingual;
 
 export const contact = {} as const;
+
+
+// Public creative works. Actual artifacts, separate from private client projects.
+export const openWorks = {
+  title: {ja:'つくったものと、つくり方。',en:'The work. And how it was made.'},
+  description: {ja:'Web・映像・スライド。完成物から、プロンプトとソースまでひらいています。',en:'Websites, films and slides. Explore the finished work, then its prompts and source.'},
+  action: {ja:'作品と制作ノートを見る',en:'Explore works & making of'},
+  href:'https://videos.maepace.com/',
+  pause:{ja:'動きを止める',en:'Pause motion'}, resume:{ja:'動かす',en:'Resume motion'},
+  items:[
+    {kind:'WEB',title:{ja:'自分の声が、お手本になる。',en:'Your voice becomes the model.'},description:{ja:'Lanclo LP · 体験と制作ノート',en:'Lanclo LP · Demo & making of'},image:'/works/lanclo-web.webp',href:'https://videos.maepace.com/works/lanclo-lp/'},
+    {kind:'FILM',title:{ja:'自分の声で、毎日の英語を。',en:'Your voice. Your daily English.'},description:{ja:'Lanclo · 69秒のプロダクト映像',en:'Lanclo · 69-second product film'},image:'/works/lanclo-film.jpg',href:'https://videos.maepace.com/films/lanclo-daily/'},
+    {kind:'SLIDES',title:{ja:'プロンプトから、伝わる体験へ。',en:'From prompts to a point of view.'},description:{ja:'8枚で読む、LP制作の判断',en:'Eight decisions behind the LP'},image:'/works/lanclo-slides.webp',href:'https://videos.maepace.com/slides/lanclo-making/'}
+  ]
+};
