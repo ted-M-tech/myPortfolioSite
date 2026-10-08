@@ -719,3 +719,130 @@ export const marksNote = {
 } satisfies Bilingual;
 
 export const contact = {} as const;
+
+
+// Public creative works. Actual artifacts, separate from private client projects.
+export const openWorks = {
+ overviewTypes:'WEB / FILM / DESIGN',
+ title:{ja:'作品集',en:'Creative works'},
+ heading:{ja:'これを、つくってみたい。',en:'Find your next thing to make.'},
+ description:{ja:'LP、映像、LINEスタンプ。完成した作品から選んで、つくり方まで。',en:'Landing pages, films and LINE stickers. Start with the finished work, then explore how it was made.'},
+ action:{ja:'すべての作品を見る',en:'Explore all works'},href:'/works',
+ all:{ja:'すべて',en:'All'},lp:{ja:'LP・Web',en:'LP / Web'},film:{ja:'映像',en:'Film'},slides:{ja:'スライド',en:'Slides'},
+ future:{ja:'スライド作品は、これから。',en:'Slide projects are coming next.'},
+ back:{ja:'作品集に戻る',en:'Back to all works'},
+ view:{ja:'完成作品を見る',en:'View the finished work'},make:{ja:'この作品のつくり方',en:'How to make this'},
+ notes:{ja:'作り方をひらく',en:'Open the making of'},
+ source:{ja:'制作ノート・ソースを開く',en:'Open notes & source'},
+ decisions:{ja:'デザインの判断',en:'Design decisions'},
+ skills:{ja:'制作技術・スキル',en:'Techniques & skills'},prompts:{ja:'プロンプト',en:'Prompts'},credits:{ja:'素材・出典',en:'Credits'},
+ promptNote:{ja:'制作後に整理した再制作向けの指示です。一度の入力で完成したという意味ではありません。',en:'This recipe was reconstructed after production. It is not a claim that one prompt created the result.'},
+ copy:{ja:'プロンプトをコピー',en:'Copy prompt'},copied:{ja:'コピーしました',en:'Copied'},
+ copyError:{ja:'コピーできませんでした。本文を選択してコピーしてください。',en:'Copy failed. Select and copy the text instead.'},
+ items:[
+  {id:'lanclo-lp',kind:'LP',title:{ja:'Lanclo — 自分の声を、お手本に。',en:'Lanclo — Your voice becomes the model'},description:{ja:'濃紺の配色、マウスに反応する波形、3ステップのイラストで伝える英語学習LP。',en:'An English-learning LP with a deep navy palette, pointer-responsive waves and three illustrated practice steps.'},image:'/works/lanclo-web.webp',href:'/works/lanclo-lp',tags:['Astro','React','Canvas'],live:'https://voice.maepace.com/lp',source:'https://github.com/ted-M-tech/tetsuya-creative-motions/tree/lanclo-lp-navy-v2/projects/lanclo-lp',skills:['LP Create','Impeccable'],summary:{ja:'濃紺・クリーム・ミントで全体を統一。2層の波形はマウスの近くで揺れ、動きを減らす設定では静止します。苦手分析→レッスン生成→ボタンを押して読むだけを、独自のSVGイラストで図解しました。本番はAstro、公開教材はAPI不要のVite版です。',en:'A unified navy, cream and mint palette. Two layers of canvas waves respond to the pointer and become static with reduced motion. Original SVG scenes show analysis → lesson generation → press and read. Production uses Astro; the API-free study uses Vite.'},prompt:{ja:'承認済みの製品事実を保ち、LPを深いネイビー・クリーム・ミントで統一する。ヒーローには位置と位相をずらした2層の波形を置き、マウス付近だけ自然に変形させる。苦手分析→レッスン生成→ボタンを押して読むだけの3段階をSVGで図解する。重複説明を減らし、料金の初回・更新条件は残す。3言語、320px・390px・1440px、動きを減らす設定で確認する。これは制作後に整理した再構成ブリーフ。',en:'Preserve verified product facts. Unify the LP in deep navy, cream and mint; layer two pointer-responsive waves in the hero. Illustrate analysis → lesson generation → press and read with SVG scenes. Remove repeated explanations while retaining initial and renewal prices. Check three languages, 320/390/1440px and reduced motion. This is a reconstructed brief, not a single original prompt.'},note:{ja:'約1.3倍は外部研究の得点上昇幅の比較で、Lanclo自体の効果検証ではありません。',en:'About 1.3× compares score gains in an external study, not Lanclo efficacy.'}},
+  {id:'lanclo-film',kind:'FILM',title:{ja:'Lanclo — 自分の声で、毎日の英語を。',en:'Lanclo — Your voice. Your daily English.'},description:{ja:'声のお手本から毎日の習慣へ。69秒のプロダクト映像。',en:'From an own-voice model to an everyday habit. A 69-second product film.'},image:'/works/lanclo-film.jpg',href:'/works/lanclo-film',tags:['HTML / SVG','HyperFrames','Gemini TTS'],live:'https://videos.maepace.com/media/lanclo-daily-r26.mp4',source:'https://github.com/ted-M-tech/tetsuya-creative-motions/tree/open-works-v1/films/lanclo',skills:['Creative Motions','HyperFrames'],summary:{ja:'シャドーイングの悩みから、自分の声のお手本、個別レッスン、ニュースへ。図解・声・テンポを組み合わせ、使う場面が浮かぶ映像にしました。HTML / SVGとGSAPで組み、HyperFramesで書き出しています。',en:'From shadowing frustration to an own-voice model, personal lessons and news. Illustration, narration and pacing show the experience. Built with HTML / SVG and GSAP, rendered with HyperFrames.'},prompt:{ja:'英語学習アプリのプロダクト映像をHTML / SVGで制作する。冒頭にシャドーイングの悩みを置き、自分の声がお手本になる驚きへつなぐ。録音→お手本→発音→分析→次の練習を、説明文を増やさず図解と動きで伝える。unDrawで画風を統一。個別練習からニュース教材へ自然につなぎ、台本・音声指示・タイミング・素材の出典をソースと一緒に残す。',en:'Create a code-based product film for an English-learning app. Open with shadowing frustration, then reveal an own-voice model. Show recording, listening, speaking, analysis and the next practice through diagrams and motion. Use one unDraw illustration family. Bridge personal practice into news material. Keep the script, voice directions, timing and asset credits with the source.'},note:{ja:'当時の訴求を記録した映像作品です。問題数やニュース配信の演出は、現在の製品仕様を保証するものではありません。',en:'This film records a creative concept at the time of production. Question counts and news-delivery scenes are not a guarantee of current product capabilities.'}},
+  {"id": "tako-talk", "title": {"ja": "Tako Talk — 会話を、明日の習慣へ。", "en": "Tako Talk — A conversation worth returning to"}, "description": {"ja": "会話・振り返り・漢字スタンプを、実際のアプリ画面で伝えるLP。", "en": "A landing page showing conversation, review and kanji stamps through actual app screens."}, "live": "https://helpkansai.maepace.com/", "tags": ["HTML / CSS", "JavaScript", "Rive"], "skills": ["HTML / CSS", "JavaScript", "Rive"], "summary": {"ja": "「日本語は知っている。でも話せない」から始まり、最初の5分でできることを見せる。会話の直後に振り返り、漢字スタンプを残す流れを、端末画面と短い動きでつなぎました。", "en": "Start with knowing Japanese but struggling to speak, then show the first five minutes. Actual phone screens and short motion connect conversation, immediate review and a daily kanji stamp."}, "note": {"ja": "LPの復元記録と更新履歴から整理。制作時の会話ログ全体や使用スキルは確認できていないため、以下は再構成した指示です。", "en": "Documented from the recovered LP source and revision history. The full original conversation and authoring skill records were not available; the recipe below is reconstructed."}, "decisions": [{"ja": "機能の列挙より、会話→振り返り→スタンプの体験順で見せる。", "en": "Show conversation → review → stamp in experience order, rather than listing features."}, {"ja": "実際のアプリ画面を主役にし、Takoのキャラクターで親しみを添える。", "en": "Lead with actual app screens; use Tako’s character to add warmth."}, {"ja": "標準語での練習と、近日予定の関西弁を区別する。", "en": "Distinguish available standard-Japanese practice from the upcoming Kansai mode."}], "prompt": {"ja": "日本語学習アプリのLPを作る。対象は単語を知っていても会話になると言葉が出ない学習者。冒頭でその悩みに触れ、最初の5分を「話す→すぐ振り返る→漢字スタンプを残す」で見せる。承認済みキャラクターと実機画面を使い、説明は1場面1メッセージ。英語を主に日本語切替を用意。近日予定の機能と利用できる機能を明確に分け、320・390・768・1440pxで画面、改行、CTA、言語切替を確認する。", "en": "Create a Japanese-learning app landing page for people who know words but freeze in conversation. Show the first five minutes as talk → review immediately → keep a kanji stamp. Use approved characters and real app screens, with one message per scene. Support English and Japanese. Separate upcoming from available features. Verify screens, text wrapping, CTAs and language switching at 320, 390, 768 and 1440px."}, "kind": "LP", "image": "/works/tako-talk-web.jpg", "href": "/works/tako-talk", "source": "https://github.com/ted-M-tech/tetsuya-creative-motions/tree/main/projects/tako-talk"},
+  {"id": "maepace-web", "title": {"ja": "MaePace — 好奇心を、前へ進む力に。", "en": "MaePace — Curiosity, put in motion"}, "description": {"ja": "開発実績・作品・学びを、ひとつのブランドでつなぐWebサイト。", "en": "One website connecting development projects, creative work and learning."}, "live": "https://maepace.com/", "tags": ["Astro", "TypeScript", "Canvas"], "skills": ["Astro", "TypeScript", "Canvas / CSS"], "summary": {"ja": "ツール群が動くヒーローから、人物・開発実績・完成作品へ。仕事のプロジェクトと見て試せる成果物を分けつつ、共通のヘッダーと言語設定で行き来できる構成にしました。", "en": "A moving tool universe leads into the person, development projects and completed creative work. Projects and finished artifacts remain distinct, joined by a shared header and language preference."}, "note": {"ja": "ブランド資料・実装・Git履歴を根拠に整理。公開ノートは再現用の設計資料で、サイト全体のソース一式ではありません。", "en": "Based on brand documentation, implementation and Git history. The public notes are reproduction guidance, not a full source distribution of the site."}, "decisions": [{"ja": "プロジェクト集の下に作品集を置き、完成物の一覧から制作方法へ進める。", "en": "Place creative works below projects, with finished previews leading into making-of notes."}, {"ja": "コピーを日英のデータとして分離し、同じ部品で両言語を表示する。", "en": "Separate bilingual copy from layout and use the same components for both languages."}, {"ja": "動きはCanvas・CSS・IntersectionObserverで実装し、表示外では不要な描画を止める。", "en": "Use Canvas, CSS and IntersectionObserver; avoid unnecessary rendering off screen."}], "prompt": {"ja": "個人開発者の実績と創作物を伝えるMaePaceのWebサイトをAstroで作る。承認済みロゴと単色のブランドを維持。ツール群が動くヒーロー、人物紹介、開発プロジェクト、完成作品、相談導線へつなぐ。作品はLPひとつ・動画ひとつの単位にし、クリック後に完成物、制作ノート、再現プロンプトを置く。日英コピーはデータで管理。ヘッダー・フッターは共通化。Canvasの描画ループ重複を防ぎ、スマホの改行、キーボード操作、動きを減らす設定でも確認する。", "en": "Build an Astro website for a developer’s projects and creative work. Preserve the approved MaePace mark and monochrome identity. Connect a moving tool-universe hero to the person, projects, completed works and contact. Count one LP or film as one artifact; its detail page shows the result, making-of and reproduction prompts. Manage bilingual copy as data and share the header and footer. Prevent duplicate Canvas animation loops and check mobile wrapping, keyboard navigation and reduced motion."}, "kind": "LP", "image": "/works/maepace-web.jpg", "href": "/works/maepace-web", "source": "https://github.com/ted-M-tech/tetsuya-creative-motions/tree/main/projects/maepace-web"},
+  {"id": "annoscene", "title": {"ja": "AnnoScene — 旅の記憶を、静かな地図に。", "en": "AnnoScene — Your world, drawn over time"}, "description": {"ja": "風景とAtlasの操作デモで、旅の記録を見せるiPhoneアプリのLP。", "en": "An iPhone app landing page pairing a quiet landscape with an Atlas interaction demo."}, "live": "https://annoscene.maepace.com/", "tags": ["HTML / CSS", "JavaScript", "Product demo"], "skills": ["HTML / CSS", "JavaScript", "動画・実機画面"], "summary": {"ja": "霧の山並みから、自分のAtlasを開く体験へ。世界→国→地域と進む操作デモと、年を選ぶ画面に絞り、説明を増やさず製品の静けさを伝えました。", "en": "Move from misty mountains into a personal Atlas. A world → country → region demo and a year-view screen convey the quiet product without adding long explanations."}, "note": {"ja": "現行のAtlas版LPを対象に記録。過去の位置情報・写真・旅程リプレイ中心の製品説明は、この作品の再現指示に含めていません。", "en": "These notes cover the current Atlas landing page. Earlier location, photo and journey-replay concepts are not part of this reproduction brief."}, "decisions": [{"ja": "最初に旅の気配を見せ、続いて実際のAtlas操作で機能を説明する。", "en": "Lead with the feeling of travel, then explain function through actual Atlas interactions."}, {"ja": "世界・国・地域・年という地図の文脈を崩さず、画面を見せる。", "en": "Keep the map’s world, country, region and year context intact in the demo."}, {"ja": "プライバシーとApp Storeへの導線を短くまとめ、機能を詰め込みすぎない。", "en": "Keep privacy and the App Store path concise rather than overloading the page."}], "prompt": {"ja": "旅の記録を自分のAtlasとして残すiPhoneアプリのLPを作る。現行の仕様と承認済み画面だけを使う。霧の山並みを大きく置き、「Your world, drawn over time.」を軸に静かな余白で構成する。世界→国→地域へ進む短い操作デモ、その国の記録、年別表示へつなぐ。写真の取り込みや位置情報記録など旧仕様を混ぜない。説明は短く、App Store導線を明確にする。画像サイズ、動画ポスター、読み込み失敗時、390pxと1440pxでの表示を検証する。", "en": "Create a landing page for an iPhone app that records places in a personal Atlas. Use only current product facts and approved screens. Lead with misty mountains and “Your world, drawn over time.” Use quiet space, a short world → country → region demo, country context and year view. Do not introduce retired photo-import or location-tracking features. Keep copy brief and the App Store path clear. Check image sizes, video posters, loading fallbacks and layouts at 390 and 1440px."}, "kind": "LP", "image": "/works/annoscene-web.jpg", "href": "/works/annoscene", "source": "https://github.com/ted-M-tech/tetsuya-creative-motions/tree/main/projects/annoscene"},
+{"id": "tako-stickers", "title": {"ja": "たこ先生 — 動く関西弁。", "en": "Tako Sensei — Animated Kansai Reactions"}, "description": {"ja": "13のリアクションが一斉に動く、4秒のループポスター。", "en": "A four-second living poster with 13 animated reactions."}, "summary": {"ja": "承認済みLINEスタンプを、音がなくても伝わる一枚のポスターに。中央のタイトルに余白を残し、周囲のリアクションを同時に動かしています。", "en": "Approved LINE stickers become a sound-off living poster. A clear central title leaves room for simultaneous reactions around it."}, "prompt": {"ja": "承認済みのアニメーションスタンプを使い、1080×1920の4秒ループポスターを構成する。中央に日英タイトルとストア導線、周囲に13のリアクション。すべて0秒から同時に動かす。暖かい紙色、紺の文字、既存キャラクターの赤で統一し、音楽や装飾を足さない。重要な文字はSNSの安全領域内へ。", "en": "Build a 1080×1920 four-second looping poster from approved animated stickers. Place a bilingual title and store CTA centrally, surrounded by 13 reactions starting together at zero. Use warm paper, navy text and existing red artwork; no music or additional ornament. Keep important text in social safe areas."}, "note": {"ja": "無音の完成版。キャラクターとLINEロゴの権利は各権利者に帰属します。", "en": "The completed silent edition. Character and LINE mark rights remain with their respective owners."}, "kind": "FILM", "image": "/works/tako-stickers.jpg", "href": "/works/tako-stickers", "live": "https://videos.maepace.com/media/tako-stickers.mp4", "source": "https://github.com/ted-M-tech/tetsuya-creative-motions/tree/main/films/tako-stickers", "tags": ["HyperFrames", "APNG / VP9", "HTML / CSS"], "skills": ["HyperFrames", "APNG / VP9", "HTML / CSS"], "portrait": true},
+{"id": "tako-4280", "kind": "FILM", "title": {"ja": "4,280円 — 言える？標準語のアクセント。", "en": "¥4,280 — An accent challenge"}, "description": {"ja": "二人の自然な掛け合いを、キャラクターと字幕で見せる74秒。", "en": "A 74-second accent challenge built around a natural two-person exchange."}, "summary": {"ja": "提供された会話を切り詰めず、言い直しや間も含めて演出。発話に合わせて日英字幕と話者の表情を切り替え、最後に短い導線を添えました。", "en": "Preserve the supplied conversation, including pauses and retries. Match bilingual captions and character reactions to the speakers, then add a short ending."}, "portrait": true, "image": "/works/tako-4280.jpg", "href": "/works/tako-4280", "live": "https://videos.maepace.com/media/tako-4280.mp4", "source": "https://github.com/ted-M-tech/tetsuya-creative-motions/tree/main/films/tako-4280", "tags": ["Natural voice", "Bilingual captions"], "skills": ["音声タイミング設計", "字幕・キャラクター演出"], "prompt": {"ja": "縦型の日本語学習動画を制作する。提供された会話を切り詰めず、言い直しや間も含めて演出。発話に合わせて日英字幕と話者の表情を切り替え、最後に短い導線を添えました。 音声を先に確定し、発話単位のタイムコードを採る。 話者ごとに吹き出しとキャラクターを対応させる。 会話の間を残し、BGMを足さず声を主役にする。 承認済みの自作キャラクターと利用可能な背景を用意。実音声の長さを測り、字幕・話者・余白をスマホで確認して書き出す。", "en": "Create a vertical Japanese-learning film. Preserve the supplied conversation, including pauses and retries. Match bilingual captions and character reactions to the speakers, then add a short ending. Use authorized character art and background assets. Measure the original audio, align each caption to speech, and check mobile readability before rendering."}, "note": {"ja": "公開プロンプトは完成映像・残存資料から再構成した制作指示です。元の会話音声・キャラクター素材を自由配布するものではありません。", "en": "The public prompt is reconstructed from the finished film and surviving records. Original voices and character assets are not freely licensed."}},
+{"id": "tokyo-osaka", "kind": "FILM", "title": {"ja": "Tokyo vs Osaka — あいさつの音を比べる。", "en": "Tokyo vs Osaka — Hear the difference"}, "description": {"ja": "東京と大阪、5つのあいさつを15秒で聞き比べる。", "en": "Five greetings, two accents, in 15 seconds."}, "summary": {"ja": "左右の都市、紺と赤、声に合わせた明暗。音の違いを聞きながら、同じ言葉のアクセントを線で追える比較動画です。", "en": "Two cities, navy and red, and speaker-led dimming. Compare the same words by listening while following their pitch contours."}, "portrait": true, "image": "/works/tokyo-osaka.jpg", "href": "/works/tokyo-osaka", "live": "https://videos.maepace.com/media/tokyo-osaka.mp4", "source": "https://github.com/ted-M-tech/tetsuya-creative-motions/tree/main/films/tokyo-osaka", "tags": ["Natural voice", "Bilingual captions"], "skills": ["音声タイミング設計", "字幕・キャラクター演出"], "prompt": {"ja": "縦型の日本語学習動画を制作する。左右の都市、紺と赤、声に合わせた明暗。音の違いを聞きながら、同じ言葉のアクセントを線で追える比較動画です。 東京→大阪の順で、各ペアの自然音声を配置する。 こんにちは・おはよう・ありがとう・おかえり・ただいまを比較する。 発話中の側を明るくし、承認済みのピッチ線を固定表示する。 承認済みの自作キャラクターと利用可能な背景を用意。実音声の長さを測り、字幕・話者・余白をスマホで確認して書き出す。", "en": "Create a vertical Japanese-learning film. Two cities, navy and red, and speaker-led dimming. Compare the same words by listening while following their pitch contours. Use authorized character art and background assets. Measure the original audio, align each caption to speech, and check mobile readability before rendering."}, "note": {"ja": "公開プロンプトは完成映像・残存資料から再構成した制作指示です。元の会話音声・キャラクター素材を自由配布するものではありません。", "en": "The public prompt is reconstructed from the finished film and surviving records. Original voices and character assets are not freely licensed."}},
+{"id": "kansai-talk", "kind": "FILM", "title": {"ja": "中の人トーク — 関西人2人のリアルな会話。", "en": "Kansai Listening — A real conversation"}, "description": {"ja": "まずは字幕なしで。中の人の会話を使った28秒の聞き取り動画。", "en": "A 28-second listening challenge featuring the people behind the characters."}, "summary": {"ja": "作り込んだ例文ではなく、二人の会話を聞き取る体験に。最初に挑戦のルールを短く示し、キャラクターと大阪の風景で世界観をつなぎます。", "en": "A listening experience centered on a real exchange. Brief instructions introduce the challenge; characters and an Osaka backdrop keep the series coherent."}, "portrait": true, "image": "/works/kansai-talk.jpg", "href": "/works/kansai-talk", "live": "https://videos.maepace.com/media/kansai-talk.mp4", "source": "https://github.com/ted-M-tech/tetsuya-creative-motions/tree/main/films/kansai-talk", "tags": ["Natural voice", "Bilingual captions"], "skills": ["音声タイミング設計", "字幕・キャラクター演出"], "prompt": {"ja": "縦型の日本語学習動画を制作する。作り込んだ例文ではなく、二人の会話を聞き取る体験に。最初に挑戦のルールを短く示し、キャラクターと大阪の風景で世界観をつなぎます。 聞き取りの挑戦を冒頭で一言で伝える。 人の会話を素材にし、音声を無理に速めない。 同じシリーズの背景・キャラクター・字幕の体系を使う。 承認済みの自作キャラクターと利用可能な背景を用意。実音声の長さを測り、字幕・話者・余白をスマホで確認して書き出す。", "en": "Create a vertical Japanese-learning film. A listening experience centered on a real exchange. Brief instructions introduce the challenge; characters and an Osaka backdrop keep the series coherent. Use authorized character art and background assets. Measure the original audio, align each caption to speech, and check mobile readability before rendering."}, "note": {"ja": "公開プロンプトは完成映像・残存資料から再構成した制作指示です。元の会話音声・キャラクター素材を自由配布するものではありません。", "en": "The public prompt is reconstructed from the finished film and surviving records. Original voices and character assets are not freely licensed."}},
+{"id": "tako-line-stickers", "kind": "STICKERS", "title": {"ja": "たこ先生 — 毎日つかえる、動く関西弁。", "en": "Tako Sensei — Everyday Kansai stickers"}, "description": {"ja": "挨拶もツッコミも。24個でひとつのLINEスタンプ作品。", "en": "Greetings and playful reactions, in one 24-piece LINE sticker set."}, "summary": {"ja": "用途とセリフを先に決め、キャラクターの統一感と送った瞬間の伝わりやすさを優先。絵・動き・文字を分けて仕上げた、毎日の会話のためのセットです。", "en": "Start with conversational intent and phrases, then keep the character consistent. Artwork, motion and lettering are finished separately as one everyday set."}, "image": "/works/tako-line-stickers.jpg", "href": "/works/tako-line-stickers", "live": "https://store.line.me/stickershop/product/36261176/ja", "source": "https://github.com/ted-M-tech/tetsuya-creative-motions/tree/main/projects/tako-line-stickers", "tags": ["24 stickers", "APNG", "Character design"], "skills": ["用途・セリフ設計", "アニメーション", "透過・文字合成"], "prompt": {"ja": "日常会話で使う24個の動くスタンプを設計する。まず用途・セリフ・感情・動作を表にする。承認済みの自作キャラクターの顔・体型・色を固定し、1枚1動作で予備動作→主動作→余韻を作る。日本語文字は生成映像に任せず後から合成。APNG化し、明暗両背景で透過の縁、内部の白抜け、文字の読みやすさを検証する。提出時点のLINE仕様に合わせて容量・フレーム・ループを確認し、メイン画像・タブ画像・並び順を整える。", "en": "Design 24 animated stickers for everyday conversation. Map intent, phrase, emotion and action first. Preserve your approved character, with one main action per sticker. Add Japanese lettering after animation. Export APNG and inspect alpha edges and lettering on light and dark backgrounds. Validate against LINE’s submission requirements at release time, then prepare the main image, tab and display order."}, "note": {"ja": "商品画像は作品紹介のためのプレビューです。制作方法を公開していますが、スタンプ商品の素材・キャラクターの再配布を許諾するものではありません。", "en": "Product artwork is shown as a portfolio preview. The making-of does not grant redistribution rights to the sticker assets or character."}}
+ ]
+};
+
+export const lancloCreate = {
+  "title": {
+    "ja": "このLPを、あなたの手で。",
+    "en": "Make this landing page."
+  },
+  "intro": {
+    "ja": "完成見本を触って、プロンプトをコピー。素材もコードも、ひとつのキットに。",
+    "en": "Explore the finished page. Copy the prompt. Every asset and source file comes in one kit."
+  },
+  "preview": {
+    "ja": "動かせる完成見本",
+    "en": "Interactive preview"
+  },
+  "desktop": {
+    "ja": "PC",
+    "en": "Desktop"
+  },
+  "mobile": {
+    "ja": "スマホ",
+    "en": "Mobile"
+  },
+  "open": {
+    "ja": "大きく開く",
+    "en": "Open full preview"
+  },
+  "heading": {
+    "ja": "このLPを作る",
+    "en": "Create this LP"
+  },
+  "body": {
+    "ja": "下のプロンプトを、普段使っているAIコーディングエージェントに貼り付けてください。完成ソースの取得から起動まで依頼できます。",
+    "en": "Paste this prompt into your coding agent. It includes getting the finished source and opening a working preview."
+  },
+  "copy": {
+    "ja": "制作プロンプトをコピー",
+    "en": "Copy creation prompt"
+  },
+  "copied": {
+    "ja": "コピーしました。AIに貼り付けてください。",
+    "en": "Copied. Paste it into your agent."
+  },
+  "error": {
+    "ja": "コピーできませんでした。下の全文を選択してください。",
+    "en": "Copy failed. Select the full prompt below."
+  },
+  "expand": {
+    "ja": "プロンプト全文を見る",
+    "en": "Read the full prompt"
+  },
+  "kit": {
+    "ja": "入っているもの",
+    "en": "Included"
+  },
+  "includes": {
+    "ja": [
+      "完成LPのソースと固定依存関係",
+      "ロゴ・イラスト・写真・3言語の文章",
+      "起動手順・素材の出典"
+    ],
+    "en": [
+      "Finished source and locked dependencies",
+      "Logo, illustrations, photos and three-language copy",
+      "Run instructions and asset credits"
+    ]
+  },
+  "requirements": {
+    "ja": "Node.js 24・npm・Git。APIキー不要。",
+    "en": "Node.js 24, npm and Git. No API keys."
+  },
+  "source": {
+    "ja": "キットを開く",
+    "en": "Open the kit"
+  },
+  "skills": {
+    "ja": "制作スキルをまとめて入れる",
+    "en": "Install the design skill bundle"
+  },
+  "note": {
+    "ja": "この固定版を作るための新しいプロンプトです。制作当時の入力ログは制作ノートに残しています。",
+    "en": "A new prompt for this fixed edition. The original inputs remain in the production notes."
+  },
+  "history": {
+    "ja": "制作ノート・スキル・出典",
+    "en": "Notes, skills and credits"
+  },
+  "prompt": {
+    "ja": "Lancloの完成見本と同じ、イラストとアニメーションで伝える英語発音学習LPを作って、ブラウザで開いてください。提案書で終わらず、動くページまで仕上げてください。\n\n【完成見本と材料】\n公開キット：https://github.com/ted-M-tech/tetsuya-creative-motions\n固定版：lanclo-lp-create-v3\n対象：projects/lanclo-lp/source\n素材・ライセンス：projects/lanclo-lp/CREDITS.md\n完成ソース、依存関係のlockfile、ロゴ、イラスト、写真、3言語の文章を、この固定版から使ってください。外部サイトの見た目を推測して作る必要はありません。\n\n【作るページ】\nブランドはLanclo。落ち着いた青、クリーム、ミントを使い、読みやすい日本語と大きな見出しで構成します。\n・ヘッダーとヒーローを同じ青でつなぐ。「自分の声が、ネイティブのお手本に。」を主役にする。\n・録音→自分の声のお手本→聴いて発音する、の3ステップを横並びのイラストと連続する動きで見せる。\n・シャドーイングを重ねても、自分に似た声のお手本探しや直す場所の把握が難しい、という課題を描く。\n・発音分析と、その結果に合わせた次の練習を、具体的な文とデモ画面で見せる。\n・興味に合うニュースを英語教材にできることを、端末画面と8ジャンルの写真カルーセルで伝える。\n・PC・タブレット・スマホで続けられることを端末図で見せる。\n・研究は「約1.3倍」と比較グラフ。これは外部研究の得点上昇幅の比較なので、その条件と出典をキットどおり残す。\n・開発者2人の声を、丸い写真と白いカードで左右に並べる。背景はカナディアンロッキー。セリフはキットの原文どおり。\n・学び方の比較、料金、FAQ、最後のCTAまで含め、キットの全セクションを省略しない。\n\n【仕上がり】\nロゴの形、配色、写真、文章、セクション順、余白、アニメーションは完成ソースを基準にしてください。日本語・英語・韓国語の切替を維持します。横幅320・390・820・1440pxで読みやすく、スマホではカードを縦に並べます。動きを減らす設定では静かに表示します。\n\n【実装と起動】\n空の作業フォルダに公開キットを固定版で取得してください。既存のプロジェクトは上書きしないでください。\n対象ディレクトリで npm ci → npm run build → npm run dev -- --host 127.0.0.1 を実行し、プレビューURLを示してください。\nこの配布版はReact/TypeScriptをViteで静的出力する、API不要の独立したLPです。本番サイト全体やバックエンドを作る必要はありません。認証、課金、音声生成API、外部へのデプロイは実行しないでください。CTAはキットにある公開製品へのリンクとして維持します。\n\n【完了条件】\nページ全体、画像読込、各言語、PCとスマホの改行・横はみ出し、カルーセル、キーボード操作をブラウザで確認してください。実行できなかった確認は明示してください。最後にプレビューURLと起動・ビルドコマンドを返してください。",
+    "en": "Create and open the finished Lanclo English-pronunciation landing page shown in this portfolio. Deliver a working page, not a proposal.\n\nSOURCE KIT\nhttps://github.com/ted-M-tech/tetsuya-creative-motions\nPinned edition: lanclo-lp-create-v3\nProject: projects/lanclo-lp/source\nCredits: projects/lanclo-lp/CREDITS.md\nUse the finished components, dependency lockfile, logo, illustrations, photos and three-language copy from this edition.\n\nFINISHED PAGE\nUse the approved blue, cream and mint palette, generous typography and illustrated motion.\nInclude the shared blue header and hero; the three illustrated steps (record → own-voice model → listen and speak); shadowing and model-search frustration; pronunciation feedback feeding the next practice; interest-based news with actual device previews and eight photo categories; desktop/tablet/mobile continuation; the approximately 1.3× external-study score-gain comparison with its source and qualifications; two developer quotations with circular portraits in white cards over a Canadian Rockies photograph; learning-method comparison, pricing, FAQ and final CTA.\nPreserve the supplied copy, section order, brand shapes, spacing and animation. The research is not a Lanclo efficacy test. Do not invent current offers or product capabilities.\n\nBUILD\nCheck out the pinned kit in a new empty folder without overwriting existing work. In projects/lanclo-lp/source, run npm ci, npm run build, then npm run dev -- --host 127.0.0.1. Open the preview and give me its URL.\nThis self-contained export uses React/TypeScript and Vite static output. It needs no API keys or backend. Keep the existing CTA links to the live product. Do not configure authentication, payments, voice-generation services or deployment.\n\nACCEPTANCE\nKeep Japanese, English and Korean switching. Check the full page at 320, 390, 820 and 1440px, image loading, natural wrapping, no horizontal overflow, keyboard operation, motion and reduced-motion behavior. Stack the developer cards on mobile. Report any checks you could not run, and finish with the preview URL and run/build commands."
+  },
+  "demo": "https://videos.maepace.com/demos/lanclo-lp/",
+  "sourceUrl": "https://github.com/ted-M-tech/tetsuya-creative-motions/tree/lanclo-lp-create-v3/projects/lanclo-lp",
+  "skillsUrl": "https://github.com/ted-M-tech/tetsuya-creative-motions/blob/main/docs/LP-SKILL-INSTALL.ja.md"
+} as const;
