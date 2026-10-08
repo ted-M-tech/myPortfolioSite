@@ -752,3 +752,97 @@ export const openWorks = {
 {"id": "tako-line-stickers", "kind": "STICKERS", "title": {"ja": "たこ先生 — 毎日つかえる、動く関西弁。", "en": "Tako Sensei — Everyday Kansai stickers"}, "description": {"ja": "挨拶もツッコミも。24個でひとつのLINEスタンプ作品。", "en": "Greetings and playful reactions, in one 24-piece LINE sticker set."}, "summary": {"ja": "用途とセリフを先に決め、キャラクターの統一感と送った瞬間の伝わりやすさを優先。絵・動き・文字を分けて仕上げた、毎日の会話のためのセットです。", "en": "Start with conversational intent and phrases, then keep the character consistent. Artwork, motion and lettering are finished separately as one everyday set."}, "image": "/works/tako-line-stickers.jpg", "href": "/works/tako-line-stickers", "live": "https://store.line.me/stickershop/product/36261176/ja", "source": "https://github.com/ted-M-tech/tetsuya-creative-motions/tree/main/projects/tako-line-stickers", "tags": ["24 stickers", "APNG", "Character design"], "skills": ["用途・セリフ設計", "アニメーション", "透過・文字合成"], "prompt": {"ja": "日常会話で使う24個の動くスタンプを設計する。まず用途・セリフ・感情・動作を表にする。承認済みの自作キャラクターの顔・体型・色を固定し、1枚1動作で予備動作→主動作→余韻を作る。日本語文字は生成映像に任せず後から合成。APNG化し、明暗両背景で透過の縁、内部の白抜け、文字の読みやすさを検証する。提出時点のLINE仕様に合わせて容量・フレーム・ループを確認し、メイン画像・タブ画像・並び順を整える。", "en": "Design 24 animated stickers for everyday conversation. Map intent, phrase, emotion and action first. Preserve your approved character, with one main action per sticker. Add Japanese lettering after animation. Export APNG and inspect alpha edges and lettering on light and dark backgrounds. Validate against LINE’s submission requirements at release time, then prepare the main image, tab and display order."}, "note": {"ja": "商品画像は作品紹介のためのプレビューです。制作方法を公開していますが、スタンプ商品の素材・キャラクターの再配布を許諾するものではありません。", "en": "Product artwork is shown as a portfolio preview. The making-of does not grant redistribution rights to the sticker assets or character."}}
  ]
 };
+
+export const lancloCreate = {
+  "title": {
+    "ja": "このLPを、あなたの手で。",
+    "en": "Make this landing page."
+  },
+  "intro": {
+    "ja": "完成見本を触って、プロンプトをコピー。素材もコードも、ひとつのキットに。",
+    "en": "Explore the finished page. Copy the prompt. Every asset and source file comes in one kit."
+  },
+  "preview": {
+    "ja": "動かせる完成見本",
+    "en": "Interactive preview"
+  },
+  "desktop": {
+    "ja": "PC",
+    "en": "Desktop"
+  },
+  "mobile": {
+    "ja": "スマホ",
+    "en": "Mobile"
+  },
+  "open": {
+    "ja": "大きく開く",
+    "en": "Open full preview"
+  },
+  "heading": {
+    "ja": "このLPを作る",
+    "en": "Create this LP"
+  },
+  "body": {
+    "ja": "下のプロンプトを、普段使っているAIコーディングエージェントに貼り付けてください。完成ソースの取得から起動まで依頼できます。",
+    "en": "Paste this prompt into your coding agent. It includes getting the finished source and opening a working preview."
+  },
+  "copy": {
+    "ja": "制作プロンプトをコピー",
+    "en": "Copy creation prompt"
+  },
+  "copied": {
+    "ja": "コピーしました。AIに貼り付けてください。",
+    "en": "Copied. Paste it into your agent."
+  },
+  "error": {
+    "ja": "コピーできませんでした。下の全文を選択してください。",
+    "en": "Copy failed. Select the full prompt below."
+  },
+  "expand": {
+    "ja": "プロンプト全文を見る",
+    "en": "Read the full prompt"
+  },
+  "kit": {
+    "ja": "入っているもの",
+    "en": "Included"
+  },
+  "includes": {
+    "ja": [
+      "完成LPのソースと固定依存関係",
+      "ロゴ・イラスト・写真・3言語の文章",
+      "起動手順・素材の出典"
+    ],
+    "en": [
+      "Finished source and locked dependencies",
+      "Logo, illustrations, photos and three-language copy",
+      "Run instructions and asset credits"
+    ]
+  },
+  "requirements": {
+    "ja": "Node.js 24・npm・Git。APIキー不要。",
+    "en": "Node.js 24, npm and Git. No API keys."
+  },
+  "source": {
+    "ja": "キットを開く",
+    "en": "Open the kit"
+  },
+  "skills": {
+    "ja": "制作スキルをまとめて入れる",
+    "en": "Install the design skill bundle"
+  },
+  "note": {
+    "ja": "この固定版を作るための新しいプロンプトです。制作当時の入力ログは制作ノートに残しています。",
+    "en": "A new prompt for this fixed edition. The original inputs remain in the production notes."
+  },
+  "history": {
+    "ja": "制作ノート・スキル・出典",
+    "en": "Notes, skills and credits"
+  },
+  "prompt": {
+    "ja": "Lancloの完成見本と同じ、イラストとアニメーションで伝える英語発音学習LPを作って、ブラウザで開いてください。提案書で終わらず、動くページまで仕上げてください。\n\n【完成見本と材料】\n公開キット：https://github.com/ted-M-tech/tetsuya-creative-motions\n固定版：lanclo-lp-create-v3\n対象：projects/lanclo-lp/source\n素材・ライセンス：projects/lanclo-lp/CREDITS.md\n完成ソース、依存関係のlockfile、ロゴ、イラスト、写真、3言語の文章を、この固定版から使ってください。外部サイトの見た目を推測して作る必要はありません。\n\n【作るページ】\nブランドはLanclo。落ち着いた青、クリーム、ミントを使い、読みやすい日本語と大きな見出しで構成します。\n・ヘッダーとヒーローを同じ青でつなぐ。「自分の声が、ネイティブのお手本に。」を主役にする。\n・録音→自分の声のお手本→聴いて発音する、の3ステップを横並びのイラストと連続する動きで見せる。\n・シャドーイングを重ねても、自分に似た声のお手本探しや直す場所の把握が難しい、という課題を描く。\n・発音分析と、その結果に合わせた次の練習を、具体的な文とデモ画面で見せる。\n・興味に合うニュースを英語教材にできることを、端末画面と8ジャンルの写真カルーセルで伝える。\n・PC・タブレット・スマホで続けられることを端末図で見せる。\n・研究は「約1.3倍」と比較グラフ。これは外部研究の得点上昇幅の比較なので、その条件と出典をキットどおり残す。\n・開発者2人の声を、丸い写真と白いカードで左右に並べる。背景はカナディアンロッキー。セリフはキットの原文どおり。\n・学び方の比較、料金、FAQ、最後のCTAまで含め、キットの全セクションを省略しない。\n\n【仕上がり】\nロゴの形、配色、写真、文章、セクション順、余白、アニメーションは完成ソースを基準にしてください。日本語・英語・韓国語の切替を維持します。横幅320・390・820・1440pxで読みやすく、スマホではカードを縦に並べます。動きを減らす設定では静かに表示します。\n\n【実装と起動】\n空の作業フォルダに公開キットを固定版で取得してください。既存のプロジェクトは上書きしないでください。\n対象ディレクトリで npm ci → npm run build → npm run dev -- --host 127.0.0.1 を実行し、プレビューURLを示してください。\nこの配布版はReact/TypeScriptをViteで静的出力する、API不要の独立したLPです。本番サイト全体やバックエンドを作る必要はありません。認証、課金、音声生成API、外部へのデプロイは実行しないでください。CTAはキットにある公開製品へのリンクとして維持します。\n\n【完了条件】\nページ全体、画像読込、各言語、PCとスマホの改行・横はみ出し、カルーセル、キーボード操作をブラウザで確認してください。実行できなかった確認は明示してください。最後にプレビューURLと起動・ビルドコマンドを返してください。",
+    "en": "Create and open the finished Lanclo English-pronunciation landing page shown in this portfolio. Deliver a working page, not a proposal.\n\nSOURCE KIT\nhttps://github.com/ted-M-tech/tetsuya-creative-motions\nPinned edition: lanclo-lp-create-v3\nProject: projects/lanclo-lp/source\nCredits: projects/lanclo-lp/CREDITS.md\nUse the finished components, dependency lockfile, logo, illustrations, photos and three-language copy from this edition.\n\nFINISHED PAGE\nUse the approved blue, cream and mint palette, generous typography and illustrated motion.\nInclude the shared blue header and hero; the three illustrated steps (record → own-voice model → listen and speak); shadowing and model-search frustration; pronunciation feedback feeding the next practice; interest-based news with actual device previews and eight photo categories; desktop/tablet/mobile continuation; the approximately 1.3× external-study score-gain comparison with its source and qualifications; two developer quotations with circular portraits in white cards over a Canadian Rockies photograph; learning-method comparison, pricing, FAQ and final CTA.\nPreserve the supplied copy, section order, brand shapes, spacing and animation. The research is not a Lanclo efficacy test. Do not invent current offers or product capabilities.\n\nBUILD\nCheck out the pinned kit in a new empty folder without overwriting existing work. In projects/lanclo-lp/source, run npm ci, npm run build, then npm run dev -- --host 127.0.0.1. Open the preview and give me its URL.\nThis self-contained export uses React/TypeScript and Vite static output. It needs no API keys or backend. Keep the existing CTA links to the live product. Do not configure authentication, payments, voice-generation services or deployment.\n\nACCEPTANCE\nKeep Japanese, English and Korean switching. Check the full page at 320, 390, 820 and 1440px, image loading, natural wrapping, no horizontal overflow, keyboard operation, motion and reduced-motion behavior. Stack the developer cards on mobile. Report any checks you could not run, and finish with the preview URL and run/build commands."
+  },
+  "demo": "https://videos.maepace.com/demos/lanclo-lp/",
+  "sourceUrl": "https://github.com/ted-M-tech/tetsuya-creative-motions/tree/lanclo-lp-create-v3/projects/lanclo-lp",
+  "skillsUrl": "https://github.com/ted-M-tech/tetsuya-creative-motions/blob/main/docs/LP-SKILL-INSTALL.ja.md"
+} as const;
