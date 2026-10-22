@@ -1,11 +1,13 @@
 ---
 import {openWorks as c} from '../data/profile';
+// 枠は4列×3行。先頭と末尾が2マス使うので、ちょうど埋まるのは10件。作品集の先頭（新しい順）から自動で取る。
+const tiles = c.items.slice(0, 10);
 ---
 <section class="open-works" id="open-works" aria-labelledby="works-title">
  <div class="wrap">
   <div class="works-heading"><h2 id="works-title"><span class="ja">{c.title.ja}</span><span class="en">{c.title.en}</span></h2><p><span class="ja">{c.description.ja}</span><span class="en">{c.description.en}</span></p></div>
   <a class="collection" href={c.href}>
-   <div class="collection-device" aria-hidden="true"><div class="collection-screen">{c.items.map(item=><div class:list={['collection-tile',item.id, {portrait:'portrait' in item && item.portrait}]}><img src={item.image} alt="" width="1440" height="960" loading="lazy"/><span class="tile-label">{item.title.en.split(' — ')[0]} / {item.kind}</span></div>)}</div></div>
+   <div class="collection-device" aria-hidden="true"><div class="collection-screen">{tiles.map(item=><div class:list={['collection-tile',item.id, {portrait:'portrait' in item && item.portrait}]}><img src={item.image} alt="" width="1440" height="960" loading="lazy"/><span class="tile-label">{item.title.en.split(' — ')[0]} / {item.kind}</span></div>)}</div></div>
    <div class="collection-caption"><span class="collection-types">{c.overviewTypes}</span><span class="collection-action"><span class="ja">{c.action.ja}</span><span class="en">{c.action.en}</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span></div>
   </a>
  </div>
