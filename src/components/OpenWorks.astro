@@ -2,7 +2,7 @@
 import {openWorks as c} from '../data/profile';
 // 量を見せる壁。作品と各話のポスターを全部並べ、件数から格子を決める。作品を足してもここは触らない。
 type Tile={id:string;image:string;label?:string;portrait?:boolean};
-const works:Tile[]=c.items.flatMap(item=>'episodes' in item&&item.episodes?.length
+const works:Tile[]=c.items.flatMap((item):Tile[]=>'episodes' in item&&item.episodes?.length
  ?item.episodes.map(e=>({id:e.id,image:e.image,portrait:true}))
  :[{id:item.id,image:item.image,label:`${item.title.en.split(' — ')[0]} / ${item.kind}`,portrait:'portrait' in item&&item.portrait}]);
 // 枠の縦横比に対し、セルが縦長ポスターに近く(3:4)、空きマスが少ない列数を選ぶ。
