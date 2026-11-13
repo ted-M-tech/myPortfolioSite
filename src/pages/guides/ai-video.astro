@@ -67,14 +67,15 @@ const FAQ = [
   <section id="s1" class="card">
     <h2><span class="n">1</span>キットをダウンロード</h2>
     <a class="btn primary" href={KIT_URL} target="_blank" rel="noopener noreferrer">キットをダウンロード（kit.zip）</a>
-    <p class="small">Google ドライブが開きます。右上の「ダウンロード」から保存してください。「ダウンロード」フォルダに置いたまま、展開しなくて大丈夫です。</p>
+    <p class="small">Google ドライブが開いたら、ダウンロードのボタン（↓のマーク）で保存してください。保存先は「ダウンロード」フォルダのままで、展開もしなくて大丈夫です。</p>
   </section>
 
   <section id="s2" class="card">
     <h2><span class="n">2</span>Claude Code を開く</h2>
-    <p>Mac の「ターミナル」を開いて、下の1行を貼って Enter。作業用フォルダを作って Claude Code を起動します。</p>
+    <p>使いやすい方でどうぞ。どちらでも同じように進められます。</p>
+    <div class="way"><b>アプリで</b>Claude のデスクトップアプリを開いて「Code」を選び、作業用のフォルダ（例：新しく作った「ai-video」フォルダ）を選びます。<a href="https://code.claude.com/docs/ja/desktop" target="_blank" rel="noopener noreferrer">アプリの使い方</a></div>
+    <div class="way"><b>ターミナルで</b>Mac の「ターミナル」に下の1行を貼って Enter。作業用フォルダを作って Claude Code を起動します。<a href="https://code.claude.com/docs/ja/quickstart" target="_blank" rel="noopener noreferrer">インストール手順</a></div>
     <div class="code"><pre id="p-start">{START}</pre><button class="copy" data-target="p-start" type="button">コピー</button></div>
-    <p class="small">Claude Code がまだ入っていなければ、<a href="https://code.claude.com/docs/ja/overview" target="_blank" rel="noopener noreferrer">公式の手順</a>で先にインストールしてください。</p>
   </section>
 
   <section id="s3" class="card">
@@ -148,6 +149,9 @@ const FAQ = [
   .card { background: var(--surface-raised); border: 1px solid var(--line); border-radius: 20px; padding: 26px 26px 22px; margin-top: 18px; scroll-margin-top: 90px; }
   .card h2 { display: flex; align-items: center; gap: 12px; font-size: 22px; margin: 0 0 12px; }
   .n { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: #fff; font: 800 17px/1 Geist, sans-serif; flex: none; }
+  .way { font-size: 16px; line-height: 1.8; padding: 12px 16px; margin: 10px 0; border-radius: 14px; background: var(--surface); }
+  .way b { display: block; font-weight: 800; margin-bottom: 2px; }
+  .way a { margin-left: 6px; font-size: 14px; text-decoration: underline; }
   .card p { font-size: 16px; line-height: 1.85; margin: 8px 0 14px; }
   code { font-family: ui-monospace, Menlo, monospace; background: var(--surface-sunken); padding: 1px 6px; border-radius: 6px; font-size: .92em; }
   .code { position: relative; background: #17140f; border-radius: 14px; margin: 10px 0 12px; }
