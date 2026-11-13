@@ -71,8 +71,9 @@ src/
 
 ## Deployment
 
-Push to `main` → **Workers Builds** builds and deploys automatically.
-Build command `pnpm build`, deploy command `pnpm exec wrangler deploy`.
+Deploy by hand from a clean `main`: `pnpm run deploy`. Work on a branch, merge to `main`, then deploy.
+**Workers Builds** (push to `main`) has failed on every build since 2026-07, so it does not deploy;
+fix it from the Cloudflare build log before relying on it again.
 
 `www` → apex is a Cloudflare **Redirect Rule**, not code — there is no Worker to put it in.
 
