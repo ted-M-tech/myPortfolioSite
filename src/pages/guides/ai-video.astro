@@ -37,13 +37,6 @@ const MAIN_TAIL = `始める前に：
 - 選ぶところ・確認するところでは必ず止まって私に聞いて。勝手に進めないで。投稿や課金はしないで。
 - 最後にインスタ用のサムネイルも10案出して。`;
 
-const FIXES = [
-  ['キャラ', ['一気にしょぼくなった。前の○番の雰囲気に戻して', '愛らしさがなくなった。参考の絵っぽさを残して大人っぽく', 'もう少しラフにしたら？30案出して', 'メガネ不要・帽子不要・髪は普通の短髪']],
-  ['動き', ['顔も揺れている。顔は固定して', '揺れが速すぎる。もっとゆるく', 'キャラがずっと同じ方向を向いている。場面ごとに歩いて移動させて']],
-  ['構成・テンポ', ['刺さらない。フック時点でキャラに喋らせて', '背景もなぜ1パターン？テンポ良く変えて', '○○のあとに空白が空く。自然にして', 'CTAに詰め込みすぎ。コメントのお願いを先に出して、最後にキャラがカードに飛び込む感じ']],
-  ['音・見た目', ['効果音がAIっぽい。実録音に替えて、earshot で聞いて直して', 'ここの絵が安っぽい。図形の代わりに本物の画面や素材にして', 'アカウント名・アプリ名は出さない。見た目で伝えて']],
-] as const;
-
 const NEED = [
   ['Mac', 'macOS で確認しています（Windows・Linux は未確認）'],
   ['Claude Code', 'Claude の有料プラン。1本作るとかなりの量を使います'],
@@ -56,8 +49,6 @@ const FAQ = [
   ['途中で止まった・エラーが出た', 'そのまま「エラーを読んで直して、続きから進めて」と Claude Code に伝えてください。ツールの仕様が変わったときは「最新の公式手順を調べて直して」が効きます。'],
   ['「キットが見つからない」と言われた', 'kit.zip を置いた場所（例：「ダウンロードフォルダにある」）を伝えてください。名前を変えていても大丈夫です。'],
   ['お金はいくらかかる？', 'Claude と ChatGPT の有料プランが前提です。キット自体と、Rive・効果音・earshot・HyperFrames は無料です。有料のものを使う前には、必ず確認するように指示してあります。'],
-  ['勝手に投稿されない？', 'されません。投稿・課金・インストールは、すべてあなたの OK を待つように書いてあります。'],
-  ['キャラは何を描いてもいい？', 'オリジナルにしてください。既存のアニメ・ゲームのキャラや実在の人物に似せないのがルールです。CC BY の効果音を使ったら、投稿にクレジットを書きます（Claude Code が一覧を作ります）。'],
 ] as const;
 ---
 <Learn title="AI解説動画キットの使い方" description="Claude Code にコピペするだけで、線画キャラが喋って動く縦型の解説動画を作れるキットの使い方。">
@@ -66,24 +57,17 @@ const FAQ = [
     <p class="eyebrow">AI VIDEO KIT</p>
     <h1>AIっぽくない解説動画を、<br />Claude Code で作るキット</h1>
     <p class="lead">線画のキャラが喋って動く縦型動画（リール・TikTok、30〜50秒）を、Claude Code が監督になって作ります。<br />このページの手順どおりに<strong>コピーして貼るだけ</strong>で進められます。</p>
-    <a class="btn primary" href={KIT_URL} target="_blank" rel="noopener noreferrer">キットをダウンロード（kit.zip）</a>
-    <p class="note">Google ドライブが開きます。右上の「ダウンロード」から保存してください。展開しなくて大丈夫です。</p>
   </header>
 
-  <nav class="toc" aria-label="手順">
-    <a href="#need">0. 用意するもの</a><a href="#s1">1. ダウンロード</a><a href="#s2">2. Claude Code を開く</a><a href="#s3">3. 準備をコピペ</a><a href="#s4">4. 動画を作る</a><a href="#s5">5. 直したいとき</a><a href="#faq">よくある質問</a>
-  </nav>
-
   <section id="need" class="card">
-    <h2><span class="n">0</span>用意するもの</h2>
-    <ul class="checks">{NEED.map(([k, v]) => <li><label><input type="checkbox" /><b>{k}</b><span>{v}</span></label></li>)}</ul>
-    <p class="small">チェックは自分用のメモです（どこにも送信されません）。</p>
+    <h2>用意するもの</h2>
+    <ul class="checks">{NEED.map(([k, v]) => <li><b>{k}</b><span>{v}</span></li>)}</ul>
   </section>
 
   <section id="s1" class="card">
     <h2><span class="n">1</span>キットをダウンロード</h2>
-    <p>上のボタンから <code>kit.zip</code> を保存します。「ダウンロード」フォルダに置いたままで OK です。</p>
-    <a class="btn" href={KIT_URL} target="_blank" rel="noopener noreferrer">kit.zip を開く</a>
+    <a class="btn primary" href={KIT_URL} target="_blank" rel="noopener noreferrer">キットをダウンロード（kit.zip）</a>
+    <p class="small">Google ドライブが開きます。右上の「ダウンロード」から保存してください。「ダウンロード」フォルダに置いたまま、展開しなくて大丈夫です。</p>
   </section>
 
   <section id="s2" class="card">
@@ -108,15 +92,7 @@ const FAQ = [
       <label>長さ<select id="f-len"><option>30秒くらい</option><option selected>35秒くらい</option><option>45秒くらい</option><option>60秒くらい</option></select></label>
     </div>
     <div class="code tall"><pre id="p-main" data-head={MAIN_HEAD} data-tail={MAIN_TAIL}></pre><button class="copy" data-target="p-main" type="button">コピー</button></div>
-    <p class="small">途中で「どれにする？」と聞かれたら、番号や好みで答えてください。勝手に先へは進みません。</p>
-  </section>
-
-  <section id="s5" class="card">
-    <h2><span class="n">5</span>直したいとき</h2>
-    <p>実際の制作で使った直しの言葉です。そのまま言えば伝わります（タップでコピー）。</p>
-    {FIXES.map(([g, list]) => (
-      <div class="fixgroup"><h3>{g}</h3><div class="chips">{list.map((t) => <button class="chip" type="button" data-copy={t}>{t}</button>)}</div></div>
-    ))}
+    <p class="small">途中で「どれにする？」と聞かれたら、番号や好みで答えてください。直したいところも、普通の言葉で伝えれば直してくれます。</p>
   </section>
 
   <section id="faq" class="card">
@@ -148,8 +124,6 @@ const FAQ = [
   };
   document.querySelectorAll<HTMLButtonElement>('button.copy').forEach((b) =>
     b.addEventListener('click', () => copy(document.getElementById(b.dataset.target || '')?.textContent || '', b)));
-  document.querySelectorAll<HTMLButtonElement>('button.chip').forEach((b) =>
-    b.addEventListener('click', () => copy(b.dataset.copy || '', b)));
 
   const main = document.getElementById('p-main');
   const field = (id: string) => (document.getElementById(id) as HTMLInputElement | HTMLSelectElement | null)?.value.trim() || '';
@@ -171,8 +145,6 @@ const FAQ = [
   .btn { display: inline-block; padding: 12px 22px; border-radius: 999px; border: 1.5px solid var(--ink); font-weight: 700; text-decoration: none; color: var(--ink); background: var(--surface-raised); }
   .btn.primary { background: var(--ink); color: var(--paper); padding: 16px 28px; font-size: 17px; }
   .btn:hover { opacity: .85; }
-  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 26px 0 8px; }
-  .toc a { font-size: 13px; padding: 6px 12px; border-radius: 999px; background: var(--surface-sunken); color: var(--text); text-decoration: none; }
   .card { background: var(--surface-raised); border: 1px solid var(--line); border-radius: 20px; padding: 26px 26px 22px; margin-top: 18px; scroll-margin-top: 90px; }
   .card h2 { display: flex; align-items: center; gap: 12px; font-size: 22px; margin: 0 0 12px; }
   .n { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: #fff; font: 800 17px/1 Geist, sans-serif; flex: none; }
@@ -185,17 +157,13 @@ const FAQ = [
   .copy:active { transform: scale(.96); }
   .checks { list-style: none; padding: 0; margin: 6px 0 4px; }
   .checks li { border-top: 1px solid var(--line); }
-  .checks label { display: grid; grid-template-columns: 22px 150px 1fr; gap: 10px; align-items: baseline; padding: 12px 2px; font-size: 15px; line-height: 1.6; cursor: pointer; }
+  .checks li { display: grid; grid-template-columns: 150px 1fr; gap: 10px; align-items: baseline; padding: 12px 2px; font-size: 15px; line-height: 1.6; }
   .checks b { font-weight: 800; }
   .checks span { color: var(--text-muted); }
   .form { display: grid; gap: 12px; margin: 6px 0 4px; }
   .form label { display: grid; gap: 6px; font-size: 14px; font-weight: 800; }
   .form input, .form select { font: inherit; font-weight: 500; font-size: 16px; padding: 12px 14px; border-radius: 12px; border: 1.5px solid var(--line-strong); background: var(--surface); color: var(--text); }
   .form input:focus, .form select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
-  .fixgroup h3 { font-size: 15px; margin: 16px 0 8px; color: var(--text-muted); }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .chip { text-align: left; font: 500 14px/1.5 inherit; padding: 9px 14px; border-radius: 12px; border: 1px solid var(--line-strong); background: var(--surface); color: var(--text); cursor: pointer; }
-  .chip:hover { border-color: var(--accent); }
   details { border-top: 1px solid var(--line); padding: 12px 0; }
   summary { font-weight: 800; font-size: 16px; cursor: pointer; }
   details p { margin: 8px 0 2px; color: var(--text-muted); }
@@ -204,8 +172,7 @@ const FAQ = [
   #toast.on { opacity: 1; transform: translate(-50%, 0); }
   @media (max-width: 600px) {
     .card { padding: 20px 16px 16px; border-radius: 16px; }
-    .checks label { grid-template-columns: 22px 1fr; }
-    .checks span { grid-column: 2; }
+    .checks li { grid-template-columns: 1fr; gap: 2px; }
     .code pre { padding-right: 18px; padding-top: 52px; }
   }
 </style>
