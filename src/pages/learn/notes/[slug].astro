@@ -1,0 +1,10 @@
+---
+import {getArticles} from '../../../lib/learning';
+import {render} from 'astro:content';
+import Learn from '../../../layouts/Learn.astro';
+import { learning as l } from '../../../data/profile';
+export async function getStaticPaths(){return (await getArticles()).map(note=>({params:{slug:note.slug},props:{note}}));}
+const {note:n}=Astro.props;
+const {Content}=await render(n.entry);
+---
+<Learn indexable={n.status==='published'} title={n.title} description={n.summary}><div class="article"><header class="detail-head"><a class="back-link" href="/learn/blog">← ブログ</a><p class="eyebrow">FIELD NOTES / {n.category}</p><h1>{n.title}</h1><p>{n.summary}</p></header>{n.status!=='published' && <div class="sample-label">{l.labels.sample}</div>}<p class="article-meta">更新：{n.updatedAt}{n.verifiedAt && ` / 検証：${n.verifiedAt}`}</p><div class="markdown-body"><Content /></div><a class="button dark" href="/learn/blog">ブログに戻る<span>↗</span></a></div></Learn>

@@ -1,0 +1,84 @@
+{
+  "repository": "https://github.com/ted-M-tech/japanese-ai-friends",
+  "verified_main_commit": "86fc1e113e1f63a76f06d2d139eb1f3b5dc8be31",
+  "examples": [
+    {
+      "content_id": "0080",
+      "asset": "reel-frame.png",
+      "delivery_url": "https://drive.google.com/file/d/1xhjr02Z-M1O_tTJZPnKQp9wZdPjM_kFW/view",
+      "source_sha256": "e6756e47fdc28dde343331494259dc37071fc16f9ff1811b0dca56540b6750fd",
+      "asset_sha256": "359181b6d7a024d81099287b17a8613f5246a8b830841a1f24119639c620b104",
+      "capture_seconds": 0.8
+    },
+    {
+      "content_id": "0086",
+      "asset": "story-question.png",
+      "delivery_url": "https://drive.google.com/file/d/1SDYPMSezDH8roemFjqesZyXfV_aycob8/view",
+      "source_sha256": "26f8181677ad349a7e3792fc11d8bcca688b3d3d8c38bf951e34d9ee67695bfe",
+      "asset_sha256": "26f8181677ad349a7e3792fc11d8bcca688b3d3d8c38bf951e34d9ee67695bfe"
+    },
+    {
+      "content_id": "0080",
+      "asset": "greetings.mp4",
+      "delivery_url": "https://drive.google.com/file/d/1xhjr02Z-M1O_tTJZPnKQp9wZdPjM_kFW/view",
+      "source_sha256": "e6756e47fdc28dde343331494259dc37071fc16f9ff1811b0dca56540b6750fd",
+      "role": "unchanged teaching sample; production review, not approved master"
+    },
+    {
+      "content_id": "0033",
+      "asset": "carousel-01.png",
+      "source_path": "content/social/posts/0033/formats/carousel/.work/renders/slide-01.png",
+      "asset_sha256": "52e6f3cdfeaf0f4867723c64c268d9fffd315bca5be59f5eb24adbe524122783",
+      "role": "existing production sample; no published-post or approved-master claim; inspected against source QA"
+    },
+    {
+      "content_id": "0033",
+      "asset": "carousel-02.png",
+      "source_path": "content/social/posts/0033/formats/carousel/.work/renders/slide-02.png",
+      "asset_sha256": "5c577a1d73d3329b7c026f519daf71449144f0d682bdd5808d36772782639037",
+      "role": "existing production sample; no published-post or approved-master claim; inspected against source QA"
+    },
+    {
+      "content_id": "0033",
+      "asset": "carousel-03.png",
+      "source_path": "content/social/posts/0033/formats/carousel/.work/renders/slide-03.png",
+      "asset_sha256": "942fd727e6ea213e47b81bd1f1a52933c2bd39194b9b588ed5588d3718fae431",
+      "role": "existing production sample; no published-post or approved-master claim; inspected against source QA"
+    },
+    {
+      "content_id": "0033",
+      "asset": "carousel-04.png",
+      "source_path": "content/social/posts/0033/formats/carousel/.work/renders/slide-04.png",
+      "asset_sha256": "cb19158080bc4ecd28f38cfa459da870eb4a1c83f93e3fe8b1c06d376a8d4572",
+      "role": "existing production sample; no published-post or approved-master claim; inspected against source QA"
+    },
+    {
+      "content_id": "0033",
+      "asset": "carousel-05.png",
+      "source_path": "content/social/posts/0033/formats/carousel/.work/renders/slide-05.png",
+      "asset_sha256": "b167631847277c9d22b0d9001a5dbc34b1cc324c09e92f6708466a7b566e2055",
+      "role": "existing production sample; no published-post or approved-master claim; inspected against source QA"
+    },
+    {
+      "content_id": "0033",
+      "asset": "carousel-06.png",
+      "source_path": "content/social/posts/0033/formats/carousel/.work/renders/slide-06.png",
+      "asset_sha256": "e3d9318fb47c71dd511fd328bb21539e480a48bd5d827e82e1205807eb4b963b",
+      "role": "existing production sample; no published-post or approved-master claim; inspected against source QA"
+    },
+    {
+      "content_id": "0033",
+      "asset": "carousel-07.png",
+      "source_path": "content/social/posts/0033/formats/carousel/.work/renders/slide-07.png",
+      "asset_sha256": "d26a0a31a24a2d86c3470d2cf77814f96c43ed581cdb2c743e307172a1273622",
+      "role": "existing production sample; no published-post or approved-master claim; inspected against source QA"
+    },
+    {
+      "content_id": "0033",
+      "asset": "carousel-08.png",
+      "source_path": "content/social/posts/0033/formats/carousel/.work/renders/slide-08.png",
+      "asset_sha256": "ef02a4d071625e3e3be6ef876593471ec4a4d94274f9901a1d03923213a88139",
+      "role": "existing production sample; no published-post or approved-master claim; inspected against source QA"
+    }
+  ]
+}

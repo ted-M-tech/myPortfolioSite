@@ -1,0 +1,7 @@
+# Local only: copy to ignored .dev.vars and enter a restricted SANDBOX key.
+STRIPE_RESTRICTED_KEY=
+# JSON mapping course slug to Stripe sandbox one-time Price ID. Empty disables checkout.
+STRIPE_COURSE_PRICES={}
+
+# Astro local preview origin (omit in production to use request origin).
+CHECKOUT_ORIGIN=http://127.0.0.1:4323

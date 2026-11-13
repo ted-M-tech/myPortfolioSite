@@ -1,0 +1,16 @@
+---
+import BookingCalendar from '../../components/BookingCalendar.astro';
+import {getBookingUrl} from '../../data/integrations';
+import Learn from '../../layouts/Learn.astro';
+const bookingUrl=getBookingUrl();
+---
+<Learn title="初回無料相談" description="AIの学び方や仕事への導入について、30分のオンライン無料相談。カレンダーから日時を選んで予約できます。">
+<section class="wrap learn-intro"><p class="eyebrow">MAEPACE / FREE CONSULTATION</p><h1>次の一歩を、一緒に。</h1><p>AIの学び方、仕事への導入、制作の相談。<br/>まずは30分、やりたいことを聞かせてください。</p></section>
+<section class="wrap live-calendar">
+{bookingUrl?<><p class="calendar-help">ご都合のよい日時を選んでください。予約画面のタイムゾーンをご確認ください。</p><p class="calendar-help">予約情報の取り扱いは<a href="/learn/privacy">プライバシー案内</a>をご確認ください。</p><BookingCalendar /></>:<p>予約受付を準備しています。</p>}
+</section>
+</Learn>
+
+<style>
+.live-calendar{padding-bottom:70px}.calendar-help{font-size:13px;color:var(--text-muted);margin-bottom:20px}#cal-booking{width:100%;min-height:680px;overflow:auto}.calendar-fallback{font-size:13px;display:inline-block;margin-top:16px;border-bottom:1px solid var(--line)}
+</style>

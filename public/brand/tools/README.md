@@ -102,3 +102,5 @@ Cursor のアセットは角が立った正方形で配布されている。丸�
 各社の名称とマークは各社に帰属する。ここでの使用は「実際に使っている道具を
 事実として示す」目的に限る。提携や推奨を示唆しない旨はヒーロー内に明記している
 （`ToolUniverse.astro` の `.marks-note`）。
+
+- Gemini: official Google asset, https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg (reference link shortcut).

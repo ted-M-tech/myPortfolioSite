@@ -4,12 +4,12 @@
   "compatibility_date": "2026-07-19",
   "account_id": "76b7441b99478c7d2bb1accbee256299",
 
-  // main を書かない = Worker コードを持たない静的アセット配信。
-  // このサイトにサーバー処理は無いので、リクエストごとに Worker を起こす理由がない。
-  // サーバー処理が要るようになったら @astrojs/cloudflare ではなく
-  // その経路だけを持つ Worker を足すこと（サイト全体を SSR にしない）。
+  // Payment APIs only; all pages remain static Astro assets.
+  "main": "server/payments.mjs",
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/payments/*"],
     "not_found_handling": "404-page"
   },
 

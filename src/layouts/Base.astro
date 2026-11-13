@@ -1,4 +1,5 @@
 ---
+import LanguageBootstrap from "../components/LanguageBootstrap.astro";
 import "../styles/global.css";
 import { site, person } from "../data/profile";
 
@@ -25,6 +26,7 @@ const ogImage = new URL("/og-v7.png", site.url).href;
 <html lang="en" data-lang="en">
   <head>
     <meta charset="utf-8" />
+    <LanguageBootstrap />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -76,18 +78,6 @@ const ogImage = new URL("/og-v7.png", site.url).href;
       JS が無効なら要素は最初から見えたままになり、空白ページにならない。
       描画前に付けたいので inline かつ is:inline。
     -->
-    <script is:inline>
-      document.documentElement.classList.add("js");
-      try {
-        const saved = localStorage.getItem("mp-lang");
-        if (saved === "ja" || saved === "en") {
-          document.documentElement.setAttribute("data-lang", saved);
-          document.documentElement.lang = saved;
-        }
-      } catch {
-        /* localStorage が使えない環境では既定の英語のまま */
-      }
-    </script>
   </head>
 
   <body>

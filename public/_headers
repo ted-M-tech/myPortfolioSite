@@ -1,0 +1,10 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+/learn/purchase-preview/*
+  X-Robots-Tag: noindex, nofollow
+/learn/mentoring-checkout
+  X-Robots-Tag: noindex, nofollow
+/learn/payment-result
+  X-Robots-Tag: noindex, nofollow

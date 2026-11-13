@@ -1,0 +1,7 @@
+---
+import AskAI from './AskAI.astro';
+import {site,siteNavigation as n,marksNote} from '../data/profile';
+---
+<div class="wrap" id="ask-ai"><AskAI /></div>
+<footer class="site-footer"><div class="footer-main"><a class="footer-brand" href="/">{site.brand}</a><nav aria-label="Footer">{[...n.links,n.privacy].map(link=><a href={link.href}><span class="ja">{link.ja}</span><span class="en">{link.en}</span></a>)}<a href={n.consult.href}><span class="ja">{n.consult.ja}</span><span class="en">{n.consult.en}</span></a></nav></div><div class="footer-small"><small>© {new Date().getFullYear()} {site.brand}</small><p><span class="ja">{marksNote.ja}</span><span class="en">{marksNote.en}</span></p></div></footer>
+<style>.site-footer{padding:32px var(--pad-x);border-top:1px solid var(--line);color:var(--text);background:var(--paper);font-family:var(--font-sans)}.footer-main,.footer-small{max-width:1280px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:24px}.footer-brand{font-size:19px;font-weight:600}.site-footer nav{display:flex;flex-wrap:wrap;gap:12px 24px;font-size:12px}.site-footer nav a{min-height:32px;display:inline-flex;align-items:center}.footer-small{margin-top:20px;align-items:start;color:var(--text-muted)}.footer-small small,.footer-small p{font-size:11px;line-height:1.7;letter-spacing:0;margin:0}@media(max-width:700px){.footer-main,.footer-small{flex-direction:column;align-items:start;gap:16px}.site-footer{padding-block:28px}}</style>

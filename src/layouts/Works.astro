@@ -1,0 +1,9 @@
+---
+import Base from './Base.astro';
+import Nav from '../components/Nav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+const {title,description}=Astro.props;
+---
+<Base title={title} description={description}><Nav/><main id="main" class="works-main"><slot/></main><SiteFooter/></Base>
+<script>import {initLang} from '../scripts/lang';initLang();</script>
+<style>.works-main{min-height:65vh;padding-bottom:80px}</style>

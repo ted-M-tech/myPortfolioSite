@@ -1,0 +1,8 @@
+---
+import Learn from '../../layouts/Learn.astro';
+import NoteArticles from '../../components/NoteArticles.astro';
+import PageHeading from '../../components/PageHeading.astro';
+import {siteNavigation as n} from '../../data/profile';
+---
+<Learn title={n.blog.title} description={n.blog.description}><PageHeading title={n.blog.title} english={n.blog.en} description={n.blog.description}/><section class="wrap blog-list"><NoteArticles /></section></Learn>
+<style>.blog-list{padding-bottom:64px}</style>

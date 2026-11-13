@@ -1,0 +1,9 @@
+---
+import Learn from '../../layouts/Learn.astro';
+import CourseCheckout from '../../components/CourseCheckout.astro';
+import {mentoring} from '../../data/mentoring';
+---
+<Learn title="伴走サポート / テスト決済">
+<section class="wrap payment"><a href="/learn/mentoring">← 伴走サポートへ</a><h1>伴走サポートのテスト決済</h1><p>1か月・10,000円のキャンペーン。自動更新はありません。</p><CourseCheckout slug={mentoring.slug} heading="Stripeで、支払いの流れを確認する" pending="テスト決済の接続設定中です。実際の申し込み・請求は行いません。"/><p class="fine">この画面は開発用です。支払っても契約成立・面談予約は行われません。</p></section>
+</Learn>
+<style>.payment{max-width:760px;padding-block:40px}.payment h1{font-size:28px;margin:20px 0}.payment>a,.fine{font-size:12px;color:var(--text-muted)}</style>

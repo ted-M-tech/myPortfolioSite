@@ -1,15 +1,16 @@
 ---
 import Base from "../layouts/Base.astro";
+import HomeLearning from '../components/HomeLearning.astro';
+import SiteFooter from '../components/SiteFooter.astro';
 import Nav from "../components/Nav.astro";
 import ToolUniverse from "../components/ToolUniverse.astro";
 import Marquee from "../components/Marquee.astro";
 import Stats from "../components/Stats.astro";
+import OpenWorks from "../components/OpenWorks.astro";
 import Work from "../components/Work.astro";
-import Ethos from "../components/Ethos.astro";
 import Skills from "../components/Skills.astro";
 import Path from "../components/Path.astro";
 import Recommendations from "../components/Recommendations.astro";
-import Process from "../components/Process.astro";
 import Services from "../components/Services.astro";
 import Play from "../components/Play.astro";
 import Contact from "../components/Contact.astro";
@@ -24,14 +25,15 @@ import { site } from "../data/profile";
     <Marquee />
     <Stats />
     <Work />
-    <Ethos />
+    <OpenWorks />
+    <HomeLearning />
     <Skills />
-    <Process />
     <Recommendations />
     <Play />
     <Services />
     <Contact />
   </main>
+  <SiteFooter />
 </Base>
 
 <script>

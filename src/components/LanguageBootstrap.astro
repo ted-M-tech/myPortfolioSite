@@ -1,0 +1,13 @@
+<!-- Critical language CSS is inline, before any body markup or external styles. -->
+<style is:inline>
+  html[data-lang="ja"] .en, html[data-lang="en"] .ja { display:none !important; }
+</style>
+<script is:inline>
+  document.documentElement.classList.add('js');
+  const requestedLanguage = new URLSearchParams(location.search).get('lang');
+  let savedLanguage;
+  try { savedLanguage = localStorage.getItem('mp-lang'); } catch { /* Storage is optional. */ }
+  const initialLanguage = [requestedLanguage, savedLanguage].find(value => value === 'ja' || value === 'en') || (navigator.language.startsWith('ja') ? 'ja' : 'en');
+  document.documentElement.dataset.lang = initialLanguage;
+  document.documentElement.lang = initialLanguage;
+</script>
