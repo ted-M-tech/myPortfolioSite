@@ -1,0 +1,12 @@
+---
+import {getNoteArticles} from '../lib/note';
+interface Props {limit?:number;compact?:boolean}
+const {limit=25,compact=false}=Astro.props;
+const {profile,articles}=await getNoteArticles();
+---
+<p class="en" style="font-size:13px;color:var(--text-muted);margin-bottom:20px">Articles on note are published in Japanese.</p>
+{articles.length>0?<div class="note-cards">{articles.slice(0,limit).map(article=><a href={article.url} target="_blank" rel="noopener noreferrer">{article.image&&<img src={article.image} alt="" loading="lazy"/>}<div><h3 translate="no" lang="ja">{article.title}</h3>{!compact&&article.summary&&<p translate="no" lang="ja">{article.summary}</p>}<span><span class="ja">noteで読む ↗</span><span class="en">Read on note ↗</span></span></div></a>)}</div>:<p class="note-empty">{profile?'記事はnoteでご覧いただけます。':'記事の公開先を準備しています。'}</p>}
+{!compact&&profile&&<a class="note-profile" href={profile} target="_blank" rel="noopener noreferrer">noteの記事一覧へ ↗</a>}
+<style>
+.note-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}.note-cards>a{border:1px solid var(--line);border-radius:8px;overflow:hidden}.note-cards img{width:100%;aspect-ratio:1.91;object-fit:cover}.note-cards>a>div{padding:20px}.note-cards h3{font-size:17px;line-height:1.6}.note-cards p{font-size:13px;color:var(--text-muted);margin-top:10px}.note-cards> a>div>span,.note-profile{display:block;font-size:12px;margin-top:20px}.note-empty{font-size:14px;color:var(--text-muted)}@media(max-width:720px){.note-cards{grid-template-columns:1fr}}
+</style>

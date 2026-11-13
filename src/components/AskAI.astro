@@ -1,0 +1,59 @@
+---
+import {askAI as copy} from '../data/profile';
+const copyLabel=copy.genericCopy;
+---
+<section class="ask-ai" data-ai-menu>
+ <h2><span class="ja">{copy.label.ja}</span><span class="en">{copy.label.en}</span></h2>
+ <div class="ai-options">
+  <a data-ai-provider="chatgpt" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer"><img src="/brand/tools/chatgpt.svg" width="48" height="48" alt=""/><span>ChatGPT ↗</span></a>
+  <a data-ai-provider="claude" href="https://claude.ai/new" target="_blank" rel="noopener noreferrer"><img src="/brand/tools/claude.svg" width="48" height="48" alt=""/><span>Claude ↗</span></a>
+  <a data-ai-provider="gemini" href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer"><img src="/brand/tools/gemini.svg" width="36" height="36" alt=""/><span>Gemini ↗</span><small><span class="ja">{copy.geminiAction.ja}</span><span class="en">{copy.geminiAction.en}</span></small></a>
+  <a data-ai-provider="perplexity" href="https://www.perplexity.ai/search" target="_blank" rel="noopener noreferrer"><img src="/brand/tools/perplexity.svg" width="48" height="48" alt=""/><span>Perplexity ↗</span></a>
+ </div>
+ <div class="ai-copy"><p><span class="ja">{copy.hint.ja}</span><span class="en">{copy.hint.en}</span></p><button type="button" data-copy-lesson><span aria-hidden="true">⧉</span> <span class="ja">{copyLabel.ja}</span><span class="en">{copyLabel.en}</span></button></div>
+ <span class="copy-status" role="status" aria-live="polite"></span>
+ <textarea hidden readonly aria-label={copyLabel.en}></textarea>
+</section>
+<script>
+import {askAI as copy} from '../data/profile';
+const language=()=>document.documentElement.dataset.lang==='en'?'en':'ja';
+document.querySelectorAll<HTMLElement>('[data-ai-menu]').forEach(menu=>{
+ const active=()=>document.querySelector<HTMLElement>('.lesson-panel:not([hidden])');
+ const title=()=>active()?.querySelector('h1')?.innerText.trim()??document.title;
+ const url=()=>{const current=new URL(location.href);const publicUrl=new URL(current.pathname,'https://maepace.com');if(active())publicUrl.searchParams.set('lesson',current.searchParams.get('lesson')??'0');publicUrl.searchParams.set('lang',language());return publicUrl.href;};
+ const prompt=()=>copy.prompt[language()].replace('{title}',title()).replace('{url}',url());
+ const links=[...menu.querySelectorAll<HTMLAnchorElement>('[data-ai-provider]')];
+ const destinations=new Map(links.map(link=>[link,link.href]));
+ const status=menu.querySelector<HTMLElement>('.copy-status')!;
+ const fallback=menu.querySelector('textarea')!;
+ async function copyText(text:string,message:string){
+  try{await navigator.clipboard.writeText(text);status.textContent=message;fallback.hidden=true;}
+  catch{fallback.value=text;fallback.hidden=false;fallback.focus();fallback.select();status.textContent=copy.manual[language()];}
+ }
+ function update(){links.forEach(link=>{const target=new URL(destinations.get(link)!);if(link.dataset.aiProvider!=='gemini')target.searchParams.set('q',prompt());link.href=target.href;});}
+ update();
+ document.addEventListener("maepace:language",update);
+ document.addEventListener("maepace:lesson",update);
+ links.forEach(link=>link.addEventListener('click',()=>{
+  update();
+  if(link.dataset.aiProvider==='gemini')void copyText(prompt(),copy.geminiCopied[language()]);
+ }));
+ menu.querySelector('[data-copy-lesson]')?.addEventListener('click',async()=>{
+  const source=active()?.querySelector<HTMLElement>('.lesson-body')??document.querySelector<HTMLElement>('main');
+  const parts:string[]=[];
+  if(source){const walker=document.createTreeWalker(source,NodeFilter.SHOW_TEXT);while(walker.nextNode()){const node=walker.currentNode;const el=node.parentElement;if(!el||el.closest('script,style,textarea,input,select,button,form,iframe,[hidden],[data-private]')||!el.getClientRects().length||getComputedStyle(el).visibility==='hidden')continue;const value=node.textContent?.trim();if(value)parts.push(value);}}
+  const body=parts.join('\n');
+  await copyText(`${title()}\n${url()}\n\n${body}`,copy.copied[language()]);
+ });
+});
+</script>
+<style>
+.ask-ai{margin:40px 0 24px;padding:28px 0;border-top:1px solid var(--line);color:var(--text)}
+.ask-ai h2{font-size:22px;font-weight:600;line-height:1.5;margin:0 0 22px;letter-spacing:-.025em}
+.ai-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;max-width:620px}
+.ai-options a{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:10px;min-height:102px;padding:16px 10px;border:1px solid var(--line);border-radius:12px;background:var(--surface-raised);font-size:14px;font-weight:500;text-decoration:none;transition:border-color .2s}
+.ai-options a:hover{border-color:var(--text-muted)}.ai-options img{width:36px;height:36px;object-fit:contain}
+.ai-options small{font-size:10px;font-weight:400;color:var(--text-muted);line-height:1.4}.ai-copy{margin-top:20px;max-width:620px}.ai-copy p{font-size:12px;line-height:1.8;color:var(--text-muted);margin:0 0 8px}.ai-copy button{min-height:44px;padding:0;border:0;background:transparent;color:inherit;font:inherit;font-size:13px;cursor:pointer;text-decoration:underline;text-underline-offset:4px}.copy-status{display:block;font-size:12px}.ask-ai textarea{width:100%;min-height:140px;margin-top:12px;font-size:12px}
+@media(max-width:480px){.ai-options{gap:8px}.ai-options a{min-height:90px;padding:12px 4px;font-size:11px}.ai-options img{width:32px;height:32px}.ask-ai h2{font-size:20px}}
+@media(prefers-reduced-motion:reduce){.ai-options a{transition:none}}
+</style>

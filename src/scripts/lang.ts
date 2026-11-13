@@ -1,34 +1,22 @@
-/**
- * 日本語 / 英語の切り替え。
- *
- * 両言語ともマークアップに存在し、CSS が出し分ける（global.css）。
- * ここがやるのは data-lang の付け替えと保存だけ。
- */
-type Lang = "ja" | "en";
-
-const STORAGE_KEY = "mp-lang";
-
-function apply(lang: Lang) {
-  const root = document.documentElement;
-  root.setAttribute("data-lang", lang);
-  root.lang = lang;
-
-  for (const btn of document.querySelectorAll<HTMLButtonElement>("[data-lang-set]")) {
-    btn.setAttribute("aria-pressed", String(btn.dataset.langSet === lang));
+/** Shared language preference. Course position and progress are independent of language. */
+export type Lang = 'ja' | 'en';
+export function applyLanguage(lang: Lang, updateUrl = false) {
+  document.documentElement.dataset.lang = lang;
+  document.documentElement.lang = lang;
+  document.querySelectorAll<HTMLButtonElement>('[data-lang-set]').forEach(button => {
+    button.setAttribute('aria-pressed', String(button.dataset.langSet === lang));
+  });
+  try { localStorage.setItem('mp-lang', lang); } catch { /* Storage is optional. */ }
+  if (updateUrl) {
+    const url = new URL(location.href);
+    url.searchParams.set('lang', lang);
+    history.replaceState(null, '', url);
   }
-
-  try {
-    localStorage.setItem(STORAGE_KEY, lang);
-  } catch {
-    // プライベートモード等では保存できない。表示の切り替えは成立するので黙って続行する
-  }
+  document.dispatchEvent(new CustomEvent('maepace:language', { detail: lang }));
 }
-
 export function initLang() {
-  const current = (document.documentElement.getAttribute("data-lang") as Lang) ?? "en";
-  apply(current);
-
-  for (const btn of document.querySelectorAll<HTMLButtonElement>("[data-lang-set]")) {
-    btn.addEventListener("click", () => apply(btn.dataset.langSet as Lang));
-  }
+  applyLanguage(document.documentElement.dataset.lang === 'ja' ? 'ja' : 'en');
+  document.querySelectorAll<HTMLButtonElement>('[data-lang-set]').forEach(button => {
+    button.addEventListener('click', () => applyLanguage(button.dataset.langSet as Lang, true));
+  });
 }

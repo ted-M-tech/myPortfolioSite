@@ -1,0 +1,38 @@
+---
+const {slug, heading, pending} = Astro.props;
+---
+<div class="course-checkout" data-course-checkout={slug}>
+  <div><strong>{heading}</strong><p data-offer-message>{pending}</p></div>
+  <button class="button dark" data-checkout-button hidden>テスト購入へ →</button>
+  <p role="status" aria-live="polite" data-checkout-message></p>
+</div>
+<script>
+for (const root of document.querySelectorAll<HTMLElement>('[data-course-checkout]')) {
+  const course = root.dataset.courseCheckout!;
+  const button = root.querySelector<HTMLButtonElement>('[data-checkout-button]')!;
+  const message = root.querySelector<HTMLElement>('[data-checkout-message]')!;
+  const offerMessage = root.querySelector<HTMLElement>('[data-offer-message]')!;
+  fetch(`/api/payments/offer?course=${encodeURIComponent(course)}`).then(r=>r.ok?r.json():null).then(offer=>{
+    if (!offer?.available || !offer.sandbox) return;
+    // Stripe amounts use currency minor units (JPY: 0, CAD/USD: 2).
+    const formatter = new Intl.NumberFormat('ja-JP',{style:'currency',currency:offer.currency});
+    const digits = formatter.resolvedOptions().maximumFractionDigits ?? 2;
+    offerMessage.textContent = `テスト価格 ${formatter.format(offer.amount / 10 ** digits)} ／ 実際の請求・受講権の付与はありません。`;
+    button.hidden = false;
+  }).catch(()=>{});
+  button.addEventListener('click',async()=>{
+    button.disabled=true; message.textContent='決済画面を開いています…';
+    try {
+      const response=await fetch('/api/payments/checkout',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({course})});
+      const result=await response.json();
+      if (!response.ok) throw new Error(result.error);
+      const target=new URL(result.url);
+      if(target.protocol!=='https:' || target.hostname!=='checkout.stripe.com') throw new Error('決済URLを確認できませんでした。');
+      window.location.assign(target.href);
+    } catch(error) {message.textContent=error instanceof Error?error.message:'接続できませんでした。';button.disabled=false;}
+  });
+}
+</script>
+<style>
+.course-checkout{padding:18px 0;margin:20px 0;border-block:1px solid var(--line);display:flex;align-items:center;gap:16px;flex-wrap:wrap}.course-checkout strong{font-size:14px;font-weight:600}.course-checkout p{font-size:12px;color:var(--text-muted);margin-top:6px;line-height:1.7}.course-checkout button{margin-left:auto;cursor:pointer}.course-checkout [role=status]:empty{display:none}.course-checkout [role=status]{width:100%}.course-checkout [hidden]{display:none}
+</style>

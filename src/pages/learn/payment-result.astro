@@ -1,0 +1,27 @@
+---
+import Learn from '../../layouts/Learn.astro';
+---
+<Learn title="テスト決済の確認">
+<section class="wrap result"><p class="eyebrow">CHECKOUT / SANDBOX</p><h1>テスト決済を確認しています</h1><p role="status" aria-live="polite" id="result-message">少しお待ちください。</p><p class="fine">開発用の決済です。実際の請求や、有料教材の解放は行いません。</p><a href="/learn/mentoring" class="button dark">個別サポートに戻る →</a></section>
+</Learn>
+<script>
+const params=new URLSearchParams(location.search);
+const title=document.querySelector('h1')!;
+const message=document.querySelector('#result-message')!;
+const id=params.get('session_id'); const course=params.get('course');
+// Remove the session identifier from the visible URL and browser history.
+history.replaceState(null,'','/learn/payment-result');
+async function check(){
+  if(!id || !course){title.textContent='決済情報がありません';message.textContent='個別サポートのページからテスト決済を開始してください。';return;}
+  try{
+    const response=await fetch(`/api/payments/result?${new URLSearchParams({session_id:id,course})}`);
+    const result=await response.json();
+    if(!response.ok) throw new Error(result.error);
+    title.textContent=result.paid?'テスト決済が完了しました':'支払いはまだ完了していません';
+    message.textContent=result.paid?'Stripeで支払い完了を確認しました。':'時間をおいて、支払い状況を再確認できます。';
+    if(!result.paid){const retry=document.createElement('button');retry.textContent='再確認';retry.addEventListener('click',()=>{retry.remove();check();});message.append(' ',retry);}
+  }catch(error){title.textContent='決済状況を確認できませんでした';message.textContent=error instanceof Error?error.message:'時間をおいてお試しください。';}
+}
+check();
+</script>
+<style>.result{max-width:760px;padding-block:60px}.result h1{font-size:clamp(24px,4vw,36px);margin:16px 0}.result p{margin-bottom:20px}.result .fine{font-size:12px;color:var(--text-muted)}</style>

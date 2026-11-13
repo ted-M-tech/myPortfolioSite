@@ -10,6 +10,8 @@ export default defineConfig({
   build: {
     inlineStylesheets: "auto",
   },
+  // Local payment API; the website itself stays static.
+  vite: { server: { proxy: { "/api/payments": "http://127.0.0.1:8787" } } },
   prefetch: {
     prefetchAll: false,
   },

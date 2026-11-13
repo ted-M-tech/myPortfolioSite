@@ -80,3 +80,8 @@ src/
 ロゴ・命名・使用ルールの正典は [`docs/brand/maepace.md`](docs/brand/maepace.md)。
 アセットは `public/brand/`。`fill="currentColor"` なので親の `color` で単色化する。
 **傾けない・歪めない・単色のみ・尾を伸ばさない。** 触る前に必ず読むこと。
+
+
+## Learnのコンテンツ管理
+
+自己紹介・共通UI文言は `src/data/profile.ts`。記事・講座・レッスンの原本は `src/content/` のContent Collectionsへ分離しています。本文をprofile.tsやコンポーネントに追加しないでください。予約連携は `src/data/integrations.ts`。詳細は [運用ガイド](docs/learning-content.md) を参照。既存の「全内容をprofile.tsへ」という規則は、Learnの本文には適用しません。

@@ -1,0 +1,15 @@
+---
+import {getBookingUrl} from '../data/integrations';
+import {contact} from '../data/profile';
+const bookingUrl=getBookingUrl();
+const calLink=bookingUrl?new URL(bookingUrl).pathname.slice(1):'';
+---
+{bookingUrl&&<div class="booking-calendar"><div id="cal-booking" data-cal-link={calLink}></div><a class="calendar-fallback" href={bookingUrl} target="_blank" rel="noopener noreferrer"><span class="ja">{contact.fallback.ja}</span><span class="en">{contact.fallback.en}</span> ↗</a></div>}
+<script is:inline>
+(function(C,A,L){let p=function(a,ar){a.q.push(ar);};let d=C.document;C.Cal=C.Cal||function(){let cal=C.Cal;let ar=arguments;if(!cal.loaded){cal.ns={};cal.q=cal.q||[];let script=d.createElement('script');script.src=A;d.head.appendChild(script);cal.loaded=true;}if(ar[0]===L){const api=function(){p(api,arguments);};const namespace=ar[1];api.q=api.q||[];if(typeof namespace==='string'){cal.ns[namespace]=cal.ns[namespace]||api;p(cal.ns[namespace],ar);p(cal,['initNamespace',namespace]);}else p(cal,ar);return;}p(cal,ar);};})(window,'https://app.cal.com/embed/embed.js','init');
+const element=document.getElementById('cal-booking');
+if(element){const mount=()=>{Cal('init','maepace',{origin:'https://cal.com'});Cal.ns.maepace('inline',{elementOrSelector:'#cal-booking',calLink:element.dataset.calLink,config:{layout:'month_view',theme:'light'}});Cal.ns.maepace('ui',{hideEventTypeDetails:false,layout:'month_view'});};const observer=new IntersectionObserver(entries=>{if(entries.some(entry=>entry.isIntersecting)){mount();observer.disconnect();}},{rootMargin:'200px'});observer.observe(element);}
+</script>
+<style>
+.booking-calendar{min-width:0;width:100%;color:var(--text)}#cal-booking{width:100%;min-height:680px;overflow:auto}.calendar-fallback{font-size:12px;display:inline-block;margin-top:16px;text-decoration:underline;text-underline-offset:4px}
+</style>

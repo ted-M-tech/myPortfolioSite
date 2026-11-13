@@ -1,0 +1,28 @@
+---
+import '../styles/learn.css';
+import LanguageBootstrap from '../components/LanguageBootstrap.astro';
+import {localizeHtml} from '../lib/localize-html';
+import englishCopy from '../data/i18n/en.json';
+import SiteFooter from '../components/SiteFooter.astro';
+import Nav from '../components/Nav.astro';
+import { learning as l, site } from '../data/profile';
+interface Props { title?: string; description?: string; indexable?: boolean }
+const {title=l.title, description=l.intro, indexable=['/learn/blog','/learn/mentoring','/learn/consult','/learn/privacy'].includes(Astro.url.pathname)}=Astro.props;
+const english = (text: string) => (englishCopy as Record<string,string>)[text] ?? text;
+const localizedContent = localizeHtml(await Astro.slots.render('default'));
+---
+<!doctype html><html lang="ja" data-lang="ja"><head><meta charset="utf-8"/><LanguageBootstrap /><meta name="viewport" content="width=device-width,initial-scale=1"/><title data-ja={`${title} — MaePace`} data-en={english(`${title} — MaePace`)}>{title} — MaePace</title><meta name="description" content={description}/>{!indexable && <meta name="robots" content="noindex"/>}<meta property="og:type" content="website"/><meta property="og:locale" content="ja_JP"/><meta property="og:title" content={`${title} — MaePace`}/><meta property="og:description" content={description}/><meta property="og:url" content={new URL(Astro.url.pathname,site.url).href}/><link rel="canonical" href={new URL(Astro.url.pathname,site.url).href}/><link rel="icon" href="/favicon.svg"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/><script is:inline>
+const pageTitle = document.querySelector('title');
+if (pageTitle) pageTitle.textContent = pageTitle.dataset[document.documentElement.lang] || pageTitle.textContent;
+</script></head><body>
+<a class="skip-link" href="#main-content"><span class="ja">本文へ移動</span><span class="en">Skip to content</span></a><Nav variant="learn" />
+<main id="main-content" tabindex="-1"><Fragment set:html={localizedContent}/></main>
+<SiteFooter />
+</body></html>
+
+<script>
+import { initLang } from "../scripts/lang";
+import { initTranslation } from "../scripts/translate";
+initTranslation();
+initLang();
+</script>

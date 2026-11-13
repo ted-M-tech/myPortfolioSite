@@ -10,7 +10,7 @@ brand (屋号) the site operates under; it is served from `maepace.com`, with ot
 on subdomains.
 
 Built with **Astro 7**, output as a static site, served as **Cloudflare Workers static assets**.
-There is no UI framework and no animation library. Total client JS is ~2.5 KB.
+There is no UI framework and no animation library. Learn also loads a shared, cached English translation catalog; the portfolio does not load that catalog.
 
 ## Commands
 
@@ -46,8 +46,8 @@ src/
 ## Decisions worth not re-litigating
 
 - **No adapter.** `@astrojs/cloudflare` forces `output: 'server'`, which would mean sprinkling
-  `prerender` everywhere to undo it. `wrangler.jsonc` deliberately has **no `main`** — that is
-  what makes it assets-only, with no Worker code to run or maintain.
+  `prerender` everywhere to undo it. `wrangler.jsonc` serves pages as static assets. The small `server/payments.mjs` Worker
+  handles only `/api/payments/*`; do not convert the whole site to SSR.
 - **No animation library.** Reveals use IntersectionObserver; the hero is a hand-written 2D canvas.
   CSS `animation-timeline: view()` was tried and **rejected**: `animation-range` is sensitive to
   element height and to whether an ancestor is a scroll container, and when conditions line up the
@@ -87,3 +87,12 @@ tone, or lengthen the tail.** Read the doc before touching anything brand-relate
 This repo previously held a Next.js site synced from v0.dev and deployed on Vercel. All of that
 was removed. If you find references to Next.js, v0.dev, Vercel, or `@opennextjs/cloudflare`, they
 are stale.
+
+
+## Learnのコンテンツ管理
+
+自己紹介・共通UI文言は `src/data/profile.ts`。記事・講座・レッスンの原本は `src/content/` のContent Collectionsへ分離しています。本文をprofile.tsやコンポーネントに追加しないでください。予約連携は `src/data/integrations.ts`。詳細は [運用ガイド](docs/learning-content.md) を参照。既存の「全内容をprofile.tsへ」という規則は、Learnの本文には適用しません。
+
+## 日英対応
+
+共通の言語設定は `LanguageBootstrap.astro` と `src/scripts/lang.ts`。Learnの日本語原稿は `src/content/`、英訳は `src/data/i18n/en.json`、複数行の依頼例は `examples.en.json`。翻訳のためにページや講座IDを複製しないでください。本文変更時は対応する英訳を更新し、`pnpm build && pnpm check:i18n` を実行します。詳細は `docs/localization.md`。

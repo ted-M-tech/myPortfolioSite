@@ -16,7 +16,7 @@ export const site = {
   /** 屋号。表記は CamelCase 固定（docs/brand/maepace.md） */
   brand: "MaePace",
   brandJa: "マエペース",
-  title: "Tetsuya Maeda — AI Driven Full Stack Developer",
+  title: "MaePace — AI Development & Learning",
   description: {
     ja: "前田哲哉 / Tetsuya Maeda。AIを開発プロセスの中核に据え、フロントエンド、バックエンド、クラウドまで一気通貫で構築するAI Driven Full Stack Developer。",
     en: "Tetsuya Maeda is an AI Driven Full Stack Developer building production-ready products across frontend, backend, cloud and AI.",
@@ -369,28 +369,6 @@ export const enablement = [
   },
 ] as const;
 
-/**
- * 知識・失敗・現場・対話をぜんぶ材料にして、実際に必要なものをつくる、という節。
- *
- * 以前は「まだない傑作へ」「まだ見ぬ最高傑作」と書いていたが、言い過ぎだった。
- * 何をつくるかを宣言する場所ではなく、どう materials を扱うかを示す場所なので、
- * 誇張のない言い方に戻してある。飾った言い換えを持ち込まないこと。
- */
-export const ethos = {
-  heading: {
-    ja: "本当に必要なものを、つくる。",
-    en: "Build what's actually needed.",
-  },
-  values: [
-    { ja: "現場から", en: "Grounded" },
-    { ja: "速く出す", en: "Ship fast" },
-    { ja: "動き続ける", en: "Keeps running" },
-    { ja: "測って直す", en: "Measured" },
-    { ja: "チームで", en: "With the team" },
-    { ja: "次の一歩", en: "Next step" },
-  ],
-} as const;
-
 export const skills = [
   {
     group: { ja: "AI駆動開発", en: "AI Driven Development" },
@@ -480,6 +458,14 @@ export const timeline = [
       en: "SCADA and building automation systems / Scrum Master",
     },
     period: "2020 — 2025",
+  },
+  {
+    title: "Master’s Degree",
+    focus: {
+      ja: "修士（電子情報科学）取得",
+      en: "Master’s degree in Electronic and Information Science",
+    },
+    period: "2020",
   },
 ] as const;
 
@@ -718,10 +704,65 @@ export const marksNote = {
   en: "Product names and marks belong to their respective owners. No affiliation or endorsement implied.",
 } satisfies Bilingual;
 
-export const contact = {} as const;
+export const contact = {
+ title:{ja:'まずは、30分話してみませんか。',en:'Let’s start with a 30-minute conversation.'},
+ description:{ja:'AIの使い方、学び方、制作・開発の相談。やりたいことがまとまっていなくても大丈夫です。',en:'Talk about using AI, learning, or your next project. You don’t need to have everything figured out.'},
+ detail:{ja:'初回無料・オンライン30分',en:'Free first consultation · 30 minutes online'},
+ hint:{ja:'ご都合のよい日時を選んでください。予約画面のタイムゾーンをご確認ください。',en:'Choose a time that works for you and check the time zone shown in the calendar.'},
+ fallback:{ja:'表示されない場合はCal.comで開く',en:'Open on Cal.com if the calendar does not load'},
+ privacy:{ja:'予約情報の取り扱い',en:'How booking information is handled'},
+} as const;
+
+/** AI practice hub: draft courses are intentionally not available for purchase. */
+export const learning = {
+  entry: { ja: '講座', en: 'Courses' },
+  title: '講座', eyebrow: 'MAEPACE / LEARN & BUILD',
+  headline: ['AIと、つくる。', '自分の力にする。'],
+  intro: '開発、動画、日々の仕事。実際に試して、使える方法を選び、続けられる仕組みに。実務から生まれるAIの学びを届けます。',
+  nav: [{label:'実績',href:'/#work'},{label:'講座',href:'/learn'},{label:'ブログ',href:'/learn/blog'}],
+  labels: {back:'ホーム',consult:'つくりたいことを相談',courses:'講座のプランを見る',all:'すべて',practice:'実践から、学びをつくる。',practiceSub:'自分たちが手を動かしたものから。完成品だけでなく、その裏側の判断も共有していきます。',courseTitle:'何をできるようになりたい？',courseSub:'気になるツールからでも、作りたいものからでも。1講座ずつ選べます。',notesTitle:'試したことを、次の一歩に。',notesSub:'実践ノート・教材のサンプル。検証記事は、確認日と実行条件を添えて更新していきます。',read:'サンプルを読む',plan:'講座プランを見る',draft:'準備中',sample:'教材サンプル',return:'講座一覧に戻る',flow:'つくって終わらず、使い続けられるように。',flowSub:'知識と、手を動かす経験を一緒に。支援のゴールは、自分で次の一歩を進められること。',teamTitle:'まず、自分たちが実践する。',teamSub:'日本とカナダから。技術を試す力と、人の挑戦を後押しする力を持ち寄ります。',contactTitle:'あなたの「つくりたい」から、始めよう。',contactSub:'仕事へのAI導入、動画制作、小さなアプリ。目的を整理し、実装から引き継ぎまで、必要な支援を一緒に考えます。',contactNote:'講座の内容・価格・開始日は検討中です。相談はメールで受け付けます。',footer:'実践を、誰かの次の一歩に。',preview:'講座プラン・教材サンプルを含むプレビュー',outline:'学習ステップ（案）',outcome:'この講座で目指すこと',audience:'こんな方へ',deliverable:'完成するもの',interest:'この講座について相談',unpublished:'現在は講座の構成案です。受講受付・決済は開始していません。',next:'次の講座を探す'},
+  filters:['すべて','ツール入門','資料・動画','SNS','開発・自動化'],
+  tools:['claude','chatgpt','notion','docker','github','n8n'],
+  cases:[
+    {tag:'CREATIVE / 実制作',title:'AIで、映像を形にする。',text:'生成AIによるプロモーション動画。企画から素材生成、編集・仕上げまで。',image:'/work/ai-video-promo-poster.webp',video:'/work/ai-video-promo.mp4',caption:'Tetsuyaの制作サンプル'},
+    {tag:'PRODUCT / 共同活動',title:'学ぶ楽しさを、プロダクトに。',text:'日本語教育SNSとHelp Kansai。アプリや教材を通して、日本語を学ぶ体験をつくる。',image:'/work/help-kansai-case-v2.webp',video:'',caption:'共同活動のプロダクト紹介'}
+  ],
+  steps:[['01','試す','自分の課題を、動くものに。'],['02','理解する','選び方と判断の理由を知る。'],['03','続ける','自分で使える手順を残す。']],
+  team:[{name:'Tetsuya',role:'AI ENGINEERING / BUILD',text:'AIエンジニア。最新ツールを実務で試し、開発・制作・業務の仕組みに取り入れる。',image:'/profile-photo.webp'},{name:'Ryosuke',role:'MARKETING / ENABLEMENT',text:'海外営業の経験を生かし、マーケティング・日本語教育・行動の後押しに取り組む。',image:''}],
+};
+
+/** Shared site structure; Learn is a section of MaePace. */
+export const siteNavigation = {
+  links: [
+    {href:'/#services',ja:'サービス',en:'Services'},
+    {href:'/#work',ja:'実績',en:'Projects'},
+    {href:'/works',ja:'作品集',en:'Gallery'},
+    {href:'/#path',ja:'プロフィール',en:'About'},
+    {href:'/learn/blog',ja:'ブログ',en:'Blog'},
+  ],
+  consult:{href:'/learn/consult',ja:'無料相談',en:'Book a call'},
+  privacy:{href:'/learn/privacy',ja:'プライバシー',en:'Privacy'},
+  blog:{title:'ブログ',en:'Blog',description:'実務で試したAIの使い方や、開発・制作の工夫を紹介します。'},
+  support:{title:'個別サポート',description:'自分の仕事や制作を題材に、一緒に進めたい方へ。',link:'内容・料金を見る →'},
+  homeLearning:{
+    blog:{title:{ja:'最新のブログ',en:'Latest articles'},description:{ja:'実務で試したAIの使い方と、制作・開発の工夫。',en:'Practical AI methods and lessons from making and building.'},action:{ja:'記事一覧へ',en:'All articles'}},
+  },
+};
+
+/** Shared public-page AI shortcuts. */
+export const askAI = {
+ label:{ja:'このページについて、AIに聞く',en:'Explore this page with AI'},
+ geminiAction:{ja:'コピーして開く・貼り付け',en:'Copy, open & paste'},
+ geminiCopied:{ja:'質問文をコピーしました。Geminiの入力欄に貼り付けてください。',en:'Prompt copied. Paste it into Gemini.'},
+ genericCopy:{ja:'このページの本文をコピー',en:'Copy page text'},
+ hint:{ja:'ページを読めない場合は、本文をコピーして貼り付けてください。',en:'If AI cannot read the page, copy and paste the text.'},
+ copied:{ja:'コピーしました。',en:'Copied.'},
+ manual:{ja:'本文を選択しました。手動でコピーしてください。',en:'Text selected. Copy it manually.'},
+ prompt:{ja:'このページについて質問したいです。\n{title}\n{url}',en:'I would like to ask about this page.\n{title}\n{url}'},
+} as const;
 
 
-// Public creative works. Actual artifacts, separate from private client projects.
+// Public works are complete artifacts. Supporting images and process notes are not works.
 export const openWorks = {
  overviewTypes:'WEB / FILM / DESIGN',
  title:{ja:'作品集',en:'Creative works'},
